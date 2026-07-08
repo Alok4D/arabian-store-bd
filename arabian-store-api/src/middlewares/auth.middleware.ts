@@ -14,9 +14,14 @@ export const authenticateAdmin = (req: AuthRequest, res: Response, next: NextFun
     }
 
     const token = authHeader.split(' ')[1];
-    const jwtSecret = (process.env.JWT_SECRET as string) || 'fallback_secret_key_for_dev_only';
+    if (!token) {
+      res.status(401).json({ success: false, message: 'Unauthorized. Malformed token.' });
+      return;
+    }
+
+    const secretKey: string = process.env.JWT_SECRET ? String(process.env.JWT_SECRET) : 'fallback_secret_key_for_dev_only';
     
-    const decoded = jwt.verify(token, jwtSecret) as unknown as { id: string; email: string };
+    const decoded = jwt.verify(token as string, secretKey) as unknown as { id: string; email: string };
     req.admin = decoded;
     
     next();
