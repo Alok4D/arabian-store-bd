@@ -14,9 +14,9 @@ export const authenticateAdmin = (req: AuthRequest, res: Response, next: NextFun
     }
 
     const token = authHeader.split(' ')[1];
-    const jwtSecret = process.env.JWT_SECRET || 'fallback_secret_key_for_dev_only';
+    const jwtSecret = (process.env.JWT_SECRET as string) || 'fallback_secret_key_for_dev_only';
     
-    const decoded = jwt.verify(token, jwtSecret) as { id: string; email: string };
+    const decoded = jwt.verify(token, jwtSecret) as unknown as { id: string; email: string };
     req.admin = decoded;
     
     next();
