@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 20% 98%; /* #faf9f6 */
+    --foreground: 0 0% 10%; /* #1a1a1a */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Gold: #d4af37 */
+    --primary: 46 65% 52%; 
+    --primary-foreground: 0 0% 98%;
+
+    /* Dark Brown: #3b2f2f */
+    --secondary: 0 11% 21%; 
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 40 10% 90%;
+    --muted-foreground: 40 5% 45%;
+
+    --accent: 46 65% 52%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 40 10% 90%;
+    --input: 40 10% 90%;
+    --ring: 46 65% 52%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 11% 15%; 
+    --foreground: 0 0% 98%;
+
+    --card: 0 11% 21%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 11% 21%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 46 65% 52%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 25%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 25%;
+    --muted-foreground: 40 5% 65%;
+
+    --accent: 46 65% 52%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 46 65% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Utilities for Landing Page */
+.gold-gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-primary;
+}
+
+.floating-image {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
