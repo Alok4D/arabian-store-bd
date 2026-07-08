@@ -36,8 +36,13 @@ export default function HealthBenefits() {
                 "কপার",
                 "ম্যাঙ্গানিজ",
                 "বিভিন্ন অ্যান্টিঅক্সিডেন্ট"
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 bg-[#fcf8f2] p-3 rounded-lg border border-[#faecd8]">
+              ].map((item, idx, arr) => (
+                <div 
+                  key={idx} 
+                  className={`flex items-center gap-2 bg-[#fcf8f2] p-3 rounded-lg border border-[#faecd8] ${
+                    idx === arr.length - 1 && arr.length % 2 !== 0 ? 'col-span-2' : ''
+                  }`}
+                >
                   <Leaf size={18} className="text-[#009e19] flex-shrink-0" />
                   <span className="font-semibold text-[15px]">{item}</span>
                 </div>
