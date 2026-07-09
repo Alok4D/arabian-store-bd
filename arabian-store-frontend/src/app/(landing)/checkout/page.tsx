@@ -387,13 +387,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Shipping Section */}
-            <div>
-              <div className="flex justify-between items-center w-full rounded-md border border-[#c3e6cb] p-4 text-[16px] font-bold text-[#155724] bg-[#d4edda] shadow-sm">
-                <span>ডেলিভারি চার্জ:</span>
-                <span>{deliveryCharge.toLocaleString()}.00৳</span>
-              </div>
-            </div>
+
           </div>
 
           {/* RIGHT COLUMN: Your Order Details */}
