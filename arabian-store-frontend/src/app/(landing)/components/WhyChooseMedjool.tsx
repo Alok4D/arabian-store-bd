@@ -4,8 +4,8 @@ import { Globe, Heart, Gift, Zap, Star, CheckCircle2 } from 'lucide-react';
 
 export default function WhyChooseMedjool() {
   return (
-    <div className="py-16 md:py-24 bg-white text-[#333]">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 space-y-16">
+    <div className="py-8 md:py-12 bg-[#faf9f5] text-[#333]">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 space-y-8">
         
         {/* Intro Section */}
         <div className="text-center max-w-4xl mx-auto">
@@ -18,17 +18,17 @@ export default function WhyChooseMedjool() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           
           {/* Global Popularity */}
-          <div className="bg-[#fcf8f2] rounded-xl p-8 border border-[#faecd8] shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-6">
+          <div className="bg-[#fcf8f2] rounded-xl p-5 md:p-6 border border-[#faecd8] shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3 mb-4">
               <div className="bg-[#a46404] text-white p-3 rounded-lg">
                 <Globe size={28} />
               </div>
               <h3 className="text-[24px] md:text-[28px] font-bold text-[#a46404]">বিশ্বজুড়ে জনপ্রিয় কেন?</h3>
             </div>
-            <ul className="space-y-5">
+            <ul className="space-y-3">
               {[
                 "মধ্যপ্রাচ্যে অতিথি আপ্যায়নের অন্যতম সেরা খাবার",
                 "ইউরোপ ও আমেরিকায় স্বাস্থ্যসচেতন মানুষের জনপ্রিয় স্ন্যাকস",
@@ -46,14 +46,14 @@ export default function WhyChooseMedjool() {
           </div>
 
           {/* BD Popularity */}
-          <div className="bg-[#f0fbf4] rounded-xl p-8 border border-[#d2edd9] shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3 mb-6">
+          <div className="bg-[#f0fbf4] rounded-xl p-5 md:p-6 border border-[#d2edd9] shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3 mb-4">
               <div className="bg-[#009e19] text-white p-3 rounded-lg">
                 <Star size={28} />
               </div>
               <h3 className="text-[24px] md:text-[28px] font-bold text-[#009e19]">বাংলাদেশেও কেন এত জনপ্রিয়?</h3>
             </div>
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-3 mb-5">
               {[
                 "বড় ও আকর্ষণীয় আকার",
                 "মুখে দিলেই নরম অনুভূতি",
@@ -72,7 +72,7 @@ export default function WhyChooseMedjool() {
               ))}
             </ul>
             
-            <div className="bg-white p-5 rounded-lg border-l-4 border-[#009e19] shadow-sm">
+            <div className="bg-white p-4 rounded-lg border-l-4 border-[#009e19] shadow-sm">
               <p className="text-[16px] text-neutral-500 mb-1 font-bold">অনেকেই প্রথমবার খেয়ে বলেন—</p>
               <p className="text-[20px] md:text-[22px] font-bold text-[#a46404] italic">
                 "এটা তো খেজুর নয়, যেন প্রাকৃতিক ক্যারামেল!"
