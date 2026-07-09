@@ -116,7 +116,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="px-4 py-8 md:px-12 lg:px-24 text-[#222222]">
+    <div className="px-4 py-4 md:px-12 lg:px-16 text-[#222222]">
       <div className="mx-auto max-w-7xl">
         
         {/* Login Toggle Section */}
@@ -180,8 +180,8 @@ export default function CheckoutPage() {
         </div>
 
         {/* Your Products Section */}
-        <div className="mb-12">
-          <h2 className="text-[20px] md:text-[24px] font-bold text-neutral-800 mb-6 text-left">Your Products</h2>
+        <div className="mb-8">
+          <h2 className="text-[24px] md:text-[28px] font-bold text-neutral-800 mb-4 text-left">Your Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {products.map((product) => {
               const isSelected = selectedProduct === product.id;
@@ -189,13 +189,12 @@ export default function CheckoutPage() {
                 <div 
                   key={product.id} 
                   onClick={() => setSelectedProduct(product.id)}
-                  className={`relative flex items-start gap-3 md:gap-4 p-4 md:p-5 cursor-pointer transition-all bg-white border rounded-md overflow-hidden ${
+                  className={`relative flex items-start gap-3 md:gap-4 p-3 md:p-4 cursor-pointer transition-all bg-white border rounded-md overflow-hidden ${
                     isSelected ? 'border-[#009e19] shadow-sm' : 'border-neutral-300'
                   }`}
                 >
-                  {/* Delivery Free Ribbon */}
                   {Number(product.shippingFee) === 0 && (
-                    <div className="absolute right-[-35px] top-[15px] w-[140px] transform rotate-45 bg-[#f05924] text-white text-[12px] md:text-[13px] font-bold py-1 text-center shadow-sm z-10">
+                    <div className="absolute right-[-35px] top-[15px] w-[140px] transform rotate-45 bg-[#f05924] text-white text-[13px] md:text-[15px] font-bold py-1 text-center shadow-sm z-10">
                       Delivery Free!
                     </div>
                   )}
@@ -213,10 +212,10 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="flex-1 pr-4">
-                    <div className="text-[15px] md:text-[17px] font-bold text-neutral-800 leading-snug mb-1">
+                    <div className="text-[18px] md:text-[20px] font-bold text-neutral-800 leading-snug mb-1">
                       {product.title}
                     </div>
-                    <div className="text-[14px] text-neutral-500 mb-4">
+                    <div className="text-[15px] md:text-[17px] text-neutral-500 mb-3">
                       {product.description || "বিশেষ ডিসকাউন্ট অফার"}
                     </div>
                     <div className="flex items-center gap-3">
@@ -224,17 +223,17 @@ export default function CheckoutPage() {
                       <div className="flex items-center border border-neutral-300 rounded-sm bg-white">
                         <button 
                           onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
-                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[16px] leading-tight"
+                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[18px] leading-tight"
                         >-</button>
-                        <span className="px-3.5 py-0.5 border-x border-neutral-300 text-[14px] font-semibold text-neutral-700">
+                        <span className="px-3.5 py-0.5 border-x border-neutral-300 text-[16px] font-semibold text-neutral-700">
                           {quantities[product.id] || 1}
                         </span>
                         <button 
                           onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
-                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[16px] leading-tight"
+                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[18px] leading-tight"
                         >+</button>
                       </div>
-                      <span className="font-extrabold text-[16px] md:text-[18px] text-neutral-900">{Number(product.price).toLocaleString()}৳</span>
+                      <span className="font-extrabold text-[18px] md:text-[22px] text-neutral-900">{Number(product.price).toLocaleString()}৳</span>
                     </div>
                   </div>
                 </div>
@@ -246,16 +245,16 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12" id="order">
           
           {/* LEFT COLUMN: Billing & Shipping */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-6">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight mb-6 text-neutral-900">
+              <h2 className="text-[24px] md:text-[28px] font-bold tracking-tight mb-4 text-neutral-900">
                 ডেলিভারি বিস্তারিত
               </h2>
               
-              <div className="space-y-5 bg-[#fdfdfd] p-5 md:p-6 rounded-md border border-neutral-200 shadow-sm">
+              <div className="space-y-4 bg-[#fdfdfd] p-4 md:p-5 rounded-md border border-neutral-200 shadow-sm">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
                     পূর্ণ নাম <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -263,13 +262,13 @@ export default function CheckoutPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="আপনার নাম লিখুন"
-                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
+                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
 
                 {/* Mobile Number */}
                 <div>
-                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
                     মোবাইল নাম্বার <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -277,13 +276,13 @@ export default function CheckoutPage() {
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value)}
                     placeholder="আপনার ১১ ডিজিটের মোবাইল নাম্বার"
-                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
+                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
 
                 {/* WhatsApp Number */}
                 <div>
-                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
                     হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)
                   </label>
                   <input
@@ -291,19 +290,19 @@ export default function CheckoutPage() {
                     value={whatsappNumber}
                     onChange={(e) => setWhatsappNumber(e.target.value)}
                     placeholder="প্রবাসীদের জন্য প্রযোজ্য"
-                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
+                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
 
                 {/* District Selection */}
                 <div>
-                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
                     আপনার জেলা <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={district}
                     onChange={(e) => setDistrict(e.target.value)}
-                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
+                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   >
                     <option value="ঢাকা">ঢাকা</option>
                     <option value="ফরিদপুর">ফরিদপুর</option>
@@ -374,7 +373,7 @@ export default function CheckoutPage() {
 
                 {/* Full Address */}
                 <div>
-                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
                     পূর্ণ ঠিকানা <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -382,7 +381,7 @@ export default function CheckoutPage() {
                     value={fullAddress}
                     onChange={(e) => setFullAddress(e.target.value)}
                     placeholder="গ্রাম/এলাকা, থানা, জেলা"
-                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
+                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
                 </div>
               </div>
@@ -399,13 +398,13 @@ export default function CheckoutPage() {
 
           {/* RIGHT COLUMN: Your Order Details */}
           <div className="lg:col-span-5">
-            <h2 className="text-2xl font-bold tracking-tight mb-6 text-neutral-900">
+            <h2 className="text-[24px] md:text-[28px] font-bold tracking-tight mb-4 text-neutral-900">
               অর্ডার সামারি
             </h2>
 
             <div className="border border-neutral-200 rounded-lg p-1 bg-white shadow-sm">
               {/* Product Table Header */}
-              <div className="flex justify-between text-base font-bold pb-3 pt-2 border-b border-dashed border-neutral-200 px-3">
+              <div className="flex justify-between text-[16px] md:text-[18px] font-bold pb-3 pt-2 border-b border-dashed border-neutral-200 px-3">
                 <span className="text-neutral-600">Product</span>
                 <span className="text-neutral-600">Subtotal</span>
               </div>
@@ -426,14 +425,14 @@ export default function CheckoutPage() {
                     {/* Product Details & Internal Pricing Breakdown */}
                     <div className="flex-1 flex justify-between items-start gap-4">
                       <div className="space-y-1">
-                        <p className="text-[15px] font-bold text-neutral-800 leading-tight">
+                        <p className="text-[16px] md:text-[18px] font-bold text-neutral-800 leading-tight">
                           {selectedProductData.title}
                         </p>
-                        <p className="text-[13px] text-neutral-500 font-bold">Qty: {selectedProductQuantity}</p>
+                        <p className="text-[14px] md:text-[16px] text-neutral-500 font-bold">Qty: {selectedProductQuantity}</p>
                       </div>
                       
                       <div className="text-right">
-                        <span className="text-[16px] font-bold text-neutral-900">
+                        <span className="text-[17px] md:text-[19px] font-bold text-neutral-900">
                           {Number(selectedProductData.price).toLocaleString()}৳
                         </span>
                       </div>
@@ -443,7 +442,7 @@ export default function CheckoutPage() {
               )}
 
               {/* Summary Rows */}
-              <div className="space-y-3 py-4 border-b border-dashed border-neutral-200 px-3 text-[15px]">
+              <div className="space-y-3 py-4 border-b border-dashed border-neutral-200 px-3 text-[16px] md:text-[18px]">
                 <div className="flex justify-between items-center">
                   <span className="text-neutral-600 font-bold">Subtotal</span>
                   <div className="text-right">
