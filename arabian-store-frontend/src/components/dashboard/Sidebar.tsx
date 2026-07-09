@@ -53,7 +53,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       `}>
         {/* Logo */}
         <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800">
-          <Link href="/admin" className="flex items-center gap-2 font-bold text-xl">
+          <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl">
             <Package className="w-6 h-6 text-[#e35a34]" />
             <span>Arabian Store</span>
           </Link>

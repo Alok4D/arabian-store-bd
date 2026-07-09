@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  // Check if the user is visiting an admin route
-  if (request.nextUrl.pathname.startsWith('/admin')) {
+  // Check if the user is visiting a dashboard route
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
     // Check for the admin_token cookie
     const token = request.cookies.get('admin_token')?.value;
 
@@ -18,5 +18,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/admin'],
+  matcher: ['/dashboard/:path*', '/dashboard'],
 };

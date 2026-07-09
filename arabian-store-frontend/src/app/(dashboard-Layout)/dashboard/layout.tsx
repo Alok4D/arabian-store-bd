@@ -10,6 +10,7 @@ const manrope = Manrope({
 import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { 
@@ -75,7 +76,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   ];
 
   const handleLogout = () => {
-    // Implement logout logic here (e.g. clear cookies/localStorage)
+    Cookies.remove('admin_token');
     router.push("/login");
   };
 
@@ -159,7 +160,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
                 <div className="h-16 flex items-center px-6 border-b shrink-0">
-                  <Link href="/admin" className="flex items-center gap-2">
+                  <Link href="/dashboard" className="flex items-center gap-2">
                     <div className=" flex justify-center text-[#009e19] font-bold overflow-hidden">
                       <Package className="w-8 h-8" />
                     </div>
