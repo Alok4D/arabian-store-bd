@@ -112,7 +112,37 @@ export default function CheckoutPage() {
   };
 
   if (loadingProducts) {
-    return <div className="p-24 text-center">Loading products...</div>;
+    return (
+      <div className="px-4 py-4 md:px-12 lg:px-16 w-full animate-pulse">
+        <div className="mx-auto max-w-7xl">
+          {/* Skeleton for "Your Products" */}
+          <div className="mb-8">
+            <div className="h-8 w-48 bg-neutral-200 rounded mb-4"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="h-[120px] bg-white border border-neutral-200 rounded-md"></div>
+              <div className="h-[120px] bg-white border border-neutral-200 rounded-md"></div>
+            </div>
+          </div>
+          
+          {/* Skeleton for the two columns */}
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-7 space-y-6">
+              <div className="h-8 w-48 bg-neutral-200 rounded mb-4"></div>
+              <div className="space-y-4 bg-white p-4 md:p-5 rounded-md border border-neutral-200">
+                <div className="h-16 bg-neutral-100 rounded-md"></div>
+                <div className="h-16 bg-neutral-100 rounded-md"></div>
+                <div className="h-16 bg-neutral-100 rounded-md"></div>
+                <div className="h-16 bg-neutral-100 rounded-md"></div>
+              </div>
+            </div>
+            <div className="lg:col-span-5">
+              <div className="h-8 w-48 bg-neutral-200 rounded mb-4"></div>
+              <div className="h-64 bg-white border border-neutral-200 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

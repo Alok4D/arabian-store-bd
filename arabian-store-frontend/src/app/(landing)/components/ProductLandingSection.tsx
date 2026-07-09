@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 export default function ProductLandingSection() {
 
   const [products, setProducts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,6 +19,8 @@ export default function ProductLandingSection() {
         }
       } catch (error) {
         console.error("Failed to fetch products", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProducts();
@@ -122,7 +125,12 @@ export default function ProductLandingSection() {
         </div>
 
         {/* Pricing & Packaging Packages Block */}
-        {products.length > 0 && (
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4 animate-pulse">
+            <div className="bg-white/60 border border-[#d2edd9] rounded-md h-[90px] md:h-[100px] shadow-sm"></div>
+            <div className="bg-white/60 border border-[#d2edd9] rounded-md h-[90px] md:h-[100px] shadow-sm"></div>
+          </div>
+        ) : products.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4">
             {products.map((product) => (
               <div key={product.id} className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[24px] md:leading-[36px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
