@@ -9,26 +9,65 @@ datasource db {
   provider = "postgresql"
 }
 
-model Order {
-  id              String   @id @default(uuid())
-  customerName    String
-  phoneNumber     String
-  whatsappNumber  String?
-  district        String?
-  fullAddress     String
-  packageType     String
-  quantity        Int      @default(1)
-  paymentMethod   String   @default("COD") // COD or BKASH
-  totalAmount     Int
-  status          String   @default("PENDING") // PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-}
-
 model Admin {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
+  name      String   @default("Admin")
   email     String   @unique
   password  String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  image       String
+  price       Decimal
+  weight      String
+  stock       Int
+  shippingFee Decimal
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orders      Order[]
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  orderId       String   @unique
+  customerName  String
+  phone         String
+  whatsapp      String?
+  address       String
+  note          String?
+  quantity      Int
+  subtotal      Decimal
+  shippingFee   Decimal
+  total         Decimal
+  paymentMethod PaymentMethod @default(COD)
+  status        OrderStatus   @default(PENDING)
+
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id])
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum PaymentMethod {
+  COD
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PACKAGING
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }

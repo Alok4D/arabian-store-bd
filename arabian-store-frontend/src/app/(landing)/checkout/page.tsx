@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Lock, Square } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
   const router = useRouter();
   const [showLogin, setShowLogin] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState('3kg');
-  const [quantities, setQuantities] = useState<Record<string, number>>({
-    '1kg': 1, '2kg': 1, '3kg': 1, '5kg': 1
-  });
+  const [products, setProducts] = useState<any[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   // Form State
   const [fullName, setFullName] = useState('');
@@ -22,8 +22,39 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [errorMessage, setErrorMessage] = useState('');
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${apiUrl}/products`);
+        const data = await res.json();
+        if (data.success && data.data.length > 0) {
+          setProducts(data.data);
+          setSelectedProduct(data.data[0].id);
+          const initialQuantities: Record<string, number> = {};
+          data.data.forEach((p: any) => {
+            initialQuantities[p.id] = 1;
+          });
+          setQuantities(initialQuantities);
+        }
+      } catch (error) {
+        console.error("Failed to load products", error);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const selectedProductData = products.find(p => p.id === selectedProduct);
+  const selectedProductPrice = selectedProductData ? Number(selectedProductData.price) : 0;
+  const selectedProductQuantity = quantities[selectedProduct] || 1;
+  const deliveryCharge = selectedProductData ? Number(selectedProductData.shippingFee) : 130;
+  const subtotal = selectedProductPrice * selectedProductQuantity;
+  const totalPrice = subtotal + deliveryCharge;
+
   const handleSubmitOrder = async () => {
-    if (!fullName || !mobileNumber || !fullAddress) {
+    if (!fullName || !mobileNumber || !fullAddress || !selectedProduct) {
       setErrorMessage('অনুগ্রহ করে নাম, মোবাইল নাম্বার এবং পূর্ণ ঠিকানা দিন।');
       return;
     }
@@ -37,19 +68,22 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customerName: fullName,
-          phoneNumber: mobileNumber,
-          whatsappNumber,
+          phone: mobileNumber,
+          whatsapp: whatsappNumber,
           district,
-          fullAddress,
-          packageType: selectedProduct,
+          address: fullAddress + ', ' + district,
+          quantity: selectedProductQuantity,
+          subtotal: subtotal,
+          shippingFee: deliveryCharge,
+          total: totalPrice,
           paymentMethod,
-          quantity: quantities[selectedProduct] || 1
+          productId: selectedProduct
         })
       });
 
       const data = await res.json();
       if (data.success) {
-        router.push(`/checkout/success?orderId=${data.order.id.slice(0, 8)}&method=${paymentMethod}&product=${selectedProduct}&qty=${quantities[selectedProduct] || 1}`);
+        router.push(`/checkout/success?orderId=${data.data.orderId}&method=${paymentMethod}&product=${selectedProductData?.title}&qty=${selectedProductQuantity}`);
       } else {
         setErrorMessage(data.message || 'অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।');
       }
@@ -61,25 +95,16 @@ export default function CheckoutPage() {
     }
   };
 
-  const products = [
-    { id: '1kg', name: '১ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '1,650.00৳' },
-    { id: '2kg', name: '২ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '3,200.00৳' },
-    { id: '3kg', name: '৩ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '4,500.00৳' },
-    { id: '5kg', name: '৫ কেজি মিশরীয় মেডজুল খেজুর × 1', price: '7,500.00৳', tag: 'বেস্ট সেলার' },
-  ];
-
-  const selectedProductData = products.find(p => p.id === selectedProduct) || products[0];
-  const selectedProductPrice = parseInt(selectedProductData.price.replace(/,/g, ''));
-  const selectedProductQuantity = quantities[selectedProduct] || 1;
-  const deliveryCharge = 130;
-  const totalPrice = (selectedProductPrice * selectedProductQuantity) + deliveryCharge;
-
   const handleQuantityChange = (id: string, delta: number) => {
     setQuantities(prev => ({
       ...prev,
       [id]: Math.max(1, (prev[id] || 1) + delta)
     }));
   };
+
+  if (loadingProducts) {
+    return <div className="p-24 text-center">Loading products...</div>;
+  }
 
   return (
     <div className="px-4 py-8 md:px-12 lg:px-24 text-[#222222]">
@@ -149,7 +174,7 @@ export default function CheckoutPage() {
         <div className="mb-12">
           <h2 className="text-[20px] md:text-[24px] font-bold text-neutral-800 mb-6 text-left">Your Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {products.map((product, index) => {
+            {products.map((product) => {
               const isSelected = selectedProduct === product.id;
               return (
                 <div 
@@ -160,9 +185,11 @@ export default function CheckoutPage() {
                   }`}
                 >
                   {/* Delivery Free Ribbon */}
-                  <div className="absolute right-[-35px] top-[15px] w-[140px] transform rotate-45 bg-[#f05924] text-white text-[12px] md:text-[13px] font-bold py-1 text-center shadow-sm z-10">
-                    Delivery Free!
-                  </div>
+                  {Number(product.shippingFee) === 0 && (
+                    <div className="absolute right-[-35px] top-[15px] w-[140px] transform rotate-45 bg-[#f05924] text-white text-[12px] md:text-[13px] font-bold py-1 text-center shadow-sm z-10">
+                      Delivery Free!
+                    </div>
+                  )}
 
                   <div className="flex items-center mt-1">
                     <div className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#009e19]' : 'border-neutral-300'}`}>
@@ -170,14 +197,18 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 bg-white rounded flex items-center justify-center overflow-hidden border border-neutral-200">
-                    <img src="/banner-img/product-banner.webp" alt="Product" className="w-full h-full object-cover" />
+                    <img 
+                      src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image) : "/banner-img/product-banner.webp"} 
+                      alt={product.title} 
+                      className="w-full h-full object-cover" 
+                    />
                   </div>
                   <div className="flex-1 pr-4">
                     <div className="text-[15px] md:text-[17px] font-bold text-neutral-800 leading-snug mb-1">
-                      {product.name}
+                      {product.title}
                     </div>
                     <div className="text-[14px] text-neutral-500 mb-4">
-                      বিশেষ ডিসকাউন্ট অফার
+                      {product.description || "বিশেষ ডিসকাউন্ট অফার"}
                     </div>
                     <div className="flex items-center gap-3">
                       {/* Real quantity selector */}
@@ -194,7 +225,7 @@ export default function CheckoutPage() {
                           className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[16px] leading-tight"
                         >+</button>
                       </div>
-                      <span className="font-extrabold text-[16px] md:text-[18px] text-neutral-900">{product.price}</span>
+                      <span className="font-extrabold text-[16px] md:text-[18px] text-neutral-900">{Number(product.price).toLocaleString()}৳</span>
                     </div>
                   </div>
                 </div>
@@ -294,37 +325,43 @@ export default function CheckoutPage() {
               </div>
 
               {/* Product Item Row */}
-              <div className="py-4 border-b border-dashed border-neutral-200 px-3">
-                <div className="flex items-start gap-4">
-                  {/* Product Image */}
-                  <div className="h-16 w-16 flex-shrink-0 bg-white rounded overflow-hidden border border-neutral-200 flex items-center justify-center p-1">
-                    <img src="/banner-img/product-banner.webp" alt="Product" className="w-full h-full object-contain" />
-                  </div>
-                  
-                  {/* Product Details & Internal Pricing Breakdown */}
-                  <div className="flex-1 flex justify-between items-start gap-4">
-                    <div className="space-y-1">
-                      <p className="text-[15px] font-bold text-neutral-800 leading-tight">
-                        {selectedProductData.name.split(' ×')[0]}
-                      </p>
-                      <p className="text-[13px] text-neutral-500 font-bold">Qty: {selectedProductQuantity}</p>
+              {selectedProductData && (
+                <div className="py-4 border-b border-dashed border-neutral-200 px-3">
+                  <div className="flex items-start gap-4">
+                    {/* Product Image */}
+                    <div className="h-16 w-16 flex-shrink-0 bg-white rounded overflow-hidden border border-neutral-200 flex items-center justify-center p-1">
+                      <img 
+                        src={selectedProductData.image ? (selectedProductData.image.startsWith('/uploads/') ? `http://localhost:5000${selectedProductData.image}` : selectedProductData.image) : "/banner-img/product-banner.webp"} 
+                        alt="Product" 
+                        className="w-full h-full object-contain" 
+                      />
                     </div>
                     
-                    <div className="text-right">
-                      <span className="text-[16px] font-bold text-neutral-900">
-                        {selectedProductData.price}
-                      </span>
+                    {/* Product Details & Internal Pricing Breakdown */}
+                    <div className="flex-1 flex justify-between items-start gap-4">
+                      <div className="space-y-1">
+                        <p className="text-[15px] font-bold text-neutral-800 leading-tight">
+                          {selectedProductData.title}
+                        </p>
+                        <p className="text-[13px] text-neutral-500 font-bold">Qty: {selectedProductQuantity}</p>
+                      </div>
+                      
+                      <div className="text-right">
+                        <span className="text-[16px] font-bold text-neutral-900">
+                          {Number(selectedProductData.price).toLocaleString()}৳
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               {/* Summary Rows */}
               <div className="space-y-3 py-4 border-b border-dashed border-neutral-200 px-3 text-[15px]">
                 <div className="flex justify-between items-center">
                   <span className="text-neutral-600 font-bold">Subtotal</span>
                   <div className="text-right">
-                    <span className="block font-bold text-neutral-900">{(selectedProductPrice * selectedProductQuantity).toLocaleString()}.00৳</span>
+                    <span className="block font-bold text-neutral-900">{subtotal.toLocaleString()}.00৳</span>
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -360,25 +397,6 @@ export default function CheckoutPage() {
                     পণ্য হাতে পেয়ে ডেলিভারিম্যানকে টাকা বুঝিয়ে দিন।
                   </div>
                 </div>
-
-                {/* bKash Payment */}
-                <div className="flex justify-between items-center pt-2">
-                  {/* <label className="flex items-center gap-3 cursor-pointer text-base font-semibold text-neutral-800">
-                    <input
-                      type="radio"
-                      name="payment_method"
-                      checked={paymentMethod === 'BKASH'}
-                      onChange={() => setPaymentMethod('BKASH')}
-                      className="h-4 w-4 accent-orange-600 border-neutral-300 text-orange-600 focus:ring-0"
-                    />
-                    <span>bKash Payment Gateway</span>
-                  </label> */}
-                  {/* Mini bKash Logo Placeholder matching look */}
-                  {/* <div className="flex items-center gap-1 font-bold text-[#d12053] italic text-sm">
-                    <span>bKash</span>
-                    <div className="w-4 h-4 bg-[#d12053] transform rotate-45 origin-center clip-path-logo inline-block ml-0.5" />
-                  </div> */}
-                </div>
               </div>
 
               {/* Submit Button */}
@@ -389,11 +407,11 @@ export default function CheckoutPage() {
               )}
               <button 
                 onClick={handleSubmitOrder}
-                disabled={isLoading}
-                className={`w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                disabled={isLoading || !selectedProductData}
+                className={`w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Lock className="h-4 w-4 fill-current" />
-                <span>{isLoading ? 'Processing...' : `Place Order ${parseInt(products.find(p => p.id === selectedProduct)?.price.replace(/,/g, '') || '0') + 130}.00৳`}</span>
+                <span>{isLoading ? 'Processing...' : `Place Order ${totalPrice.toLocaleString()}.00৳`}</span>
               </button>
 
             </div>
