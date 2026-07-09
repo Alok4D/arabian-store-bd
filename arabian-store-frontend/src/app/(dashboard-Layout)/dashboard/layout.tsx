@@ -1,5 +1,12 @@
 "use client";
 
+import { Manrope } from "next/font/google";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -73,7 +80,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="h-screen flex bg-muted/20 overflow-hidden">
+    <div className={`h-screen flex bg-white overflow-hidden ${manrope.className}`}>
       {/* Sidebar */}
       <aside className={`${isCollapsed ? "w-20" : "w-64"} bg-background border-r flex flex-col hidden md:flex shrink-0 transition-all duration-300 ease-in-out`}>
         <div className={`h-16 flex items-center ${isCollapsed ? "justify-center" : "px-6"} border-b shrink-0 overflow-hidden`}>
@@ -227,7 +234,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-[#fafafa]">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-white">
           <div className="w-full max-w-full mx-auto">
             {children}
           </div>
