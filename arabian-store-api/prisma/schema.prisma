@@ -40,16 +40,16 @@ model Product {
 
 model Order {
   id            String   @id @default(cuid())
-  orderId       String   @unique
+  orderId       String   @unique @default(cuid())
   customerName  String
-  phone         String
+  phone         String   @default("")
   whatsapp      String?
-  address       String
+  address       String   @default("Not provided")
   note          String?
   quantity      Int
-  subtotal      Decimal
-  shippingFee   Decimal
-  total         Decimal
+  subtotal      Decimal  @default(0)
+  shippingFee   Decimal  @default(0)
+  total         Decimal  @default(0)
   paymentMethod PaymentMethod @default(COD)
   status        OrderStatus   @default(PENDING)
 
