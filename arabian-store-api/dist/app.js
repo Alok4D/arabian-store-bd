@@ -13,6 +13,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(morgan('dev'));
+// Serve static files (like uploaded images)
+app.use(express.static('public'));
 // Health check
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok', message: 'API is running smoothly' });
