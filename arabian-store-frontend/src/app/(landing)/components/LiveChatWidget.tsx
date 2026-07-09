@@ -7,8 +7,9 @@ export function LiveChatWidget() {
 
   return (
     <div 
-      className="fixed bottom-6 right-6 z-50 hidden md:flex items-center justify-end h-[60px]"
+      className={`fixed bottom-6 right-6 z-50 hidden md:flex items-center justify-end h-[60px] ${isOpen ? 'w-[280px]' : 'w-[60px]'}`}
       onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
     >
       {/* Expanded Icons */}
       <div 
@@ -31,16 +32,7 @@ export function LiveChatWidget() {
 
       {/* Tooltip & Main Button */}
       <div className="relative flex items-center">
-        {/* Tooltip - Live Chat (Left) */}
-        <div 
-          className={`absolute right-full mr-3 bg-white text-neutral-800 px-4 py-2 rounded-xl shadow-md whitespace-nowrap font-medium text-[15px] transition-all duration-300 pointer-events-none flex items-center justify-center ${
-            isOpen ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
-          }`}
-        >
-          Live Chat
-          <div className="absolute top-1/2 -right-[4px] w-2.5 h-2.5 bg-white transform -translate-y-1/2 rotate-45 shadow-sm -z-10"></div>
-        </div>
-        
+   
         {/* Tooltip - Hide (Top) */}
         <div 
           className={`absolute bottom-full mb-3 right-1/2 translate-x-1/2 bg-white text-neutral-800 px-3 py-1.5 rounded-lg shadow-md whitespace-nowrap font-medium text-[14px] transition-all duration-300 pointer-events-none flex items-center justify-center ${
