@@ -12,7 +12,7 @@ export default function HealthBenefits() {
           <div className="inline-block bg-[#009e19] text-white p-2 rounded-full mb-3 shadow-sm">
             <HeartPulse size={28} />
           </div>
-          <h2 className="text-[28px] md:text-[40px] font-bold text-[#009e19] mb-4">
+          <h2 className="text-[22px] md:text-[40px] font-bold text-[#009e19] mb-4">
             কেন প্রতিদিন মেডজুল খেতে পারেন?
           </h2>
           <p className="text-[20px] md:text-[24px] font-medium text-neutral-700">
