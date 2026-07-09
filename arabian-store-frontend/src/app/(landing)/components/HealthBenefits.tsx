@@ -20,14 +20,14 @@ export default function HealthBenefits() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-stretch">
           
           {/* Nutrition List */}
-          <div className="lg:col-span-5 bg-white rounded-xl p-4 md:p-5 border border-neutral-100 shadow-sm">
+          <div className="lg:col-span-6 bg-white rounded-xl p-4 md:p-5 border border-neutral-100 shadow-sm">
             <h3 className="text-[22px] md:text-[26px] font-bold text-[#a46404] mb-3 border-b border-neutral-100 pb-2">
               এতে রয়েছে—
             </h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {[
                 "খাদ্যআঁশ (ফাইবার)",
                 "প্রাকৃতিক কার্বোহাইড্রেট",
@@ -44,14 +44,14 @@ export default function HealthBenefits() {
                   }`}
                 >
                   <Leaf size={16} className="text-[#009e19] flex-shrink-0" />
-                  <span className="font-semibold text-[16px] md:text-[18px]">{item}</span>
+                  <span className="font-medium text-[16px] md:text-[19px] leading-snug">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Benefits List */}
-          <div className="lg:col-span-7 bg-white rounded-xl p-4 md:p-5 border border-neutral-100 shadow-sm relative overflow-hidden">
+          <div className="lg:col-span-6 bg-white rounded-xl p-4 md:p-5 border border-neutral-100 shadow-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-[#e8f5ec] rounded-bl-full -z-10 opacity-50" />
             
             <h3 className="text-[22px] md:text-[26px] font-bold text-[#009e19] mb-3 border-b border-neutral-100 pb-2">
