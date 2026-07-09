@@ -111,8 +111,15 @@ export default function OrdersPage() {
                   {orders.map((order) => (
                     <tr key={order.id} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
                       <td className="py-4 px-4 font-bold text-neutral-700">{order.orderId}</td>
-                      <td className="py-4 px-4 text-sm text-neutral-500">
-                        {new Date(order.createdAt).toLocaleDateString()}
+                      <td className="py-4 px-4 text-sm text-neutral-500 whitespace-nowrap">
+                        {new Date(order.createdAt).toLocaleString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true
+                        })}
                       </td>
                       <td className="py-4 px-4">
                         <div className="font-medium text-neutral-800">{order.customerName}</div>

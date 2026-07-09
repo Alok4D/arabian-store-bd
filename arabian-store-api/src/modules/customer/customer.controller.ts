@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { CustomerService } from './customer.service.js';
 
 export const getAllCustomers = async (req: Request, res: Response): Promise<void> => {

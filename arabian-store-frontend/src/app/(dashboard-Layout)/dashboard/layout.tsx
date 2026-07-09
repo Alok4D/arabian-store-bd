@@ -45,7 +45,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     { href: "/dashboard/orders", label: "Orders", icon: Receipt },
     { href: "/dashboard/products", label: "Products", icon: Package },
     { href: "/dashboard/customers", label: "Customers", icon: UserIcon },
-    { href: "/dashboard/analytics", label: "Analytics", icon: LineChart },
     { href: "/dashboard/settings", label: "Settings", icon: Settings },
   ];
 
