@@ -23,8 +23,27 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Mock user for now (Redux was removed)
-  const user = { name: "Admin", role: "admin", avatar: "" };
+  const [user, setUser] = useState({ name: "Admin", role: "admin", avatar: "" });
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${apiUrl}/auth/profile`);
+        const data = await res.json();
+        if (data.success && data.data) {
+          setUser({
+            name: data.data.name || "Admin",
+            role: "admin",
+            avatar: data.data.image || ""
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch admin profile", error);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -209,7 +228,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-[#fafafa]">
-          <div className="w-full max-w-7xl mx-auto">
+          <div className="w-full max-w-full mx-auto">
             {children}
           </div>
         </main>
