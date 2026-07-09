@@ -125,7 +125,7 @@ export default function OrdersPage() {
                       <td className="py-4 px-4">
                         <div className="font-medium text-neutral-800">{order.customerName}</div>
                         <div className="text-xs text-neutral-500">{order.phone}</div>
-                        <div className="text-xs text-neutral-400 max-w-[150px] truncate" title={order.address}>{order.address}</div>
+                        {/* <div className="text-xs text-neutral-400 max-w-[150px] truncate" title={order.address}>{order.address}</div> */}
                       </td>
                       <td className="py-4 px-4 text-sm">
                         <span className="font-medium">{order.product?.title || 'Unknown Product'}</span>

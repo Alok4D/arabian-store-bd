@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Settings, User, Lock, Save, Camera } from "lucide-react";
+import { Settings, User, Lock, Save, Camera, Truck } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function SettingsPage() {
@@ -17,6 +17,9 @@ export default function SettingsPage() {
 
   const [passwordData, setPasswordData] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
 
+  const [shippingData, setShippingData] = useState({ insideDhaka: 80, outsideDhaka: 130 });
+  const [shippingSaving, setShippingSaving] = useState(false);
+
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -24,6 +27,8 @@ export default function SettingsPage() {
   const fetchProfile = async () => {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+      
+      // Fetch profile
       const res = await fetch(`${apiUrl}/auth/profile`);
       const data = await res.json();
       if (data.success) {
@@ -32,8 +37,19 @@ export default function SettingsPage() {
           setImagePreview(data.data.image);
         }
       }
+
+      // Fetch shipping settings
+      const shipRes = await fetch(`${apiUrl}/shipping`);
+      const shipData = await shipRes.json();
+      if (shipData.success && shipData.data) {
+        setShippingData({
+          insideDhaka: Number(shipData.data.insideDhaka),
+          outsideDhaka: Number(shipData.data.outsideDhaka),
+        });
+      }
+
     } catch (error) {
-      console.error("Failed to fetch profile", error);
+      console.error("Failed to fetch settings", error);
     } finally {
       setIsLoading(false);
     }
@@ -53,6 +69,10 @@ export default function SettingsPage() {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+  };
+
+  const handleShippingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setShippingData({ ...shippingData, [e.target.name]: e.target.value });
   };
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
@@ -116,6 +136,33 @@ export default function SettingsPage() {
       alert("Error updating password");
     } finally {
       setPasswordSaving(false);
+    }
+  };
+
+  const handleUpdateShipping = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setShippingSaving(true);
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+      const res = await fetch(`${apiUrl}/shipping`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          insideDhaka: shippingData.insideDhaka,
+          outsideDhaka: shippingData.outsideDhaka,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Shipping settings updated successfully!");
+      } else {
+        alert(data.message || "Failed to update shipping settings");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error updating shipping settings");
+    } finally {
+      setShippingSaving(false);
     }
   };
 
@@ -254,6 +301,53 @@ export default function SettingsPage() {
                 className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {passwordSaving ? "Updating..." : <><Lock className="w-4 h-4" /> Change Password</>}
+              </button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Shipping Settings */}
+        <Card className="border-[#faecd8]">
+          <CardHeader>
+            <CardTitle className="text-blue-600 flex items-center gap-2">
+              <Truck className="w-5 h-5" /> Shipping Settings
+            </CardTitle>
+            <CardDescription>Configure delivery charges for different areas.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleUpdateShipping} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700">Inside Dhaka (৳)</label>
+                <input 
+                  type="number" 
+                  name="insideDhaka"
+                  required
+                  min="0"
+                  value={shippingData.insideDhaka}
+                  onChange={handleShippingChange}
+                  placeholder="e.g. 80"
+                  className="w-full p-2 border rounded-md outline-none focus:border-blue-500 bg-neutral-50"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700">Outside Dhaka (৳)</label>
+                <input 
+                  type="number" 
+                  name="outsideDhaka"
+                  required
+                  min="0"
+                  value={shippingData.outsideDhaka}
+                  onChange={handleShippingChange}
+                  placeholder="e.g. 130"
+                  className="w-full p-2 border rounded-md outline-none focus:border-blue-500 bg-neutral-50"
+                />
+              </div>
+              <button 
+                type="submit" 
+                disabled={shippingSaving}
+                className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {shippingSaving ? "Updating..." : <><Save className="w-4 h-4" /> Update Shipping</>}
               </button>
             </form>
           </CardContent>

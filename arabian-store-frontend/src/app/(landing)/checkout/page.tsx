@@ -17,7 +17,8 @@ export default function CheckoutPage() {
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('');
-  const [district, setDistrict] = useState('Sherpur');
+  const [district, setDistrict] = useState('ঢাকা');
+  const [shippingSettings, setShippingSettings] = useState({ insideDhaka: 80, outsideDhaka: 130 });
   const [fullAddress, setFullAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [errorMessage, setErrorMessage] = useState('');
@@ -36,9 +37,17 @@ export default function CheckoutPage() {
             initialQuantities[p.id] = 1;
           });
           setQuantities(initialQuantities);
+          const shipRes = await fetch(`${apiUrl}/shipping`);
+          const shipData = await shipRes.json();
+          if (shipData.success && shipData.data) {
+            setShippingSettings({
+              insideDhaka: Number(shipData.data.insideDhaka),
+              outsideDhaka: Number(shipData.data.outsideDhaka)
+            });
+          }
         }
       } catch (error) {
-        console.error("Failed to load products", error);
+        console.error("Failed to load data", error);
       } finally {
         setLoadingProducts(false);
       }
@@ -49,7 +58,7 @@ export default function CheckoutPage() {
   const selectedProductData = products.find(p => p.id === selectedProduct);
   const selectedProductPrice = selectedProductData ? Number(selectedProductData.price) : 0;
   const selectedProductQuantity = quantities[selectedProduct] || 1;
-  const deliveryCharge = selectedProductData ? Number(selectedProductData.shippingFee) : 130;
+  const deliveryCharge = district === 'ঢাকা' || district === 'Dhaka' ? shippingSettings.insideDhaka : shippingSettings.outsideDhaka;
   const subtotal = selectedProductPrice * selectedProductQuantity;
   const totalPrice = subtotal + deliveryCharge;
 
@@ -284,6 +293,83 @@ export default function CheckoutPage() {
                     placeholder="প্রবাসীদের জন্য প্রযোজ্য"
                     className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
                   />
+                </div>
+
+                {/* District Selection */}
+                <div>
+                  <label className="block text-[15px] font-bold mb-1.5 text-neutral-800">
+                    আপনার জেলা <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={district}
+                    onChange={(e) => setDistrict(e.target.value)}
+                    className="w-full rounded-md border border-neutral-300 px-4 py-3 text-[15px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
+                  >
+                    <option value="ঢাকা">ঢাকা</option>
+                    <option value="ফরিদপুর">ফরিদপুর</option>
+                    <option value="গাজীপুর">গাজীপুর</option>
+                    <option value="গোপালগঞ্জ">গোপালগঞ্জ</option>
+                    <option value="জামালপুর">জামালপুর</option>
+                    <option value="কিশোরগঞ্জ">কিশোরগঞ্জ</option>
+                    <option value="মাদারীপুর">মাদারীপুর</option>
+                    <option value="মানিকগঞ্জ">মানিকগঞ্জ</option>
+                    <option value="মুন্সিগঞ্জ">মুন্সিগঞ্জ</option>
+                    <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+                    <option value="নারায়ণগঞ্জ">নারায়ণগঞ্জ</option>
+                    <option value="নরসিংদী">নরসিংদী</option>
+                    <option value="নেত্রকোনা">নেত্রকোনা</option>
+                    <option value="রাজবাড়ী">রাজবাড়ী</option>
+                    <option value="শরীয়তপুর">শরীয়তপুর</option>
+                    <option value="শেরপুর">শেরপুর</option>
+                    <option value="টাঙ্গাইল">টাঙ্গাইল</option>
+                    <option value="বগুড়া">বগুড়া</option>
+                    <option value="জয়পুরহাট">জয়পুরহাট</option>
+                    <option value="নওগাঁ">নওগাঁ</option>
+                    <option value="নাটোর">নাটোর</option>
+                    <option value="নবাবগঞ্জ">নবাবগঞ্জ</option>
+                    <option value="পাবনা">পাবনা</option>
+                    <option value="রাজশাহী">রাজশাহী</option>
+                    <option value="সিরাজগঞ্জ">সিরাজগঞ্জ</option>
+                    <option value="দিনাজপুর">দিনাজপুর</option>
+                    <option value="গাইবান্ধা">গাইবান্ধা</option>
+                    <option value="কুড়িগ্রাম">কুড়িগ্রাম</option>
+                    <option value="লালমনিরহাট">লালমনিরহাট</option>
+                    <option value="নীলফামারী">নীলফামারী</option>
+                    <option value="পঞ্চগড়">পঞ্চগড়</option>
+                    <option value="রংপুর">রংপুর</option>
+                    <option value="ঠাকুরগাঁও">ঠাকুরগাঁও</option>
+                    <option value="বরগুনা">বরগুনা</option>
+                    <option value="বরিশাল">বরিশাল</option>
+                    <option value="ভোলা">ভোলা</option>
+                    <option value="ঝালকাঠি">ঝালকাঠি</option>
+                    <option value="পটুয়াখালী">পটুয়াখালী</option>
+                    <option value="পিরোজপুর">পিরোজপুর</option>
+                    <option value="বান্দরবান">বান্দরবান</option>
+                    <option value="ব্রাহ্মণবাড়িয়া">ব্রাহ্মণবাড়িয়া</option>
+                    <option value="চাঁদপুর">চাঁদপুর</option>
+                    <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+                    <option value="কুমিল্লা">কুমিল্লা</option>
+                    <option value="কক্সবাজার">কক্সবাজার</option>
+                    <option value="ফেনী">ফেনী</option>
+                    <option value="খাগড়াছড়ি">খাগড়াছড়ি</option>
+                    <option value="লক্ষ্মীপুর">লক্ষ্মীপুর</option>
+                    <option value="নোয়াখালী">নোয়াখালী</option>
+                    <option value="রাঙ্গামাটি">রাঙ্গামাটি</option>
+                    <option value="হবিগঞ্জ">হবিগঞ্জ</option>
+                    <option value="মৌলভীবাজার">মৌলভীবাজার</option>
+                    <option value="সুনামগঞ্জ">সুনামগঞ্জ</option>
+                    <option value="সিলেট">সিলেট</option>
+                    <option value="বাগেরহাট">বাগেরহাট</option>
+                    <option value="চুয়াডাঙ্গা">চুয়াডাঙ্গা</option>
+                    <option value="যশোর">যশোর</option>
+                    <option value="ঝিনাইদহ">ঝিনাইদহ</option>
+                    <option value="খুলনা">খুলনা</option>
+                    <option value="কুষ্টিয়া">কুষ্টিয়া</option>
+                    <option value="মাগুরা">মাগুরা</option>
+                    <option value="মেহেরপুর">মেহেরপুর</option>
+                    <option value="নড়াইল">নড়াইল</option>
+                    <option value="সাতক্ষীরা">সাতক্ষীরা</option>
+                  </select>
                 </div>
 
                 {/* Full Address */}

@@ -72,3 +72,9 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
 }
+
+model ShippingSetting {
+  id           String  @id @default(cuid())
+  insideDhaka  Decimal @default(80)
+  outsideDhaka Decimal @default(130)
+}
