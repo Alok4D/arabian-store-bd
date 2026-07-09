@@ -55,22 +55,22 @@ export function Footer() {
             {/* Facebook Page Widget Placeholder */}
             <div className="flex justify-center md:justify-end">
               <div className="w-full max-w-[340px] h-32 bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden flex flex-col relative">
-                 {/* Fake FB Banner */}
-                 <div 
-                   className="h-20 bg-[#1e4a28] w-full flex items-center justify-center text-white/50 text-xs bg-cover bg-center"
-                   style={{ backgroundImage: "url('/702625471_1452288243581247_6964213978760610794_n.png')" }}
-                 >
-                 </div>
-                 {/* Fake FB Page Info */}
-                 <div className="h-12 bg-white flex items-center px-4 gap-3 relative">
-                    <div className="w-12 h-12 rounded-full border-[3px] border-white bg-white shadow-sm absolute -top-6 left-4 flex items-center justify-center text-[8px] font-bold overflow-hidden">
-                       <img src="/471756009_1028734385936637_4350842613043007973_n.jpg" alt="Arabian Store" className="w-full h-full object-contain" />
-                    </div>
-                    <div className="ml-14 flex-1 mt-1">
-                        <h4 className="font-bold text-black text-sm leading-tight hover:underline cursor-pointer">Arabian Store</h4>
-                        <p className="text-[11px] text-neutral-500">49K followers</p>
-                    </div>
-                 </div>
+                {/* Fake FB Banner */}
+                <div
+                  className="h-20 bg-[#1e4a28] w-full flex items-center justify-center text-white/50 text-xs bg-cover bg-center"
+                  style={{ backgroundImage: "url('/702625471_1452288243581247_6964213978760610794_n.png')" }}
+                >
+                </div>
+                {/* Fake FB Page Info */}
+                <div className="h-12 bg-white flex items-center px-4 gap-3 relative">
+                  <div className="w-12 h-12 rounded-full border-[3px] border-white bg-white shadow-sm absolute -top-6 left-4 flex items-center justify-center text-[8px] font-bold overflow-hidden">
+                    <img src="/471756009_1028734385936637_4350842613043007973_n.jpg" alt="Arabian Store" className="w-full h-full object-contain" />
+                  </div>
+                  <div className="ml-14 flex-1 mt-1">
+                    <h4 className="font-bold text-black text-sm leading-tight hover:underline cursor-pointer">Arabian Store</h4>
+                    <p className="text-[11px] text-neutral-500">49K followers</p>
+                  </div>
+                </div>
               </div>
             </div>
 

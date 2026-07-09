@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import ProductLandingSection from './components/ProductLandingSection';
 import WhyChooseMedjool from './components/WhyChooseMedjool';
 import HealthBenefits from './components/HealthBenefits';
+import { LiveChatWidget } from './components/LiveChatWidget';
 
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       </div>
       <CustomerReviews />
       <Footer />
+      <LiveChatWidget />
     </main>
   );
 }

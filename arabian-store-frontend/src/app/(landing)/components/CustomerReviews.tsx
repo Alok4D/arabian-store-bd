@@ -32,10 +32,10 @@ export function CustomerReviews() {
         setItemsPerView(3);
       }
     };
-    
+
     // Initial check
-    handleResize(); 
-    
+    handleResize();
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -46,7 +46,7 @@ export function CustomerReviews() {
     if (maxIndex < 0) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
+      setCurrentIndex((prevIndex) =>
         prevIndex >= maxIndex ? 0 : prevIndex + 1
       );
     }, 3000); // Auto slide every 3 seconds
@@ -67,16 +67,16 @@ export function CustomerReviews() {
   return (
     <div className="py-16 bg-[#E8FDF2] w-full mt-12 overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 lg:px-0 max-w-7xl relative">
-        <h2 
+        <h2
           className="text-[28px] md:text-[36px] md:leading-[36px] font-bold text-center text-black mb-10"
           style={{ fontFamily: "'Noto Serif Bengali', sans-serif" }}
         >
-          গ্রাহকদের অনুভূতি
+          কাস্টমার রিভিউ
         </h2>
-        
+
         <div className="relative group">
-          
-          <button 
+
+          <button
             onClick={prevSlide}
             disabled={currentIndex === 0}
             className={`absolute -left-2 md:-left-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2.5 rounded-full shadow-md z-10 flex items-center justify-center text-orange-500 transition-all cursor-pointer ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -85,13 +85,13 @@ export function CustomerReviews() {
           </button>
 
           <div className="overflow-hidden px-2 py-2">
-            <div 
+            <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
             >
               {reviews.map((imgSrc, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="flex-none px-3"
                   style={{ width: `${100 / itemsPerView}%` }}
                 >
@@ -103,7 +103,7 @@ export function CustomerReviews() {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={nextSlide}
             disabled={currentIndex >= maxIndex}
             className={`absolute -right-2 md:-right-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2.5 rounded-full shadow-md z-10 flex items-center justify-center text-orange-500 transition-all cursor-pointer ${currentIndex >= maxIndex ? 'opacity-50 cursor-not-allowed' : ''}`}
