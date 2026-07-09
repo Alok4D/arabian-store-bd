@@ -49,7 +49,7 @@ export default function ProductLandingSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6">
           
           {/* Left Side: Features Lists */}
-          <div className="lg:col-span-6 space-y-6 md:space-y-8 lg:pr-4">
+          <div className="lg:col-span-6 space-y-6 md:space-y-8 lg:pr-4 order-2 lg:order-1">
             
             {/* Mobile CTA Button (Only visible on small screens) */}
             <div className="flex justify-center md:hidden pt-2 pb-2">
@@ -119,7 +119,7 @@ export default function ProductLandingSection() {
           </div>
 
           {/* Right Side: Showcase Product Image */}
-          <div className="lg:col-span-6 flex items-center justify-center">
+          <div className="lg:col-span-6 flex items-center justify-center order-1 lg:order-2 mb-4 lg:mb-0">
            <img src="/banner-img/product-banner.webp" alt="Egyptian Medjool" className="w-full h-auto object-contain drop-shadow-xs" />
           </div>
         </div>

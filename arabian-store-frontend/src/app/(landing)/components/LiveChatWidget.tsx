@@ -7,7 +7,7 @@ export function LiveChatWidget() {
 
   return (
     <div 
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-end h-[60px]"
+      className="fixed bottom-6 right-6 z-50 hidden md:flex items-center justify-end h-[60px]"
       onMouseEnter={() => setIsOpen(true)}
     >
       {/* Expanded Icons */}
