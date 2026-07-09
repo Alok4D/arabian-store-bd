@@ -106,13 +106,13 @@ export default function ProductsPage() {
                       <td className="py-3 px-4 text-neutral-600">{Number(product.shippingFee)}৳</td>
                       <td className="py-3 px-4 text-right">
                         <div className="flex justify-end gap-2">
-                          <button 
-                            onClick={() => alert("Edit feature coming soon!")}
+                          <Link 
+                            href={`/dashboard/products/edit/${product.id}`}
                             className="p-2 text-neutral-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
                             title="Edit"
                           >
                             <Edit className="w-4 h-4" />
-                          </button>
+                          </Link>
                           <button 
                             onClick={() => handleDelete(product.id)}
                             className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
