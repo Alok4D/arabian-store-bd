@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { Hind_Siliguri } from 'next/font/google';
+import { Noto_Sans_Bengali } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 
-const hindSiliguri = Hind_Siliguri({ 
+const notoSansBengali = Noto_Sans_Bengali({ 
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['bengali', 'latin'],
   display: 'swap',
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className={hindSiliguri.className}>
+      <body className={notoSansBengali.className}>
         {children}
         {/* <FloatingContact /> */}
         <Toaster position="top-center" />
