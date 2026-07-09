@@ -1,8 +1,27 @@
 "use client";
 
 import { Check } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function ProductLandingSection() {
+  const [products, setProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${apiUrl}/products`);
+        const data = await res.json();
+        if (data.success) {
+          setProducts(data.data.filter((p: any) => p.isActive));
+        }
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#eef9f3] bg-gradient-to-br from-[#f5fbf7] via-[#eef9f3] to-[#e4f5eb] py-12 px-4 md:px-8 lg:px-16 text-[#333333]">
       <div className="mx-auto max-w-7xl space-y-8">
@@ -102,41 +121,18 @@ export default function ProductLandingSection() {
         </div>
 
         {/* Pricing & Packaging Packages Block */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4">
-          
-          {/* 1 KG Card */}
-          <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[24px] md:leading-[36px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-            <span className="block md:inline">
-              <span className="text-[#a46404]">১ কেজি</span> মিশরীয় মেডজুল খেজুর
-            </span>
-            <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">১৬৫০ টাকা</span>
+        {products.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-4">
+            {products.map((product) => (
+              <div key={product.id} className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[24px] md:leading-[36px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
+                <span className="block md:inline">
+                  <span className="text-[#a46404]"></span> {product.title}
+                </span>
+                <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">{Number(product.price).toLocaleString('bn-BD')} টাকা</span>
+              </div>
+            ))}
           </div>
-
-          {/* 2 KG Card */}
-          <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[24px] md:leading-[36px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-            <span className="block md:inline">
-              <span className="text-[#a46404]">২ কেজি</span> মিশরীয় মেডজুল খেজুর
-            </span>
-            <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">৩২০০ টাকা</span>
-          </div>
-
-          {/* 3 KG Card */}
-          <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[24px] md:leading-[36px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-            <span className="block md:inline">
-              <span className="text-[#a46404]">৩ কেজি</span> মিশরীয় মেডজুল খেজুর
-            </span>
-            <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">৪৫০০ টাকা</span>
-          </div>
-
-          {/* 5 KG Card */}
-          <div className="bg-[#f2fbf4] border border-[#d2edd9] rounded-md py-6 md:py-8 text-center px-3 md:px-4 shadow-sm text-[18px] md:text-[24px] md:leading-[36px] font-bold text-black" style={{ fontFamily: "'Boronomala', sans-serif" }}>
-            <span className="block md:inline">
-              <span className="text-[#a46404]">৫ কেজি</span> মিশরীয় মেডজুল খেজুর
-            </span>
-            <span className="text-[#ff0000] block md:inline md:ml-1 mt-1 md:mt-0">৭৫০০ টাকা</span>
-          </div>
-
-        </div>
+        )}
 
       </div>
     </div>
