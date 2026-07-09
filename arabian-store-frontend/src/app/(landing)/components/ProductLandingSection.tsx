@@ -4,6 +4,7 @@ import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function ProductLandingSection() {
+
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
@@ -104,10 +105,10 @@ export default function ProductLandingSection() {
             </div>
 
             {/* Desktop CTA Button (Hidden on small screens) */}
-            <div className="hidden md:flex pt-4 justify-start">
+            <div className="hidden md:flex pt-0 justify-start">
               <button 
                 onClick={() => document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-[#009e19] hover:bg-[#008a16] text-white font-medium text-2xl px-12 py-3 rounded-md transition-all duration-200 transform hover:scale-105"
+                className="bg-[#009e19] hover:bg-[#008a16] text-white font-medium text-2xl px-12 py-3 rounded-xs transition-all duration-200 transform hover:scale-105"
               >
                 অর্ডার করুন
               </button>
