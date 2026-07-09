@@ -53,8 +53,8 @@ model Order {
   paymentMethod PaymentMethod @default(COD)
   status        OrderStatus   @default(PENDING)
 
-  productId     String
-  product       Product  @relation(fields: [productId], references: [id])
+  productId     String?
+  product       Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
