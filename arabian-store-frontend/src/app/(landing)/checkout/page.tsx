@@ -139,71 +139,70 @@ export default function CheckoutPage() {
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-
-          {/* LEFT: Package Selection + Form */}
-          <div className="lg:col-span-7 space-y-6">
-
-            {/* Package Cards */}
-            <div>
-              <h3 className="text-[16px] font-bold text-[#2D251E] mb-3">প্যাকেজ বেছে নিন</h3>
-              <div className="grid grid-cols-1 gap-3">
-                {products.map((product) => {
-                  const isSelected = selectedProduct === product.id;
-                  return (
-                    <div
-                      key={product.id}
-                      onClick={() => setSelectedProduct(product.id)}
-                      className={`relative flex items-center gap-3 p-3 cursor-pointer transition-all bg-white rounded-xl border-2 overflow-hidden ${isSelected ? 'border-[#008013] shadow-md' : 'border-[#E8DFD0] hover:border-[#C5DFC8]'}`}
-                    >
-                      {Number(product.shippingFee) === 0 && (
-                        <div className="absolute right-[-30px] top-[14px] w-[130px] transform rotate-45 bg-[#f05924] text-white text-[11px] font-bold py-0.5 text-center shadow z-10">
-                          ফ্রি ডেলিভারি!
-                        </div>
-                      )}
-                      {/* Radio */}
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-[#008013]' : 'border-[#CCC]'}`}>
-                        {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#008013]" />}
-                      </div>
-                      {/* Image */}
-                      <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden border border-[#E8DFD0]">
-                        <img
-                          src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image) : "/banner-img/product-bannerr.jpeg"}
-                          alt={product.title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      {/* Info */}
-                      <div className="flex-1 pr-8">
-                        <p className="font-bold text-[15px] text-[#2D251E] leading-snug">{product.title}</p>
-                        <p className="text-[13px] text-[#888] mt-0.5">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
-                      </div>
-                      {/* Qty + Price */}
-                      <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-                        <div className="flex items-center border border-[#D5C9B8] rounded-lg bg-white overflow-hidden">
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
-                            className="px-2.5 py-1 text-[#555] hover:bg-[#F4F0E8] text-base font-bold"
-                          >−</button>
-                          <span className="px-3 py-1 border-x border-[#D5C9B8] text-[14px] font-bold text-[#2D251E] min-w-[32px] text-center">
-                            {quantities[product.id] || 1}
-                          </span>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
-                            className="px-2.5 py-1 text-[#555] hover:bg-[#F4F0E8] text-base font-bold"
-                          >+</button>
-                        </div>
-                        <span className="font-extrabold text-[17px] text-[#1a6b2a]">{Number(product.price).toLocaleString()}৳</span>
-                      </div>
+        {/* Package Cards - Full Width Top Section */}
+        <div className="mb-10 lg:mb-14">
+          <h3 className="text-[18px] md:text-[20px] font-bold text-[#2D251E] mb-4">যেকোনো একটি প্যাকেজ নির্বাচন করুন</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            {products.map((product) => {
+              const isSelected = selectedProduct === product.id;
+              return (
+                <div
+                  key={product.id}
+                  onClick={() => setSelectedProduct(product.id)}
+                  className={`relative flex items-center gap-3 p-3 md:p-4 cursor-pointer transition-all bg-white rounded-xl border-2 overflow-hidden ${isSelected ? 'border-[#008013] shadow-md' : 'border-[#E8DFD0] hover:border-[#C5DFC8]'}`}
+                >
+                  {Number(product.shippingFee) === 0 && (
+                    <div className="absolute right-[-24px] top-[14px] w-[110px] transform rotate-45 bg-[#f05924] text-white text-[11px] font-bold py-0.5 text-center shadow z-10">
+                      ফ্রি ডেলিভারি!
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                  )}
+                  {/* Radio */}
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-[#008013]' : 'border-[#CCC]'}`}>
+                    {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#008013]" />}
+                  </div>
+                  {/* Image */}
+                  <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 rounded-lg overflow-hidden border border-[#E8DFD0]">
+                    <img
+                      src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image) : "/banner-img/product-bannerr.jpeg"}
+                      alt={product.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Info */}
+                  <div className="flex-1 pr-4 md:pr-6">
+                    <p className="font-bold text-[14px] md:text-[15px] text-[#2D251E] leading-snug">{product.title}</p>
+                    <p className="text-[12px] md:text-[13px] text-[#888] mt-1 line-clamp-2">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
+                  </div>
+                  {/* Qty + Price */}
+                  <div className="flex flex-col items-end gap-1.5 flex-shrink-0 z-10 relative">
+                    <div className="flex items-center border border-[#D5C9B8] rounded-md bg-white overflow-hidden">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
+                        className="px-2 py-0.5 text-[#555] hover:bg-[#F4F0E8] text-sm font-bold"
+                      >−</button>
+                      <span className="px-2.5 py-0.5 border-x border-[#D5C9B8] text-[13px] font-bold text-[#2D251E] min-w-[28px] text-center">
+                        {quantities[product.id] || 1}
+                      </span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
+                        className="px-2 py-0.5 text-[#555] hover:bg-[#F4F0E8] text-sm font-bold"
+                      >+</button>
+                    </div>
+                    <span className="font-extrabold text-[15px] md:text-[16px] text-[#1a6b2a]">{Number(product.price).toLocaleString()}৳</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+          {/* LEFT: Form */}
+          <div className="lg:col-span-7 space-y-6">
 
             {/* Delivery Details Form */}
             <div>
-              <h3 className="text-[16px] font-bold text-[#2D251E] mb-3">ডেলিভারি তথ্য</h3>
+              <h3 className="text-[16px] md:text-[18px] font-bold text-[#2D251E] mb-4">ডেলিভারি তথ্য</h3>
               <div className="bg-white rounded-xl border border-[#E8DFD0] p-4 md:p-5 shadow-sm space-y-4">
                 <div>
                   <label className={labelClass}>পূর্ণ নাম <span className="text-red-500">*</span></label>

@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
 export function CustomerReviews() {
+
   const reviews = [
     '/review-img/R-1.webp',
     '/review-img/R-2.webp',
@@ -49,9 +50,14 @@ export function CustomerReviews() {
     <section className="bg-[#F4F0E8] py-10 md:py-14 px-4 md:px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
 
-        <h2 className="text-center text-[22px] md:text-[30px] font-extrabold text-[#2D251E] mb-8">
-          ━ কাস্টমার রিভিউ ━
-        </h2>
+        {/* Section Header with Decorative Green Lines */}
+        <div className="flex items-center justify-center gap-3 md:gap-4 mb-8 md:mb-12">
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
+          <h2 className="text-[20px] sm:text-2xl md:text-[30px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
+            কাস্টমার রিভিউ
+          </h2>
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
+        </div>
 
         <div className="relative group">
           <button
