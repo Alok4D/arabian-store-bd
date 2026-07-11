@@ -8,6 +8,7 @@ import { LiveChatWidget } from './components/LiveChatWidget';
 import Navbar from './components/Navbar';
 import BannerSection from './components/BannerSection';
 import Packages from './components/Packages';
+import BenefitsSection from './components/BenefitsSection';
 
 
 export default function Home() {
@@ -17,7 +18,8 @@ export default function Home() {
       <BannerSection />
       <WhyChooseMedjool />
       <Packages />
-      <HealthBenefits />
+      <BenefitsSection />
+      {/* <HealthBenefits /> */}
       <div className="bg-[#FAF7F0]">
         <CheckoutPage />
       </div>

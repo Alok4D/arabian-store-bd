@@ -89,7 +89,7 @@ export default function Packages() {
                 </h3>
 
                 {/* Product Image Display Area */}
-                <div className="relative w-40 h-32 my-2 flex items-center justify-center select-none">
+                <div className="relative w-full h-32 my-2 flex items-center justify-center select-none">
                   {/* Swap with next/image or fallback HTML img according to your setup */}
                   <div className="w-full h-full relative">
                     <img
