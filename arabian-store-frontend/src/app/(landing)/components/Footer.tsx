@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Phone, MapPin } from 'lucide-react';
 import Image from 'next/image';
 
@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="w-full">
 
       {/* Top Contact Section */}
-      <div className="bg-[#1b5c30] py-16 text-white">
+      <div className="bg-[#008013] py-16 text-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-0 w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
@@ -15,9 +15,9 @@ export function Footer() {
             <div className="flex flex-col items-center md:items-start gap-3">
               <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center">
-                  <Image src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" width={200} height={50} className="object-contain" />
+                  <Image src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" width={240} height={60} className="object-contain w-[200px] md:w-[240px]" />
                 </div>
-             
+
               </div>
               <p className="text-sm text-white/60 leading-relaxed max-w-xs text-center md:text-left">
                 মিশরীয় প্রিমিয়াম মেডজুল খেজুর — বাংলাদেশের সেরা মানের সাথে।
