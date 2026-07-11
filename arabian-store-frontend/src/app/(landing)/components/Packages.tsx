@@ -50,12 +50,12 @@ export default function Packages() {
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header with Decorative Green Lines */}
-        <div className="flex items-center justify-center gap-4 mb-16">
-          <div className="hidden sm:block h-[1px] w-24 bg-gradient-to-r from-transparent to-[#008013]" />
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#2D251E] text-center tracking-wide">
+        <div className="flex items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16">
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
+          <h2 className="text-[20px] sm:text-2xl md:text-[30px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
             আমাদের প্যাকেজ সমূহ
           </h2>
-          <div className="hidden sm:block h-[1px] w-24 bg-gradient-to-l from-transparent to-[#008013]" />
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
         </div>
 
         {/* Dynamic Responsive Grid Layout */}
