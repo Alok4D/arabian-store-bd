@@ -374,7 +374,7 @@ export default function CheckoutPage() {
                 <button
                   onClick={handleSubmitOrder}
                   disabled={isLoading || !selectedProductData}
-                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-bold py-4 px-4 rounded-none transition-all flex items-center justify-center gap-2 text-[17px]  ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
+                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-bold py-3 px-4 rounded-none transition-all flex items-center justify-center gap-2 text-[17px]  ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
                 >
                   <Lock className="h-4 w-4" />
                   <span>{isLoading ? 'প্রসেস হচ্ছে...' : `অর্ডার করুন — ${totalPrice.toLocaleString()}.00৳`}</span>
