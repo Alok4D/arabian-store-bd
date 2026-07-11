@@ -5,7 +5,7 @@ import { Lock, ShieldCheck, Truck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
-  
+
   const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
                     <p className="font-bold text-[14px] md:text-[15px] text-[#333] mb-1 leading-snug">{product.title}</p>
                     <p className="text-[12px] md:text-[13px] text-[#777] leading-tight line-clamp-2">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
                   </div>
-                  
+
                   {/* Qty + Price (Right Side) */}
                   <div className="flex flex-col items-end justify-center gap-2 flex-shrink-0 z-10 relative pl-1 sm:pl-2">
                     <div className="flex items-center border border-[#D5C9B8] rounded-md bg-white overflow-hidden shadow-sm">
@@ -203,23 +203,23 @@ export default function CheckoutPage() {
 
             {/* Delivery Details Form */}
             <div>
-              <h3 className="text-[16px] md:text-[18px] font-bold text-[#2D251E] mb-4">ডেলিভারি তথ্য</h3>
-              <div className="bg-white rounded-xl border border-[#E8DFD0] p-4 md:p-5 shadow-sm space-y-4">
+              <h3 className="text-[16px] md:text-[18px] font-bold text-[#333] mb-4">Billing details</h3>
+              <div className="space-y-4">
                 <div>
-                  <label className={labelClass}>পূর্ণ নাম <span className="text-red-500">*</span></label>
-                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম লিখুন" className={inputClass} />
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার সম্পূর্ণ নাম লিখুন <span className="text-red-500">*</span></label>
+                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
                 </div>
                 <div>
-                  <label className={labelClass}>মোবাইল নাম্বার <span className="text-red-500">*</span></label>
-                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="আপনার ১১ ডিজিটের মোবাইল নাম্বার" className={inputClass} />
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">সম্পূর্ণ ঠিকানা পূরণ করুন <span className="text-red-500">*</span></label>
+                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="থানা/শহর" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
                 </div>
                 <div>
-                  <label className={labelClass}>হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)</label>
-                  <input type="text" value={whatsappNumber} onChange={e => setWhatsappNumber(e.target.value)} placeholder="প্রবাসীদের জন্য প্রযোজ্য" className={inputClass} />
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার ফোন নাম্বার <span className="text-red-500">*</span></label>
+                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="মোবাইল নাম্বার" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
                 </div>
                 <div>
-                  <label className={labelClass}>আপনার জেলা <span className="text-red-500">*</span></label>
-                  <select value={district} onChange={e => setDistrict(e.target.value)} className={inputClass}>
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার জেলা <span className="text-red-500">*</span></label>
+                  <select value={district} onChange={e => setDistrict(e.target.value)} className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]">
                     <option value="ঢাকা">ঢাকা</option>
                     <option value="ফরিদপুর">ফরিদপুর</option>
                     <option value="গাজীপুর">গাজীপুর</option>
@@ -287,97 +287,98 @@ export default function CheckoutPage() {
                   </select>
                 </div>
                 <div>
-                  <label className={labelClass}>পূর্ণ ঠিকানা <span className="text-red-500">*</span></label>
-                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="গ্রাম/এলাকা, থানা, জেলা" className={inputClass} />
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)</label>
+                  <input type="text" value={whatsappNumber} onChange={e => setWhatsappNumber(e.target.value)} placeholder="প্রবাসীদের জন্য প্রযোজ্য" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
                 </div>
+              </div>
+
+              <h3 className="text-[20px] md:text-[24px] font-extrabold text-[#2c3e50] mt-10 mb-4">Shipping</h3>
+              <div className="flex justify-between items-center p-3 bg-[#f9f9f9] border border-[#e5e7eb] text-[14px] text-[#555]">
+                <span>সারাদেশে ডেলিভারি চার্জ:</span>
+                <span className="font-medium">৳ {deliveryCharge}</span>
               </div>
             </div>
           </div>
 
           {/* RIGHT: Order Summary */}
           <div className="lg:col-span-5">
-            <h3 className="text-[16px] font-bold text-[#2D251E] mb-3">আপনার অর্ডার</h3>
-            <div className="bg-white rounded-xl border border-[#E8DFD0] shadow-sm overflow-hidden sticky top-20">
+            <h3 className="text-[16px] md:text-[18px] font-bold text-[#333] mb-4">Your order</h3>
+            <div className="sticky top-20">
 
-              {/* Selected Product Preview */}
+              {/* Table Header */}
+              <div className="flex justify-between items-center border-b border-dashed border-[#ccc] pb-2 mb-3">
+                <span className="font-bold text-[14px] text-[#555]">Product</span>
+                <span className="font-bold text-[14px] text-[#555]">Subtotal</span>
+              </div>
+
+              {/* Selected Product Row */}
               {selectedProductData && (
-                <div className="p-4 border-b border-[#F0E8DC]">
+                <div className="flex justify-between items-center border-b border-dashed border-[#ccc] pb-3 mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-16 h-16 rounded-lg overflow-hidden border border-[#E8DFD0] flex-shrink-0">
+                    <div className="w-14 h-14 rounded bg-gray-50 flex-shrink-0 overflow-hidden border border-gray-100 p-0.5">
                       <img
                         src={selectedProductData.image ? (selectedProductData.image.startsWith('/uploads/') ? `http://localhost:5000${selectedProductData.image}` : selectedProductData.image) : "/banner-img/product-bannerr.jpeg"}
-                        alt="Product"
-                        className="w-full h-full object-cover"
+                        alt={selectedProductData.title}
+                        className="w-full h-full object-contain rounded-sm"
                       />
                     </div>
-                    <div className="flex-1">
-                      <p className="font-bold text-[15px] text-[#2D251E] leading-snug">{selectedProductData.title}</p>
-                      <p className="text-[13px] text-[#888] mt-0.5">পরিমাণ: {selectedProductQuantity}</p>
-                    </div>
-                    <span className="font-extrabold text-[17px] text-[#1a6b2a]">{Number(selectedProductData.price).toLocaleString()}৳</span>
+                    <span className="text-[14px] text-[#555] pr-2">{selectedProductData.title} × {quantities[selectedProduct] || 1}</span>
                   </div>
+                  <span className="text-[14px] text-[#555] font-medium whitespace-nowrap">৳ {(Number(selectedProductData.price) * (quantities[selectedProduct] || 1)).toLocaleString()}</span>
                 </div>
               )}
 
-              {/* Price Breakdown */}
-              <div className="p-4 space-y-2.5 border-b border-[#F0E8DC]">
-                <div className="flex justify-between text-[14px]">
-                  <span className="text-[#666] font-medium">সাবটোটাল</span>
-                  <span className="font-bold text-[#2D251E]">{subtotal.toLocaleString()}.00৳</span>
-                </div>
-                <div className="flex justify-between text-[14px]">
-                  <span className="text-[#666] font-medium">ডেলিভারি চার্জ</span>
-                  <span className="font-bold text-[#2D251E]">{deliveryCharge.toLocaleString()}.00৳</span>
-                </div>
+              {/* Subtotal */}
+              <div className="flex justify-between items-center border-b border-dashed border-[#ccc] pb-3 mb-3">
+                <span className="text-[14px] text-[#555]">Subtotal</span>
+                <span className="text-[14px] text-[#555] font-medium">৳ {subtotal.toLocaleString()}</span>
               </div>
 
-              <div className="flex justify-between items-center px-4 py-3 bg-[#F0FBF4] border-b border-[#C5E8CD]">
-                <span className="font-extrabold text-[17px] text-[#2D251E]">মোট</span>
-                <span className="font-extrabold text-[22px] text-[#008013]">{totalPrice.toLocaleString()}.00৳</span>
+              {/* Delivery Charge */}
+              <div className="flex justify-between items-center border-b border-dashed border-[#ccc] pb-3 mb-3">
+                <span className="text-[14px] text-[#555]">Delivery Charge</span>
+                <span className="text-[14px] text-[#555] font-medium">৳ {deliveryCharge.toLocaleString()}</span>
+              </div>
+
+              {/* Total */}
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-[14px] text-[#333] font-bold">Total</span>
+                <span className="text-[14px] text-[#333] font-bold">৳ {totalPrice.toLocaleString()}</span>
               </div>
 
               {/* Payment Method */}
-              <div className="p-4 space-y-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    checked={paymentMethod === 'COD'}
-                    onChange={() => setPaymentMethod('COD')}
-                    className="h-4 w-4 accent-[#008013]"
-                  />
-                  <span className="font-bold text-[14px] text-[#2D251E]">ক্যাশ অন ডেলিভারি</span>
+              <div className="mb-5 mt-8">
+                <label className="flex items-center gap-2 cursor-pointer mb-2">
+                  <div className="relative flex items-center justify-center">
+                    <input
+                      type="radio"
+                      name="payment_method"
+                      checked={paymentMethod === 'COD'}
+                      onChange={() => setPaymentMethod('COD')}
+                      className="appearance-none w-5 h-5 rounded-full border-[5px] border-[#3eb56b] bg-white cursor-pointer"
+                    />
+                  </div>
+                  <span className="text-[15px] text-[#333]">ক্যাশঅন ডেলিভারি</span>
                 </label>
-                <div className="bg-[#F4F0E8] rounded-lg p-3 ml-7 text-[13px] text-[#666] font-medium border-l-4 border-[#C59B27]">
-                  পণ্য হাতে পেয়ে ডেলিভারিম্যানকে টাকা বুঝিয়ে দিন।
-                </div>
-
-                {/* Security Badges */}
-                <div className="flex items-center gap-3 mt-2">
-                  <div className="flex items-center gap-1 text-[12px] text-[#666]">
-                    <ShieldCheck className="w-4 h-4 text-[#008013]" />
-                    <span>নিরাপদ অর্ডার</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-[12px] text-[#666]">
-                    <Truck className="w-4 h-4 text-[#008013]" />
-                    <span>দ্রুত ডেলিভারি</span>
-                  </div>
+                <div className="relative bg-[#ebebeb] p-5 text-[14px] text-[#555]">
+                  <div className="absolute top-[-6px] left-[32px] w-3 h-3 bg-[#ebebeb] transform rotate-45"></div>
+                  পণ্য হাতে পেয়ে মূল্য পরিশোধ করবেন
                 </div>
               </div>
 
               {/* Error */}
               {errorMessage && (
-                <div className="mx-4 mb-3 p-3 bg-red-50 text-red-600 text-[13px] font-medium rounded-lg border border-red-200">
+                <div className="mb-4 p-3 bg-red-50 text-red-600 text-[13px] font-medium rounded-sm border border-red-200">
                   {errorMessage}
                 </div>
               )}
 
               {/* Submit Button */}
-              <div className="p-4 pt-0">
+              <div>
                 <button
                   onClick={handleSubmitOrder}
                   disabled={isLoading || !selectedProductData}
-                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-extrabold py-4 px-4 rounded-xl transition-all flex items-center justify-center gap-2 text-[16px] shadow-md hover:shadow-lg ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
+                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-bold py-4 px-4 rounded-none transition-all flex items-center justify-center gap-2 text-[17px]  ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
                 >
                   <Lock className="h-4 w-4" />
                   <span>{isLoading ? 'প্রসেস হচ্ছে...' : `অর্ডার করুন — ${totalPrice.toLocaleString()}.00৳`}</span>
