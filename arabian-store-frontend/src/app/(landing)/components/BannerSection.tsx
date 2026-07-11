@@ -4,6 +4,7 @@ import { Check, ShoppingCart, ShieldCheck, Truck, Sparkles } from 'lucide-react'
 import Image from 'next/image';
 
 export default function BannerSection() {
+  
   const scrollToOrder = () => {
     document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -26,20 +27,23 @@ export default function BannerSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
           {/* Left Content */}
-          <div className="space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
+          <div className="order-2 lg:order-1 space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
             
             {/* Main Title Area */}
             <div className="space-y-0">
-              <h3 className="text-[#1A6E36] text-2xl md:text-[28px] font-bold tracking-wide italic leading-none pl-1">
+              <h3 className="text-[#1A6E36] text-3xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2">
                 মিডিয়াম
               </h3>
-              <h1 className="text-[#0D5C22] text-7xl md:text-8xl lg:text-[110px] font-black leading-none tracking-tighter drop-shadow-sm -ml-1.5">
+              <h1 
+                className="text-[#0D5C22] text-8xl md:text-[130px] lg:text-[120px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3"
+                style={{ WebkitTextStroke: '2px #0D5C22' }}
+              >
                 মেডজুল
               </h1>
             </div>
 
             {/* Subheading */}
-            <p className="text-[#333333] text-lg md:text-xl lg:text-2xl font-bold tracking-wide max-w-xl">
+            <p className="text-[#2D251E] text-[15px] md:text-[17px] font-bold tracking-wide max-w-lg mt-4">
               বাছাইকৃত প্রিমিয়াম মান, বড় ও মাংসল সাইজ, প্রাকৃতিক মিষ্টতা
             </p>
 
@@ -47,11 +51,11 @@ export default function BannerSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2 pt-2 pb-4">
               <div className="space-y-4">
                 {featuresColumn1.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#1A6E36] flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+                  <div key={index} className="flex items-center gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-[#0F751E] flex items-center justify-center flex-shrink-0 shadow-sm ring-1 ring-offset-1 ring-offset-[#FCF2E8] ring-[#C59B27]">
+                      <Check className="w-2.5 h-2.5 text-white stroke-[4]" />
                     </div>
-                    <span className="text-[#4A4A4A] font-semibold text-[15px] md:text-base">
+                    <span className="text-[#4A4A4A] font-bold text-[14px] md:text-[15px]">
                       {item}
                     </span>
                   </div>
@@ -59,11 +63,11 @@ export default function BannerSection() {
               </div>
               <div className="space-y-4">
                 {featuresColumn2.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#1A6E36] flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+                  <div key={index} className="flex items-center gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-[#0F751E] flex items-center justify-center flex-shrink-0 shadow-sm ring-1 ring-offset-1 ring-offset-[#FCF2E8] ring-[#C59B27]">
+                      <Check className="w-2.5 h-2.5 text-white stroke-[4]" />
                     </div>
-                    <span className="text-[#4A4A4A] font-semibold text-[15px] md:text-base">
+                    <span className="text-[#4A4A4A] font-bold text-[14px] md:text-[15px]">
                       {item}
                     </span>
                   </div>
@@ -74,32 +78,32 @@ export default function BannerSection() {
             {/* Order Button */}
             <button
               onClick={scrollToOrder}
-              className="inline-flex items-center justify-center gap-2 bg-[#0F751E] hover:bg-[#0B5C17] text-white font-bold text-lg md:text-xl px-8 py-4 rounded-full transition-all duration-300 shadow-[0_4px_14px_0_rgba(15,117,30,0.39)] hover:shadow-[0_6px_20px_rgba(15,117,30,0.23)] hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center justify-center gap-2 bg-[#0D5C22] hover:bg-[#0B4A1C] text-white font-bold text-[16px] md:text-[18px] px-7 py-3 md:py-3.5 rounded-full transition-all duration-300 shadow-[0_4px_14px_0_rgba(13,92,34,0.39)] hover:shadow-[0_6px_20px_rgba(13,92,34,0.23)] hover:-translate-y-0.5 active:translate-y-0 w-max mt-2"
             >
               <ShoppingCart className="w-5 h-5" />
               এখনই অর্ডার করুন
             </button>
 
             {/* Bottom Badges */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <div className="flex items-center gap-2 bg-[#F3EFE6] border border-[#E8DFCF] rounded-md px-3 py-1.5 shadow-sm">
-                <ShieldCheck className="w-4 h-4 text-[#1A6E36]" />
-                <span className="text-[#333333] text-sm md:text-[15px] font-bold">100% খাঁটি</span>
+            <div className="flex flex-wrap items-center gap-3 pt-6">
+              <div className="flex items-center gap-2 bg-[#F3EBE0] rounded-lg px-3 py-2 shadow-sm">
+                <ShieldCheck className="w-4 h-4 text-[#0D5C22]" />
+                <span className="text-[#2D251E] text-[13px] md:text-[14px] font-extrabold tracking-wide">100% খাঁটি</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#F3EFE6] border border-[#E8DFCF] rounded-md px-3 py-1.5 shadow-sm">
-                <Sparkles className="w-4 h-4 text-[#1A6E36]" />
-                <span className="text-[#333333] text-sm md:text-[15px] font-bold">হাইজেনিক প্যাকেজিং</span>
+              <div className="flex items-center gap-2 bg-[#F3EBE0] rounded-lg px-3 py-2 shadow-sm">
+                <Sparkles className="w-4 h-4 text-[#0D5C22]" />
+                <span className="text-[#2D251E] text-[13px] md:text-[14px] font-extrabold tracking-wide">হাইজেনিক প্যাকেজিং</span>
               </div>
-              <div className="flex items-center gap-2 bg-[#F3EFE6] border border-[#E8DFCF] rounded-md px-3 py-1.5 shadow-sm">
-                <Truck className="w-4 h-4 text-[#1A6E36]" />
-                <span className="text-[#333333] text-sm md:text-[15px] font-bold">দ্রুত ডেলিভারি</span>
+              <div className="flex items-center gap-2 bg-[#F3EBE0] rounded-lg px-3 py-2 shadow-sm">
+                <Truck className="w-4 h-4 text-[#0D5C22]" />
+                <span className="text-[#2D251E] text-[13px] md:text-[14px] font-extrabold tracking-wide">দ্রুত ডেলিভারি</span>
               </div>
             </div>
 
           </div>
 
           {/* Right Image */}
-          <div className="relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0">
+          <div className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0">
             <Image 
               src="/Untitled - July 11, 2026 at 16.40.12.png" 
               alt="Premium Medjool Dates"
