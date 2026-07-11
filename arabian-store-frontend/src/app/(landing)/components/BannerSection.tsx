@@ -29,11 +29,11 @@ export default function BannerSection() {
           <div className="space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
             
             {/* Main Title Area */}
-            <div className="space-y-1">
-              <h3 className="text-[#1A6E36] text-xl md:text-2xl font-bold tracking-wide">
+            <div className="space-y-0">
+              <h3 className="text-[#1A6E36] text-2xl md:text-[28px] font-bold tracking-wide italic leading-none pl-1">
                 মিডিয়াম
               </h3>
-              <h1 className="text-[#0D5C22] text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight tracking-tight drop-shadow-sm">
+              <h1 className="text-[#0D5C22] text-7xl md:text-8xl lg:text-[110px] font-black leading-none tracking-tighter drop-shadow-sm -ml-1.5">
                 মেডজুল
               </h1>
             </div>
@@ -101,7 +101,7 @@ export default function BannerSection() {
           {/* Right Image */}
           <div className="relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0">
             <Image 
-              src="/banner-img/banner-images.png" 
+              src="/Untitled - July 11, 2026 at 16.40.12.png" 
               alt="Premium Medjool Dates"
               width={800}
               height={800}
