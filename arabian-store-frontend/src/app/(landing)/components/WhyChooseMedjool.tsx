@@ -38,22 +38,26 @@ export default function WhyChooseMedjool() {
     <section className="bg-[#F4F0E8] py-10 md:py-14 px-4 md:px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
 
-        <h2 className="text-center text-[22px] md:text-[30px] font-extrabold text-[#2D251E] mb-8">
-          ━ কেন আমাদের মেডজুল খেজুর বেছে নেবেন? ━
-        </h2>
+        {/* Section Header with Decorative Green Lines */}
+        <div className="flex items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16">
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
+          <h2 className="text-[20px] sm:text-2xl md:text-[30px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
+            কেন আমাদের মেডজুল খেজুর বেছে নেবেন?
+          </h2>
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
+        </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {reasons.map((r, i) => (
             <div
               key={i}
-              style={{ backgroundColor: r.bg, borderColor: r.border }}
-              className="flex flex-col items-center text-center p-4 md:p-6 rounded-xl border shadow-sm hover:shadow-md transition-shadow"
+              className="flex flex-col items-center text-center p-4 md:p-6 bg-white rounded-md border border-[#EAE6DF] shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="mb-3 p-3 rounded-full bg-white shadow-sm">
+              <div className="mb-3 p-3 rounded-full bg-[#F4F0E8] shadow-sm">
                 {r.icon}
               </div>
-              <h3 className="font-bold text-[14px] md:text-[16px] text-[#2D251E] mb-2">{r.title}</h3>
-              <p className="text-[12px] md:text-[13px] text-[#666] leading-relaxed">{r.desc}</p>
+              <h3 className="font-bold text-[18px] md:text-[20px] text-[#2D251E] mb-2">{r.title}</h3>
+              <p className="text-[15px] md:text-[16px] text-[#555] leading-relaxed">{r.desc}</p>
             </div>
           ))}
         </div>
