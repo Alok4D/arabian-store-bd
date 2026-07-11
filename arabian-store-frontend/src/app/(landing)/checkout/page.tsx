@@ -209,15 +209,7 @@ export default function CheckoutPage() {
                   <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার সম্পূর্ণ নাম লিখুন <span className="text-red-500">*</span></label>
                   <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
                 </div>
-                <div>
-                  <label className="block text-[13px] font-bold text-[#555] mb-1">সম্পূর্ণ ঠিকানা পূরণ করুন <span className="text-red-500">*</span></label>
-                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="থানা/শহর" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
-                </div>
-                <div>
-                  <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার ফোন নাম্বার <span className="text-red-500">*</span></label>
-                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="মোবাইল নাম্বার" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
-                </div>
-                <div>
+                  <div>
                   <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার জেলা <span className="text-red-500">*</span></label>
                   <select value={district} onChange={e => setDistrict(e.target.value)} className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]">
                     <option value="ঢাকা">ঢাকা</option>
@@ -287,8 +279,12 @@ export default function CheckoutPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[13px] font-bold text-[#555] mb-1">হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)</label>
-                  <input type="text" value={whatsappNumber} onChange={e => setWhatsappNumber(e.target.value)} placeholder="প্রবাসীদের জন্য প্রযোজ্য" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">সম্পূর্ণ ঠিকানা পূরণ করুন <span className="text-red-500">*</span></label>
+                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="থানা/শহর" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
+                </div>
+                <div>
+                  <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার ফোন নাম্বার <span className="text-red-500">*</span></label>
+                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="মোবাইল নাম্বার" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
                 </div>
               </div>
 
