@@ -5,6 +5,7 @@ import { Lock, ShieldCheck, Truck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
+  
   const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -129,9 +130,14 @@ export default function CheckoutPage() {
     <div className="px-4 py-8 md:px-8 lg:px-12 text-[#2D251E]" id="order">
       <div className="max-w-7xl mx-auto">
 
-        <h2 className="text-center text-[22px] md:text-[28px] font-extrabold text-[#2D251E] mb-8">
-          ━ অর্ডার করতে ফর্ম পূরণ করুন ━
-        </h2>
+        {/* Section Header with Decorative Green Lines */}
+        <div className="flex items-center justify-center gap-3 md:gap-4 mb-8 md:mb-12">
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
+          <h2 className="text-[20px] sm:text-2xl md:text-[28px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
+            অর্ডার করতে ফর্ম পূরণ করুন
+          </h2>
+          <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
+        </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
 
