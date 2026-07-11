@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Lock, Square } from 'lucide-react';
+import { Lock, ShieldCheck, Truck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const [showLogin, setShowLogin] = useState(false);
   const [products, setProducts] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
@@ -30,12 +29,11 @@ export default function CheckoutPage() {
         const res = await fetch(`${apiUrl}/products`);
         const data = await res.json();
         if (data.success && data.data.length > 0) {
-          setProducts(data.data);
-          setSelectedProduct(data.data[0].id);
+          const activeProducts = data.data.filter((p: any) => p.isActive);
+          setProducts(activeProducts);
+          setSelectedProduct(activeProducts[0]?.id || data.data[0].id);
           const initialQuantities: Record<string, number> = {};
-          data.data.forEach((p: any) => {
-            initialQuantities[p.id] = 1;
-          });
+          data.data.forEach((p: any) => { initialQuantities[p.id] = 1; });
           setQuantities(initialQuantities);
           const shipRes = await fetch(`${apiUrl}/shipping`);
           const shipData = await shipRes.json();
@@ -69,7 +67,6 @@ export default function CheckoutPage() {
     }
     setErrorMessage('');
     setIsLoading(true);
-
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
       const res = await fetch(`${apiUrl}/orders`, {
@@ -82,19 +79,18 @@ export default function CheckoutPage() {
           district,
           address: fullAddress + ', ' + district,
           quantity: selectedProductQuantity,
-          subtotal: subtotal,
+          subtotal,
           shippingFee: deliveryCharge,
           total: totalPrice,
           paymentMethod,
           productId: selectedProduct
         })
       });
-
       const data = await res.json();
       if (data.success) {
         router.push(`/checkout/success?orderId=${data.data.orderId}&method=${paymentMethod}&product=${selectedProductData?.title}&qty=${selectedProductQuantity}`);
       } else {
-        setErrorMessage(data.message || 'অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।');
+        setErrorMessage(data.message || 'অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।');
       }
     } catch (error) {
       console.error(error);
@@ -105,40 +101,24 @@ export default function CheckoutPage() {
   };
 
   const handleQuantityChange = (id: string, delta: number) => {
-    setQuantities(prev => ({
-      ...prev,
-      [id]: Math.max(1, (prev[id] || 1) + delta)
-    }));
+    setQuantities(prev => ({ ...prev, [id]: Math.max(1, (prev[id] || 1) + delta) }));
   };
+
+  const inputClass = "w-full rounded-lg border border-[#D5C9B8] bg-white px-3 py-2.5 text-[15px] outline-none focus:border-[#008013] focus:ring-2 focus:ring-[#008013]/20 transition-all placeholder:text-[#BBB]";
+  const labelClass = "block text-[14px] font-bold mb-1.5 text-[#2D251E]";
 
   if (loadingProducts) {
     return (
-      <div className="px-4 py-4 md:px-12 lg:px-16 w-full animate-pulse">
-        <div className="mx-auto max-w-7xl">
-          {/* Skeleton for "Your Products" */}
-          <div className="mb-8">
-            <div className="h-8 w-48 bg-neutral-200 rounded mb-4"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="h-[120px] bg-white border border-neutral-200 rounded-md"></div>
-              <div className="h-[120px] bg-white border border-neutral-200 rounded-md"></div>
-            </div>
+      <div className="px-4 py-8 md:px-8 lg:px-12 animate-pulse max-w-7xl mx-auto">
+        <div className="h-8 w-64 bg-[#E8DFD0] rounded mb-6"></div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-7 space-y-4">
+            <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+            <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+            <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
           </div>
-          
-          {/* Skeleton for the two columns */}
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="h-8 w-48 bg-neutral-200 rounded mb-4"></div>
-              <div className="space-y-4 bg-white p-4 md:p-5 rounded-md border border-neutral-200">
-                <div className="h-16 bg-neutral-100 rounded-md"></div>
-                <div className="h-16 bg-neutral-100 rounded-md"></div>
-                <div className="h-16 bg-neutral-100 rounded-md"></div>
-                <div className="h-16 bg-neutral-100 rounded-md"></div>
-              </div>
-            </div>
-            <div className="lg:col-span-5">
-              <div className="h-8 w-48 bg-neutral-200 rounded mb-4"></div>
-              <div className="h-64 bg-white border border-neutral-200 rounded-lg"></div>
-            </div>
+          <div className="lg:col-span-5">
+            <div className="h-64 bg-[#E8DFD0] rounded-xl"></div>
           </div>
         </div>
       </div>
@@ -146,194 +126,94 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="px-4 py-4 md:px-12 lg:px-16 text-[#222222]">
-      <div className="mx-auto max-w-7xl">
-        
-        {/* Login Toggle Section */}
-        <div className="mb-10">
-          <div className="text-[#515151] flex items-center gap-2 text-[15px]">
-            <Square className="w-4 h-4 text-[#e35a34]" /> 
-            <span>Returning customer?</span>
-            <button 
-              onClick={() => setShowLogin(!showLogin)} 
-              className="text-[#e35a34] hover:text-[#d14f2e] transition-colors font-medium"
-            >
-              Click here to login
-            </button>
-          </div>
+    <div className="px-4 py-8 md:px-8 lg:px-12 text-[#2D251E]" id="order">
+      <div className="max-w-7xl mx-auto">
 
-          {/* Expandable Login Form */}
-          {showLogin && (
-            <div className="mt-6 border border-[#e5e5e5] p-6 lg:p-8 text-[#515151] animate-in fade-in slide-in-from-top-2 duration-300 rounded-sm shadow-xs">
-              <p className="mb-6 text-[15px]">
-                If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                <div>
-                  <label className="block text-[14px] font-semibold mb-2">
-                    Username or email <span className="text-[#e35a34]">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    className="w-full border border-[#e5e5e5] rounded-sm px-3 py-2.5 outline-none focus:border-[#e35a34] transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[14px] font-semibold mb-2">
-                    Password <span className="text-[#e35a34]">*</span>
-                  </label>
-                  <input 
-                    type="password" 
-                    className="w-full border border-[#e5e5e5] rounded-sm px-3 py-2.5 outline-none focus:border-[#e35a34] transition-colors"
-                  />
-                </div>
-              </div>
+        <h2 className="text-center text-[22px] md:text-[28px] font-extrabold text-[#2D251E] mb-8">
+          ━ অর্ডার করতে ফর্ম পূরণ করুন ━
+        </h2>
 
-              <div className="mb-4 mt-2">
-                <label className="inline-flex items-center gap-2 cursor-pointer text-[14px]">
-                  <input type="checkbox" className="accent-[#e35a34] w-3.5 h-3.5 border-[#e5e5e5]" />
-                  Remember me
-                </label>
-              </div>
-              
-              <button className="w-full bg-[#e35a34] hover:bg-[#d14f2e] text-white py-2.5 font-semibold rounded-sm transition-colors text-[15px]">
-                Login
-              </button>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
 
-              <div className="mt-4 text-right">
-                <a href="#" className="text-[#e35a34] hover:text-[#d14f2e] text-[14px] transition-colors">Lost your password?</a>
-              </div>
-
-            </div>
-          )}
-        </div>
-
-        {/* Your Products Section */}
-        <div className="mb-8">
-          <h2 className="text-[24px] md:text-[28px] font-bold text-neutral-800 mb-4 text-left">Your Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {products.map((product) => {
-              const isSelected = selectedProduct === product.id;
-              return (
-                <div 
-                  key={product.id} 
-                  onClick={() => setSelectedProduct(product.id)}
-                  className={`relative flex items-start gap-3 md:gap-4 p-3 md:p-4 cursor-pointer transition-all bg-white border rounded-md overflow-hidden ${
-                    isSelected ? 'border-[#009e19] shadow-sm' : 'border-neutral-300'
-                  }`}
-                >
-                  {Number(product.shippingFee) === 0 && (
-                    <div className="absolute right-[-35px] top-[15px] w-[140px] transform rotate-45 bg-[#f05924] text-white text-[13px] md:text-[15px] font-bold py-1 text-center shadow-sm z-10">
-                      Delivery Free!
-                    </div>
-                  )}
-
-                  <div className="flex items-center mt-1">
-                    <div className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-[#009e19]' : 'border-neutral-300'}`}>
-                      {isSelected && <div className="w-[8px] h-[8px] rounded-full bg-[#009e19]" />}
-                    </div>
-                  </div>
-                  <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 bg-white rounded flex items-center justify-center overflow-hidden border border-neutral-200">
-                    <img 
-                      src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image) : "/banner-img/product-banner.webp"} 
-                      alt={product.title} 
-                      className="w-full h-full object-cover" 
-                    />
-                  </div>
-                  <div className="flex-1 pr-4">
-                    <div className="text-[18px] md:text-[20px] font-bold text-neutral-800 leading-snug mb-1">
-                      {product.title}
-                    </div>
-                    <div className="text-[15px] md:text-[17px] text-neutral-500 mb-3">
-                      {product.description || "বিশেষ ডিসকাউন্ট অফার"}
-                    </div>
-                    <div className="flex items-center gap-3">
-                      {/* Real quantity selector */}
-                      <div className="flex items-center border border-neutral-300 rounded-sm bg-white">
-                        <button 
-                          onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
-                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[18px] leading-tight"
-                        >-</button>
-                        <span className="px-3.5 py-0.5 border-x border-neutral-300 text-[16px] font-semibold text-neutral-700">
-                          {quantities[product.id] || 1}
-                        </span>
-                        <button 
-                          onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
-                          className="px-2.5 py-0.5 text-neutral-500 hover:bg-neutral-50 text-[18px] leading-tight"
-                        >+</button>
-                      </div>
-                      <span className="font-extrabold text-[18px] md:text-[22px] text-neutral-900">{Number(product.price).toLocaleString()}৳</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12" id="order">
-          
-          {/* LEFT COLUMN: Billing & Shipping */}
+          {/* LEFT: Package Selection + Form */}
           <div className="lg:col-span-7 space-y-6">
+
+            {/* Package Cards */}
             <div>
-              <h2 className="text-[24px] md:text-[28px] font-bold tracking-tight mb-4 text-neutral-900">
-                ডেলিভারি বিস্তারিত
-              </h2>
-              
-              <div className="space-y-4 bg-[#fdfdfd] p-4 md:p-5 rounded-md border border-neutral-200 shadow-sm">
-                {/* Full Name */}
-                <div>
-                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
-                    পূর্ণ নাম <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="আপনার নাম লিখুন"
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
-                  />
-                </div>
+              <h3 className="text-[16px] font-bold text-[#2D251E] mb-3">প্যাকেজ বেছে নিন</h3>
+              <div className="grid grid-cols-1 gap-3">
+                {products.map((product) => {
+                  const isSelected = selectedProduct === product.id;
+                  return (
+                    <div
+                      key={product.id}
+                      onClick={() => setSelectedProduct(product.id)}
+                      className={`relative flex items-center gap-3 p-3 cursor-pointer transition-all bg-white rounded-xl border-2 overflow-hidden ${isSelected ? 'border-[#008013] shadow-md' : 'border-[#E8DFD0] hover:border-[#C5DFC8]'}`}
+                    >
+                      {Number(product.shippingFee) === 0 && (
+                        <div className="absolute right-[-30px] top-[14px] w-[130px] transform rotate-45 bg-[#f05924] text-white text-[11px] font-bold py-0.5 text-center shadow z-10">
+                          ফ্রি ডেলিভারি!
+                        </div>
+                      )}
+                      {/* Radio */}
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-[#008013]' : 'border-[#CCC]'}`}>
+                        {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#008013]" />}
+                      </div>
+                      {/* Image */}
+                      <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden border border-[#E8DFD0]">
+                        <img
+                          src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image) : "/banner-img/product-bannerr.jpeg"}
+                          alt={product.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      {/* Info */}
+                      <div className="flex-1 pr-8">
+                        <p className="font-bold text-[15px] text-[#2D251E] leading-snug">{product.title}</p>
+                        <p className="text-[13px] text-[#888] mt-0.5">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
+                      </div>
+                      {/* Qty + Price */}
+                      <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+                        <div className="flex items-center border border-[#D5C9B8] rounded-lg bg-white overflow-hidden">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
+                            className="px-2.5 py-1 text-[#555] hover:bg-[#F4F0E8] text-base font-bold"
+                          >−</button>
+                          <span className="px-3 py-1 border-x border-[#D5C9B8] text-[14px] font-bold text-[#2D251E] min-w-[32px] text-center">
+                            {quantities[product.id] || 1}
+                          </span>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
+                            className="px-2.5 py-1 text-[#555] hover:bg-[#F4F0E8] text-base font-bold"
+                          >+</button>
+                        </div>
+                        <span className="font-extrabold text-[17px] text-[#1a6b2a]">{Number(product.price).toLocaleString()}৳</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-                {/* Mobile Number */}
+            {/* Delivery Details Form */}
+            <div>
+              <h3 className="text-[16px] font-bold text-[#2D251E] mb-3">ডেলিভারি তথ্য</h3>
+              <div className="bg-white rounded-xl border border-[#E8DFD0] p-4 md:p-5 shadow-sm space-y-4">
                 <div>
-                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
-                    মোবাইল নাম্বার <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}
-                    placeholder="আপনার ১১ ডিজিটের মোবাইল নাম্বার"
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
-                  />
+                  <label className={labelClass}>পূর্ণ নাম <span className="text-red-500">*</span></label>
+                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম লিখুন" className={inputClass} />
                 </div>
-
-                {/* WhatsApp Number */}
                 <div>
-                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
-                    হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)
-                  </label>
-                  <input
-                    type="text"
-                    value={whatsappNumber}
-                    onChange={(e) => setWhatsappNumber(e.target.value)}
-                    placeholder="প্রবাসীদের জন্য প্রযোজ্য"
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
-                  />
+                  <label className={labelClass}>মোবাইল নাম্বার <span className="text-red-500">*</span></label>
+                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="আপনার ১১ ডিজিটের মোবাইল নাম্বার" className={inputClass} />
                 </div>
-
-                {/* District Selection */}
                 <div>
-                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
-                    আপনার জেলা <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    value={district}
-                    onChange={(e) => setDistrict(e.target.value)}
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
-                  >
+                  <label className={labelClass}>হোয়াটসঅ্যাপ নাম্বার (ঐচ্ছিক)</label>
+                  <input type="text" value={whatsappNumber} onChange={e => setWhatsappNumber(e.target.value)} placeholder="প্রবাসীদের জন্য প্রযোজ্য" className={inputClass} />
+                </div>
+                <div>
+                  <label className={labelClass}>আপনার জেলা <span className="text-red-500">*</span></label>
+                  <select value={district} onChange={e => setDistrict(e.target.value)} className={inputClass}>
                     <option value="ঢাকা">ঢাকা</option>
                     <option value="ফরিদপুর">ফরিদপুর</option>
                     <option value="গাজীপুর">গাজীপুর</option>
@@ -400,128 +280,103 @@ export default function CheckoutPage() {
                     <option value="সাতক্ষীরা">সাতক্ষীরা</option>
                   </select>
                 </div>
-
-                {/* Full Address */}
                 <div>
-                  <label className="block text-[16px] md:text-[18px] font-bold mb-1 text-neutral-800">
-                    পূর্ণ ঠিকানা <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={fullAddress}
-                    onChange={(e) => setFullAddress(e.target.value)}
-                    placeholder="গ্রাম/এলাকা, থানা, জেলা"
-                    className="w-full rounded-md border border-neutral-300 px-3 py-2.5 text-[16px] md:text-[18px] outline-none focus:border-[#009e19] focus:ring-1 focus:ring-[#009e19] transition-all bg-white"
-                  />
+                  <label className={labelClass}>পূর্ণ ঠিকানা <span className="text-red-500">*</span></label>
+                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="গ্রাম/এলাকা, থানা, জেলা" className={inputClass} />
                 </div>
               </div>
             </div>
-
-
           </div>
 
-          {/* RIGHT COLUMN: Your Order Details */}
+          {/* RIGHT: Order Summary */}
           <div className="lg:col-span-5">
-            <h2 className="text-[24px] md:text-[28px] font-bold tracking-tight mb-4 text-neutral-900">
-              অর্ডার সামারি
-            </h2>
+            <h3 className="text-[16px] font-bold text-[#2D251E] mb-3">আপনার অর্ডার</h3>
+            <div className="bg-white rounded-xl border border-[#E8DFD0] shadow-sm overflow-hidden sticky top-20">
 
-            <div className="border border-neutral-200 rounded-lg p-1 bg-white shadow-sm">
-              {/* Product Table Header */}
-              <div className="flex justify-between text-[16px] md:text-[18px] font-bold pb-3 pt-2 border-b border-dashed border-neutral-200 px-3">
-                <span className="text-neutral-600">Product</span>
-                <span className="text-neutral-600">Subtotal</span>
-              </div>
-
-              {/* Product Item Row */}
+              {/* Selected Product Preview */}
               {selectedProductData && (
-                <div className="py-4 border-b border-dashed border-neutral-200 px-3">
-                  <div className="flex items-start gap-4">
-                    {/* Product Image */}
-                    <div className="h-16 w-16 flex-shrink-0 bg-white rounded overflow-hidden border border-neutral-200 flex items-center justify-center p-1">
-                      <img 
-                        src={selectedProductData.image ? (selectedProductData.image.startsWith('/uploads/') ? `http://localhost:5000${selectedProductData.image}` : selectedProductData.image) : "/banner-img/product-banner.webp"} 
-                        alt="Product" 
-                        className="w-full h-full object-contain" 
+                <div className="p-4 border-b border-[#F0E8DC]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden border border-[#E8DFD0] flex-shrink-0">
+                      <img
+                        src={selectedProductData.image ? (selectedProductData.image.startsWith('/uploads/') ? `http://localhost:5000${selectedProductData.image}` : selectedProductData.image) : "/banner-img/product-bannerr.jpeg"}
+                        alt="Product"
+                        className="w-full h-full object-cover"
                       />
                     </div>
-                    
-                    {/* Product Details & Internal Pricing Breakdown */}
-                    <div className="flex-1 flex justify-between items-start gap-4">
-                      <div className="space-y-1">
-                        <p className="text-[16px] md:text-[18px] font-bold text-neutral-800 leading-tight">
-                          {selectedProductData.title}
-                        </p>
-                        <p className="text-[14px] md:text-[16px] text-neutral-500 font-bold">Qty: {selectedProductQuantity}</p>
-                      </div>
-                      
-                      <div className="text-right">
-                        <span className="text-[17px] md:text-[19px] font-bold text-neutral-900">
-                          {Number(selectedProductData.price).toLocaleString()}৳
-                        </span>
-                      </div>
+                    <div className="flex-1">
+                      <p className="font-bold text-[15px] text-[#2D251E] leading-snug">{selectedProductData.title}</p>
+                      <p className="text-[13px] text-[#888] mt-0.5">পরিমাণ: {selectedProductQuantity}</p>
                     </div>
+                    <span className="font-extrabold text-[17px] text-[#1a6b2a]">{Number(selectedProductData.price).toLocaleString()}৳</span>
                   </div>
                 </div>
               )}
 
-              {/* Summary Rows */}
-              <div className="space-y-3 py-4 border-b border-dashed border-neutral-200 px-3 text-[16px] md:text-[18px]">
-                <div className="flex justify-between items-center">
-                  <span className="text-neutral-600 font-bold">Subtotal</span>
-                  <div className="text-right">
-                    <span className="block font-bold text-neutral-900">{subtotal.toLocaleString()}.00৳</span>
-                  </div>
+              {/* Price Breakdown */}
+              <div className="p-4 space-y-2.5 border-b border-[#F0E8DC]">
+                <div className="flex justify-between text-[14px]">
+                  <span className="text-[#666] font-medium">সাবটোটাল</span>
+                  <span className="font-bold text-[#2D251E]">{subtotal.toLocaleString()}.00৳</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-neutral-600 font-bold">Shipping</span>
-                  <div className="text-right">
-                    <span className="block font-bold text-neutral-900">{deliveryCharge.toLocaleString()}.00৳</span>
+                <div className="flex justify-between text-[14px]">
+                  <span className="text-[#666] font-medium">ডেলিভারি চার্জ</span>
+                  <span className="font-bold text-[#2D251E]">{deliveryCharge.toLocaleString()}.00৳</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center px-4 py-3 bg-[#F0FBF4] border-b border-[#C5E8CD]">
+                <span className="font-extrabold text-[17px] text-[#2D251E]">মোট</span>
+                <span className="font-extrabold text-[22px] text-[#008013]">{totalPrice.toLocaleString()}.00৳</span>
+              </div>
+
+              {/* Payment Method */}
+              <div className="p-4 space-y-3">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    checked={paymentMethod === 'COD'}
+                    onChange={() => setPaymentMethod('COD')}
+                    className="h-4 w-4 accent-[#008013]"
+                  />
+                  <span className="font-bold text-[14px] text-[#2D251E]">ক্যাশ অন ডেলিভারি</span>
+                </label>
+                <div className="bg-[#F4F0E8] rounded-lg p-3 ml-7 text-[13px] text-[#666] font-medium border-l-4 border-[#C59B27]">
+                  পণ্য হাতে পেয়ে ডেলিভারিম্যানকে টাকা বুঝিয়ে দিন।
+                </div>
+
+                {/* Security Badges */}
+                <div className="flex items-center gap-3 mt-2">
+                  <div className="flex items-center gap-1 text-[12px] text-[#666]">
+                    <ShieldCheck className="w-4 h-4 text-[#008013]" />
+                    <span>নিরাপদ অর্ডার</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-[12px] text-[#666]">
+                    <Truck className="w-4 h-4 text-[#008013]" />
+                    <span>দ্রুত ডেলিভারি</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 px-3 text-[20px] font-bold text-neutral-900 bg-[#f4fbf6] rounded-b-lg">
-                <span>Total</span>
-                <span className="text-[#009e19]">{totalPrice.toLocaleString()}.00৳</span>
-              </div>
-
-              {/* Payment Methods Section */}
-              <div className="mt-4 bg-[#f9f9f9] rounded-md p-4 space-y-4">
-                {/* Cash on Delivery */}
-                <div className="space-y-3">
-                  <label className="flex items-center gap-3 cursor-pointer text-base font-semibold text-neutral-800">
-                    <input
-                      type="radio"
-                      name="payment_method"
-                      checked={paymentMethod === 'COD'}
-                      onChange={() => setPaymentMethod('COD')}
-                      className="h-4 w-4 accent-orange-600 border-neutral-300 text-orange-600 focus:ring-0"
-                    />
-                    <span>ক্যাশ অন ডেলিভারি</span>
-                  </label>
-                  
-                  {/* Tooltip Description block */}
-                  <div className="relative bg-[#e9e9e9] p-3 rounded text-sm text-neutral-700 font-medium ml-7 before:content-[''] before:absolute before:-top-2 before:left-4 before:w-0 before:h-0 before:border-l-8 before:border-l-transparent before:border-r-8 before:border-r-transparent before:border-b-8 before:border-b-[#e9e9e9]">
-                    পণ্য হাতে পেয়ে ডেলিভারিম্যানকে টাকা বুঝিয়ে দিন।
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
+              {/* Error */}
               {errorMessage && (
-                <div className="mt-4 p-3 bg-red-50 text-red-600 text-sm font-medium rounded border border-red-200">
+                <div className="mx-4 mb-3 p-3 bg-red-50 text-red-600 text-[13px] font-medium rounded-lg border border-red-200">
                   {errorMessage}
                 </div>
               )}
-              <button 
-                onClick={handleSubmitOrder}
-                disabled={isLoading || !selectedProductData}
-                className={`w-full mt-4 bg-[#008000] hover:bg-[#006e00] text-white font-bold py-3.5 px-4 rounded transition-colors flex items-center justify-center gap-2 text-base shadow-sm ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : ''}`}
-              >
-                <Lock className="h-4 w-4 fill-current" />
-                <span>{isLoading ? 'Processing...' : `Place Order ${totalPrice.toLocaleString()}.00৳`}</span>
-              </button>
+
+              {/* Submit Button */}
+              <div className="p-4 pt-0">
+                <button
+                  onClick={handleSubmitOrder}
+                  disabled={isLoading || !selectedProductData}
+                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-extrabold py-4 px-4 rounded-xl transition-all flex items-center justify-center gap-2 text-[16px] shadow-md hover:shadow-lg ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
+                >
+                  <Lock className="h-4 w-4" />
+                  <span>{isLoading ? 'প্রসেস হচ্ছে...' : `অর্ডার করুন — ${totalPrice.toLocaleString()}.00৳`}</span>
+                </button>
+              </div>
 
             </div>
           </div>

@@ -2,20 +2,21 @@
 import CheckoutPage from './checkout/page';
 import { CustomerReviews } from './components/CustomerReviews';
 import { Footer } from './components/Footer';
-import ProductLandingSection from './components/ProductLandingSection';
 import WhyChooseMedjool from './components/WhyChooseMedjool';
 import HealthBenefits from './components/HealthBenefits';
 import { LiveChatWidget } from './components/LiveChatWidget';
+import Navbar from './components/Navbar';
+import BannerSection from './components/BannerSection';
 
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <ProductLandingSection />
+      <Navbar />
+      <BannerSection />
       <WhyChooseMedjool />
-    
       <HealthBenefits />
-      <div className="bg-[#fcf8f2]" id="order">
+      <div className="bg-[#FAF7F0]">
         <CheckoutPage />
       </div>
       <CustomerReviews />
