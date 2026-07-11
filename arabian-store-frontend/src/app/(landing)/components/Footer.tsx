@@ -1,25 +1,23 @@
 import React from 'react';
 import { Phone, MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() {
   return (
     <footer className="w-full">
 
       {/* Top Contact Section */}
-      <div className="bg-[#1a4a2e] py-10 text-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+      <div className="bg-[#1b5c30] py-16 text-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-0 w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
             {/* Brand */}
             <div className="flex flex-col items-center md:items-start gap-3">
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full border-2 border-[#C59B27] flex items-center justify-center bg-white overflow-hidden">
-                  <img src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" className="w-full h-full object-contain p-0.5" />
+                <div className="flex items-center justify-center">
+                  <Image src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" width={200} height={50} className="object-contain" />
                 </div>
-                <div className="flex flex-col leading-none">
-                  <span className="text-[10px] text-white/50 tracking-wide">মিডিয়াম</span>
-                  <span className="font-extrabold text-[18px] text-white leading-tight">মেডজুল</span>
-                </div>
+             
               </div>
               <p className="text-sm text-white/60 leading-relaxed max-w-xs text-center md:text-left">
                 মিশরীয় প্রিমিয়াম মেডজুল খেজুর — বাংলাদেশের সেরা মানের সাথে।
