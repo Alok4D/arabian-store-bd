@@ -57,7 +57,7 @@ export default function WhyChooseMedjool() {
                 {r.icon}
               </div>
               <h3 className="font-bold text-[18px] md:text-[20px] text-[#2D251E] mb-2">{r.title}</h3>
-              <p className="text-[15px] md:text-[16px] text-[#555] leading-relaxed">{r.desc}</p>
+              <p className="text-[15px] md:text-[14px] text-[#555] leading-relaxed">{r.desc}</p>
             </div>
           ))}
         </div>

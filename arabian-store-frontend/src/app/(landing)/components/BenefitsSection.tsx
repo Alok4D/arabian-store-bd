@@ -20,7 +20,7 @@ const benefitsData: BenefitItem[] = [
 
 export default function BenefitsSection() {
   return (
-    <section className="w-full bg-[#FAF7F0] py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="w-full bg-[#F4F0E8] py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
         {/* Left Side: Benefits Content */}
@@ -44,7 +44,7 @@ export default function BenefitsSection() {
                 </div>
                 
                 {/* Benefit Copy Text */}
-                <span className="text-base sm:text-lg font-medium text-[#2D251E] group-hover:text-[#008013] transition-colors duration-150">
+                <span className="text-[17px] sm:text-[20px] md:text-[22px] font-semibold text-[#2D251E] group-hover:text-[#008013] transition-colors duration-150">
                   {benefit.text}
                 </span>
               </li>
@@ -54,7 +54,7 @@ export default function BenefitsSection() {
 
         {/* Right Side: Product Visual Element */}
         <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative w-full mt-8 lg:mt-0">
-          <div className="w-full relative scale-100 sm:scale-105 transition-transform duration-300">
+          <div className="w-full relative scale-100 sm:scale-110 md:scale-125 transition-transform duration-300">
             <Image
               src="/benefit-section-img.png"
               alt="Medjool Dates Bowl With Benefits"
@@ -62,6 +62,7 @@ export default function BenefitsSection() {
               height={800}
               className="w-full h-auto object-contain"
               priority
+              draggable={false}
             />
           </div>
         </div>
