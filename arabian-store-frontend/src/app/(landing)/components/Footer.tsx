@@ -59,13 +59,8 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="bg-[#132e1e] py-5 text-white/50 text-center text-sm border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-center">
           <p>© 2026 Arabian Store BD. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-xs">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Refund Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
-          </div>
         </div>
       </div>
 
