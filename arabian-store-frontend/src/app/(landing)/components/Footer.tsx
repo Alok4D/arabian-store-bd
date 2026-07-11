@@ -26,7 +26,7 @@ export function Footer() {
 
             {/* Contact */}
             <div className="flex flex-col items-center md:items-start gap-3">
-              <h3 className="font-bold text-lg text-[#C59B27]">অর্ডার করতে কল করুন</h3>
+              <h3 className="font-bold text-2xl text-[#C59B27]">অর্ডার করতে কল করুন</h3>
               <a href="tel:09666767673" className="flex items-center gap-2 hover:text-[#C59B27] transition-colors text-base font-semibold">
                 <div className="w-8 h-8 bg-[#C59B27] rounded-full flex items-center justify-center">
                   <Phone className="w-4 h-4 text-white fill-current" />
@@ -43,7 +43,7 @@ export function Footer() {
 
             {/* Address */}
             <div className="flex flex-col items-center md:items-start gap-3">
-              <h3 className="font-bold text-lg text-[#C59B27]">সরাসরি আউটলেট</h3>
+              <h3 className="font-bold text-2xl text-[#C59B27]">সরাসরি আউটলেট</h3>
               <div className="flex items-start gap-2 text-sm text-white/80 leading-relaxed">
                 <MapPin className="w-5 h-5 text-[#C59B27] flex-shrink-0 mt-0.5" />
                 <p>৪৩/২ পশ্চিম চৌধুরীপাড়া, মালিবাগ, ঢাকা।<br />
