@@ -149,10 +149,10 @@ export default function CheckoutPage() {
                 <div
                   key={product.id}
                   onClick={() => setSelectedProduct(product.id)}
-                  className={`relative flex items-center gap-4 p-4 md:p-5 cursor-pointer transition-all bg-white rounded-md border ${isSelected ? 'border-[#008013] shadow-[0_0_5px_rgba(0,128,19,0.3)]' : 'border-[#d1d5db] hover:border-[#008013]/50'}`}
+                  className={`relative flex items-center gap-2 sm:gap-4 p-3 sm:p-4 md:p-5 cursor-pointer transition-all bg-white rounded-md border ${isSelected ? 'border-[#008013] shadow-[0_0_5px_rgba(0,128,19,0.3)]' : 'border-[#d1d5db] hover:border-[#008013]/50'}`}
                 >
                   {Number(product.shippingFee) === 0 && (
-                    <div className="absolute right-0 top-0 bg-[#008013] text-white text-[11px] font-medium px-2 py-0.5 rounded-bl-md shadow-sm z-10">
+                    <div className="absolute right-0 top-0 bg-[#008013] text-white text-[10px] sm:text-[11px] font-medium px-1.5 sm:px-2 py-0.5 rounded-bl-md shadow-sm z-10">
                       ফ্রি ডেলিভারি
                     </div>
                   )}
@@ -161,7 +161,7 @@ export default function CheckoutPage() {
                     {isSelected && <div className="w-2 h-2 rounded-full bg-[#008013]" />}
                   </div>
                   {/* Image */}
-                  <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 bg-white">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex-shrink-0 bg-white">
                     <img
                       src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image) : "/banner-img/product-bannerr.jpeg"}
                       alt={product.title}
@@ -169,27 +169,27 @@ export default function CheckoutPage() {
                     />
                   </div>
                   {/* Info */}
-                  <div className="flex-1 flex flex-col justify-center">
-                    <p className="font-bold text-[14px] md:text-[15px] text-[#333] mb-1 leading-snug">{product.title}</p>
-                    <p className="text-[12px] md:text-[13px] text-[#777] leading-tight line-clamp-2">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
+                  <div className="flex-1 flex flex-col justify-center min-w-0">
+                    <p className="font-bold text-[13px] sm:text-[14px] md:text-[15px] text-[#333] mb-0.5 md:mb-1 leading-snug truncate whitespace-normal line-clamp-2">{product.title}</p>
+                    <p className="text-[11px] sm:text-[12px] md:text-[13px] text-[#777] leading-tight line-clamp-2">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
                   </div>
 
                   {/* Qty + Price (Right Side) */}
-                  <div className="flex flex-col items-end justify-center gap-2 flex-shrink-0 z-10 relative pl-1 sm:pl-2">
+                  <div className="flex flex-col items-end justify-center gap-1.5 sm:gap-2 flex-shrink-0 z-10 relative pl-0 sm:pl-2">
                     <div className="flex items-center border border-[#D5C9B8] rounded-md bg-white overflow-hidden shadow-sm">
                       <button
                         onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, -1); }}
-                        className="px-2 sm:px-2.5 py-0.5 sm:py-1 text-[#555] hover:bg-[#F4F0E8] text-sm sm:text-base font-bold transition-colors"
+                        className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[#555] hover:bg-[#F4F0E8] text-sm sm:text-base font-bold transition-colors"
                       >−</button>
-                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 border-x border-[#D5C9B8] text-[13px] sm:text-[14px] font-bold text-[#2D251E] min-w-[28px] sm:min-w-[32px] text-center">
+                      <span className="px-1.5 sm:px-3 py-0.5 sm:py-1 border-x border-[#D5C9B8] text-[12px] sm:text-[14px] font-bold text-[#2D251E] min-w-[24px] sm:min-w-[32px] text-center">
                         {quantities[product.id] || 1}
                       </span>
                       <button
                         onClick={(e) => { e.stopPropagation(); handleQuantityChange(product.id, 1); }}
-                        className="px-2 sm:px-2.5 py-0.5 sm:py-1 text-[#555] hover:bg-[#F4F0E8] text-sm sm:text-base font-bold transition-colors"
+                        className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[#555] hover:bg-[#F4F0E8] text-sm sm:text-base font-bold transition-colors"
                       >+</button>
                     </div>
-                    <span className="font-extrabold text-[15px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight">{Number(product.price).toLocaleString()}৳</span>
+                    <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight">{Number(product.price).toLocaleString()}৳</span>
                   </div>
                 </div>
               );
@@ -207,11 +207,11 @@ export default function CheckoutPage() {
               <div className="space-y-4">
                 <div>
                   <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার সম্পূর্ণ নাম লিখুন <span className="text-red-500">*</span></label>
-                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
+                  <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#008013] focus:ring-1 focus:ring-[#008013] text-[14px] bg-white text-[#333]" />
                 </div>
                   <div>
                   <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার জেলা <span className="text-red-500">*</span></label>
-                  <select value={district} onChange={e => setDistrict(e.target.value)} className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]">
+                  <select value={district} onChange={e => setDistrict(e.target.value)} className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#008013] focus:ring-1 focus:ring-[#008013] text-[14px] bg-white text-[#333]">
                     <option value="ঢাকা">ঢাকা</option>
                     <option value="ফরিদপুর">ফরিদপুর</option>
                     <option value="গাজীপুর">গাজীপুর</option>
@@ -280,11 +280,11 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <label className="block text-[13px] font-bold text-[#555] mb-1">সম্পূর্ণ ঠিকানা পূরণ করুন <span className="text-red-500">*</span></label>
-                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="থানা/শহর" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
+                  <input type="text" value={fullAddress} onChange={e => setFullAddress(e.target.value)} placeholder="থানা/শহর" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#008013] focus:ring-1 focus:ring-[#008013] text-[14px] bg-white text-[#333]" />
                 </div>
                 <div>
                   <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার ফোন নাম্বার <span className="text-red-500">*</span></label>
-                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="মোবাইল নাম্বার" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#f09e0a] text-[14px] bg-white text-[#333]" />
+                  <input type="tel" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} placeholder="মোবাইল নাম্বার" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#008013] focus:ring-1 focus:ring-[#008013] text-[14px] bg-white text-[#333]" />
                 </div>
               </div>
 
