@@ -18,7 +18,7 @@ export function Footer() {
                   <Image src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" width={240} height={60} className="object-contain w-[200px] md:w-[240px]" />
                 </div>
               </div>
-              <p className="text-sm text-white/60 leading-relaxed max-w-xs text-center md:text-left">
+              <p className="text-md text-white/60 leading-relaxed max-w-xs text-center md:text-left">
                 মিশরীয় প্রিমিয়াম মেডজুল খেজুর — বাংলাদেশের সেরা মানের সাথে।
               </p>
             </div>
@@ -43,7 +43,7 @@ export function Footer() {
             {/* Address */}
             <div className="flex flex-col items-center md:items-start gap-3">
               <h3 className="font-bold text-lg lg:text-xl text-[#C59B27]">সরাসরি আউটলেট</h3>
-              <div className="flex items-start gap-2 text-sm text-white/80 leading-relaxed">
+              <div className="flex items-start gap-2 text-md text-white/80 leading-relaxed">
                 <MapPin className="w-5 h-5 text-[#C59B27] flex-shrink-0 mt-0.5" />
                 <p>৪৩/২ পশ্চিম চৌধুরীপাড়া, মালিবাগ, ঢাকা।<br />
                   (আবুল হোটেল থেকে রামপুরার দিকে, উত্তরা ব্যাংকের অপজিটে, মধুবাগের গলি)</p>
