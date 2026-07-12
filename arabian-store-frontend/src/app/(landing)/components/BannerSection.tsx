@@ -24,7 +24,7 @@ export default function BannerSection() {
   return (
     <section className="bg-[#FAF7F2] w-full pb-16  md:pb-24 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-8 items-center">
 
           {/* Left Content */}
           <div className="order-2 lg:order-1 space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
