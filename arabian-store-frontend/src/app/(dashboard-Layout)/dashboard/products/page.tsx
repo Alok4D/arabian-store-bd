@@ -79,6 +79,7 @@ export default function ProductsPage() {
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Image</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Title</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Price</th>
+                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Discount</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Stock</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Shipping</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600 text-right">Actions</th>
@@ -98,6 +99,9 @@ export default function ProductsPage() {
                       </td>
                       <td className="py-3 px-4 font-medium text-neutral-800">{product.title}</td>
                       <td className="py-3 px-4 font-semibold text-[#009e19]">{Number(product.price).toLocaleString()}৳</td>
+                      <td className="py-3 px-4 font-semibold text-orange-500">
+                        {product.discountPrice ? `${Number(product.discountPrice).toLocaleString()}৳` : '-'}
+                      </td>
                       <td className="py-3 px-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${product.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                           {product.stock > 0 ? `${product.stock} In Stock` : 'Out of Stock'}

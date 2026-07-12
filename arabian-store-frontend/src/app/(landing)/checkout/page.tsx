@@ -55,7 +55,7 @@ export default function CheckoutPage() {
   }, []);
 
   const selectedProductData = products.find(p => p.id === selectedProduct);
-  const selectedProductPrice = selectedProductData ? Number(selectedProductData.price) : 0;
+  const selectedProductPrice = selectedProductData ? Number(selectedProductData.discountPrice || selectedProductData.price) : 0;
   const selectedProductQuantity = quantities[selectedProduct] || 1;
   const deliveryCharge = district === 'ঢাকা' || district === 'Dhaka' ? shippingSettings.insideDhaka : shippingSettings.outsideDhaka;
   const subtotal = selectedProductPrice * selectedProductQuantity;
@@ -189,7 +189,14 @@ export default function CheckoutPage() {
                         className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[#555] hover:bg-[#F4F0E8] text-sm sm:text-base font-bold transition-colors"
                       >+</button>
                     </div>
-                    <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight">{Number(product.price).toLocaleString()}৳</span>
+                    {product.discountPrice ? (
+                      <div className="flex flex-col items-end leading-none mt-1">
+                        <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight">{Number(product.discountPrice).toLocaleString()}৳</span>
+                        <span className="text-[11px] sm:text-[12px] text-gray-400 line-through">{Number(product.price).toLocaleString()}৳</span>
+                      </div>
+                    ) : (
+                      <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight mt-1">{Number(product.price).toLocaleString()}৳</span>
+                    )}
                   </div>
                 </div>
               );
@@ -320,7 +327,7 @@ export default function CheckoutPage() {
                     </div>
                     <span className="text-[14px] text-[#555] pr-2">{selectedProductData.title} × {quantities[selectedProduct] || 1}</span>
                   </div>
-                  <span className="text-[14px] text-[#555] font-medium whitespace-nowrap">৳ {(Number(selectedProductData.price) * (quantities[selectedProduct] || 1)).toLocaleString()}</span>
+                  <span className="text-[14px] text-[#555] font-medium whitespace-nowrap">৳ {(Number(selectedProductData.discountPrice || selectedProductData.price) * (quantities[selectedProduct] || 1)).toLocaleString()}</span>
                 </div>
               )}
 

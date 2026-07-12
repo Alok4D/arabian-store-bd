@@ -19,6 +19,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     slug: "",
     description: "",
     price: "",
+    discountPrice: "",
     weight: "",
     stock: "",
     shippingFee: ""
@@ -37,6 +38,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
             slug: product.slug || "",
             description: product.description || "",
             price: product.price ? product.price.toString() : "",
+            discountPrice: product.discountPrice ? product.discountPrice.toString() : "",
             weight: product.weight || "",
             stock: product.stock ? product.stock.toString() : "",
             shippingFee: product.shippingFee ? product.shippingFee.toString() : ""
@@ -83,6 +85,9 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       submitData.append("slug", formData.slug || generateSlug(formData.title));
       submitData.append("description", formData.description);
       submitData.append("price", formData.price);
+      if (formData.discountPrice) {
+        submitData.append("discountPrice", formData.discountPrice);
+      }
       submitData.append("weight", formData.weight);
       submitData.append("stock", formData.stock);
       submitData.append("shippingFee", formData.shippingFee);
@@ -173,7 +178,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-neutral-700">Price (৳) <span className="text-red-500">*</span></label>
                 <input 
@@ -183,6 +188,17 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   value={formData.price}
                   onChange={handleChange}
                   placeholder="e.g. 1650"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-neutral-700">Discount Price (৳)</label>
+                <input 
+                  type="number" 
+                  name="discountPrice"
+                  value={formData.discountPrice}
+                  onChange={handleChange}
+                  placeholder="e.g. 1500"
                   className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
                 />
               </div>

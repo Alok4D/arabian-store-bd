@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Package, Lock, Mail, Loader2 } from 'lucide-react';
 import Cookies from 'js-cookie';
 import '../../globals.css';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@arabianstore.com');
@@ -45,21 +46,23 @@ export default function LoginPage() {
     <div className="min-h-screen flex bg-gray-50">
       {/* Left Side - Image */}
       <div className="hidden lg:flex w-1/2 bg-[#e35a34] relative overflow-hidden items-center justify-center">
-        <div className="absolute inset-0 bg-black/30 z-10" />
-        <img 
-          src="/medjool-dates.png" 
-          alt="Login Background" 
+        <div className="absolute inset-0 z-10" />
+        <img
+          src="/medjool-texture.png"
+          alt="Login Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="relative z-20 text-center text-white px-12">
-          <Package className="w-16 h-16 mx-auto mb-6 opacity-90" />
-          <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-white">
+        {/* <div className="relative z-20 text-center text-white px-12 flex flex-col items-center">
+          <div className="flex items-center justify-center mb-8">
+            <img src="/single-logo.jpg" alt="Arabian Store" className="object-contain w-[120px] md:w-[150px] rounded-full shadow-lg border-2 border-white/50" />
+          </div>
+          <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
             Arabian Store Dashboard
           </h1>
-          <p className="text-lg text-white/90 max-w-md mx-auto leading-relaxed">
+          <p className="text-lg text-white/95 max-w-md mx-auto leading-relaxed drop-shadow-md">
             Manage your premium dates, track orders, and interact with customers from one secure place.
           </p>
-        </div>
+        </div> */}
       </div>
 
       {/* Right Side - Form */}
@@ -84,7 +87,7 @@ export default function LoginPage() {
                   {error}
                 </div>
               )}
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Email address
