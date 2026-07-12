@@ -1,10 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useGetProductsQuery, useDeleteProductMutation } from "@/lib/feature/products/productsApi";
+
+interface Product {
+  id: string;
+  title: string;
+  price: number | string;
+  discountPrice?: number | string | null;
+  stock: number;
+  shippingFee: number | string;
+  image?: string | null;
+}
 
 export default function ProductsPage() {
   const { data, isLoading } = useGetProductsQuery({});
@@ -62,7 +71,7 @@ export default function ProductsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product) => (
+                  {products.map((product: Product) => (
                     <tr key={product.id} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
                       <td className="py-3 px-4">
                         <div className="w-12 h-12 rounded bg-white border flex items-center justify-center overflow-hidden">

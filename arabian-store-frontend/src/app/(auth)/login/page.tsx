@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Package, Lock, Mail, Loader2 } from 'lucide-react';
+import { Package, Lock, Mail, Loader2, Eye, EyeOff } from 'lucide-react';
 import Cookies from 'js-cookie';
 import '../../globals.css';
 import Image from 'next/image';
@@ -14,6 +14,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('admin@arabianstore.com');
   const [password, setPassword] = useState('admin123');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
@@ -51,17 +52,6 @@ export default function LoginPage() {
           alt="Login Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* <div className="relative z-20 text-center text-white px-12 flex flex-col items-center">
-          <div className="flex items-center justify-center mb-8 bg-white p-2 rounded-full">
-            <img src="/single-logo.jpg" alt="Arabian Store" className="object-contain w-[120px] md:w-[150px] rounded-full shadow-lg border-2 border-white/50" />
-          </div>
-          <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
-            Arabian Store Dashboard
-          </h1>
-          <p className="text-lg text-white/95 max-w-md mx-auto leading-relaxed drop-shadow-md">
-            Manage your premium dates, track orders, and interact with customers from one secure place.
-          </p>
-        </div> */}
       </div>
 
       {/* Right Side - Form */}
@@ -115,13 +105,26 @@ export default function LoginPage() {
                     <Lock className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="focus:ring-[#e35a34] focus:border-[#e35a34] block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-3 border outline-none"
+                    className="focus:ring-[#e35a34] focus:border-[#e35a34] block w-full pl-10 pr-10 sm:text-sm border-gray-300 rounded-md py-3 border outline-none"
                     placeholder="••••••••"
                   />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
 

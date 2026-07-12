@@ -1,15 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
 import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from "@/lib/feature/orders/ordersApi";
+
+interface Order {
+  id: string;
+  orderId: string;
+  createdAt: string;
+  customerName: string;
+  phone: string;
+  address?: string;
+  product?: { title: string };
+  quantity: number;
+  total: number;
+  status: string;
+}
 
 export default function OrdersPage() {
   const { data, isLoading } = useGetOrdersQuery({});
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
   const [deleteOrder] = useDeleteOrderMutation();
-  const orders = data?.data || [];
+  const orders: Order[] = data?.data || [];
 
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {

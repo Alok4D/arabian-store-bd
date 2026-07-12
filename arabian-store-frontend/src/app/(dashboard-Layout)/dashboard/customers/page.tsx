@@ -5,6 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserIcon } from "lucide-react";
 import { useGetCustomersQuery } from "@/lib/feature/customers/customersApi";
 
+interface Customer {
+  id: string | number;
+  name: string;
+  phone: string;
+  address: string;
+  totalOrders: number;
+  totalSpent: number | string;
+  lastOrderDate: string;
+}
+
 export default function CustomersPage() {
   const { data, isLoading } = useGetCustomersQuery({});
   const customers = data?.data || [];
@@ -40,7 +50,7 @@ export default function CustomersPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {customers.map((customer) => (
+                  {customers.map((customer: Customer) => (
                     <tr key={customer.id} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
                       <td className="py-4 px-4 font-bold text-neutral-800">{customer.name}</td>
                       <td className="py-4 px-4 text-neutral-600 font-medium">{customer.phone}</td>
