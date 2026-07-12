@@ -47,9 +47,10 @@ export default function LoginPage() {
       {/* Left Side - Image */}
       <div className="hidden lg:flex w-1/2 bg-[#e35a34] relative overflow-hidden items-center justify-center">
         <div className="absolute inset-0 z-10" />
-        <img
+        <Image
           src="/medjool-texture.png"
           alt="Login Background"
+          fill
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
