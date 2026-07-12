@@ -6,7 +6,14 @@ export const customersApi = baseApi.injectEndpoints({
       query: () => '/customers',
       providesTags: ['Customers'],
     }),
+    deleteCustomer: builder.mutation({
+      query: (phone) => ({
+        url: `/customers/${phone}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Customers'],
+    }),
   }),
 });
 
-export const { useGetCustomersQuery } = customersApi;
+export const { useGetCustomersQuery, useDeleteCustomerMutation } = customersApi;

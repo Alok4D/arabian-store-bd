@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { getAllCustomers } from './customer.controller.js';
+import { getAllCustomers, deleteCustomer } from './customer.controller.js';
 
 const router = Router();
 
 router.get('/', getAllCustomers);
+router.delete('/:phone', deleteCustomer);
 
 export const CustomerRoutes = router;

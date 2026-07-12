@@ -28,4 +28,13 @@ export const CustomerService = {
 
     return Array.from(customersMap.values());
   },
+
+  async deleteCustomerByPhone(phone: string) {
+    if (!phone) throw new Error('Phone number is required');
+    // Since we don't have a Customer table, we delete all orders associated with this phone
+    const deleted = await prisma.order.deleteMany({
+      where: { phone },
+    });
+    return deleted;
+  },
 };

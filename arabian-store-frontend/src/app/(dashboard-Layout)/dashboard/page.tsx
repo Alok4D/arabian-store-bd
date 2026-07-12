@@ -38,10 +38,10 @@ export default function DashboardPage() {
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="border border-neutral-200 rounded-xl p-6 space-y-4">
                 <div className="flex justify-between items-center">
-                  <div className="h-4 w-24 bg-neutral-200 rounded" />
-                  <div className="h-4 w-4 bg-neutral-200 rounded-full" />
+                  <div className="h-5 w-24 bg-neutral-200 rounded" />
+                  <div className="h-6 w-6 bg-neutral-200 rounded-full" />
                 </div>
-                <div className="h-8 w-16 bg-neutral-100 rounded" />
+                <div className="h-10 w-24 bg-neutral-100 rounded" />
                 <div className="h-3 w-32 bg-neutral-100 rounded" />
               </div>
             ))}
@@ -69,45 +69,45 @@ export default function DashboardPage() {
         <>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-600">Total Revenue</CardTitle>
-                <DollarSign className="h-4 w-4 text-[#009e19]" />
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-base font-medium text-neutral-600">Total Revenue</CardTitle>
+                <DollarSign className="h-6 w-6 text-[#009e19]" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-neutral-800">৳{overview.totalRevenue.toLocaleString()}</div>
+                <div className="text-4xl font-bold text-neutral-800 tracking-tight">৳{overview.totalRevenue.toLocaleString()}</div>
                 <p className="text-xs text-neutral-500 mt-1">From all non-cancelled orders</p>
               </CardContent>
             </Card>
             
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-600">Orders</CardTitle>
-                <Receipt className="h-4 w-4 text-[#009e19]" />
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-base font-medium text-neutral-600">Orders</CardTitle>
+                <Receipt className="h-6 w-6 text-[#009e19]" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-neutral-800">{overview.totalOrders}</div>
+                <div className="text-4xl font-bold text-neutral-800 tracking-tight">{overview.totalOrders}</div>
                 <p className="text-xs text-[#009e19] mt-1">{overview.pendingOrders} Pending</p>
               </CardContent>
             </Card>
             
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-600">Products</CardTitle>
-                <Package className="h-4 w-4 text-[#009e19]" />
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-base font-medium text-neutral-600">Products</CardTitle>
+                <Package className="h-6 w-6 text-[#009e19]" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-neutral-800">{overview.totalProducts}</div>
+                <div className="text-4xl font-bold text-neutral-800 tracking-tight">{overview.totalProducts}</div>
                 <p className="text-xs text-neutral-500 mt-1">Active products</p>
               </CardContent>
             </Card>
             
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-neutral-600">Delivered</CardTitle>
-                <Users className="h-4 w-4 text-[#009e19]" />
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-base font-medium text-neutral-600">Delivered</CardTitle>
+                <Users className="h-6 w-6 text-[#009e19]" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-neutral-800">{overview.deliveredOrders}</div>
+                <div className="text-4xl font-bold text-neutral-800 tracking-tight">{overview.deliveredOrders}</div>
                 <p className="text-xs text-neutral-500 mt-1">Successfully delivered</p>
               </CardContent>
             </Card>
@@ -127,7 +127,7 @@ export default function DashboardPage() {
                       <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#888' }} dx={-10} tickFormatter={(val) => `৳${val}`} />
                       <Tooltip 
                         contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                        formatter={(value: number) => [`৳${value}`, 'Revenue']}
+                        formatter={(value: any) => [`৳${value}`, 'Revenue']}
                         labelStyle={{ color: '#888', marginBottom: '4px' }}
                       />
                       <Line type="monotone" dataKey="revenue" stroke="#009e19" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
