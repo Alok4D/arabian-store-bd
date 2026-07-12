@@ -84,7 +84,7 @@ export default function CreateProductPage() {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl">
+    <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
       <Card className="border-[#faecd8]">
         <CardHeader>
           <CardTitle className="text-[#a46404]">Product Information</CardTitle>
