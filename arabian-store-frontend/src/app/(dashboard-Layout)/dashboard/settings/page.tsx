@@ -1,8 +1,10 @@
 "use client";
 
+import Swal from "sweetalert2";
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Settings, User, Lock, Save, Camera, Truck } from "lucide-react";
+import { Settings, User, Lock, Save, Camera, Truck, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGetProfileQuery, useUpdateProfileMutation, useUpdatePasswordMutation } from "@/lib/feature/auth/authApi";
 import { useGetShippingQuery, useUpdateShippingMutation } from "@/lib/feature/shipping/shippingApi";
@@ -18,6 +20,9 @@ export default function SettingsPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [passwordData, setPasswordData] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [shippingData, setShippingData] = useState({ insideDhaka: 80, outsideDhaka: 130 });
   const [shippingSaving, setShippingSaving] = useState(false);
@@ -82,15 +87,31 @@ export default function SettingsPage() {
       const data = await updateProfile(formData).unwrap();
       
       if (data.success) {
-        alert("Profile updated successfully!");
-        // Update local storage if necessary, then refresh page to apply layout changes
-        window.location.reload(); 
+        await Swal.fire({
+          icon: "success",
+          title: "Profile Updated!",
+          text: "Your profile has been updated successfully.",
+          confirmButtonColor: "#009e19",
+          timer: 2000,
+          timerProgressBar: true,
+        });
+        window.location.reload();
       } else {
-        alert(data.message || "Failed to update profile");
+        Swal.fire({
+          icon: "error",
+          title: "Failed!",
+          text: data.message || "Failed to update profile",
+          confirmButtonColor: "#d33",
+        });
       }
     } catch (error: any) {
       console.error(error);
-      alert(error?.data?.message || "Error updating profile");
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error?.data?.message || "Error updating profile",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setProfileSaving(false);
     }
@@ -99,7 +120,12 @@ export default function SettingsPage() {
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert("New password and confirm password do not match!");
+      Swal.fire({
+        icon: "warning",
+        title: "Password Mismatch!",
+        text: "New password and confirm password do not match.",
+        confirmButtonColor: "#d33",
+      });
       return;
     }
     setPasswordSaving(true);
@@ -110,14 +136,31 @@ export default function SettingsPage() {
       }).unwrap();
       
       if (data.success) {
-        alert("Password updated successfully! Please login again.");
-        router.push("/login"); // Force login after password change
+        await Swal.fire({
+          icon: "success",
+          title: "Password Updated!",
+          text: "Your password has been changed. Please login again.",
+          confirmButtonColor: "#009e19",
+          timer: 2500,
+          timerProgressBar: true,
+        });
+        router.push("/login");
       } else {
-        alert(data.message || "Failed to update password");
+        Swal.fire({
+          icon: "error",
+          title: "Failed!",
+          text: data.message || "Failed to update password",
+          confirmButtonColor: "#d33",
+        });
       }
     } catch (error: any) {
       console.error(error);
-      alert(error?.data?.message || "Error updating password");
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error?.data?.message || "Error updating password",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setPasswordSaving(false);
     }
@@ -133,13 +176,30 @@ export default function SettingsPage() {
       }).unwrap();
       
       if (data.success) {
-        alert("Shipping settings updated successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Shipping Updated!",
+          text: "Shipping settings have been updated successfully.",
+          confirmButtonColor: "#2563eb",
+          timer: 2000,
+          timerProgressBar: true,
+        });
       } else {
-        alert(data.message || "Failed to update shipping settings");
+        Swal.fire({
+          icon: "error",
+          title: "Failed!",
+          text: data.message || "Failed to update shipping settings",
+          confirmButtonColor: "#d33",
+        });
       }
     } catch (error: any) {
       console.error(error);
-      alert(error?.data?.message || "Error updating shipping settings");
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error?.data?.message || "Error updating shipping settings",
+        confirmButtonColor: "#d33",
+      });
     } finally {
       setShippingSaving(false);
     }
@@ -238,41 +298,71 @@ export default function SettingsPage() {
             <form onSubmit={handleUpdatePassword} className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-neutral-700">Current Password</label>
-                <input 
-                  type="password" 
-                  name="oldPassword"
-                  required
-                  value={passwordData.oldPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="Enter current password"
-                  className="w-full p-2 border rounded-md outline-none focus:border-red-500 bg-neutral-50"
-                />
+                <div className="relative">
+                  <input 
+                    type={showOldPassword ? "text" : "password"}
+                    name="oldPassword"
+                    required
+                    value={passwordData.oldPassword}
+                    onChange={handlePasswordChange}
+                    placeholder="Enter current password"
+                    className="w-full p-2 pr-10 border rounded-md outline-none focus:border-red-500 bg-neutral-50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowOldPassword(!showOldPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showOldPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-neutral-700">New Password</label>
-                <input 
-                  type="password" 
-                  name="newPassword"
-                  required
-                  minLength={6}
-                  value={passwordData.newPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="Enter new password"
-                  className="w-full p-2 border rounded-md outline-none focus:border-red-500 bg-neutral-50"
-                />
+                <div className="relative">
+                  <input 
+                    type={showNewPassword ? "text" : "password"}
+                    name="newPassword"
+                    required
+                    minLength={6}
+                    value={passwordData.newPassword}
+                    onChange={handlePasswordChange}
+                    placeholder="Enter new password"
+                    className="w-full p-2 pr-10 border rounded-md outline-none focus:border-red-500 bg-neutral-50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-neutral-700">Confirm New Password</label>
-                <input 
-                  type="password" 
-                  name="confirmPassword"
-                  required
-                  minLength={6}
-                  value={passwordData.confirmPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="Confirm new password"
-                  className="w-full p-2 border rounded-md outline-none focus:border-red-500 bg-neutral-50"
-                />
+                <div className="relative">
+                  <input 
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    required
+                    minLength={6}
+                    value={passwordData.confirmPassword}
+                    onChange={handlePasswordChange}
+                    placeholder="Confirm new password"
+                    className="w-full p-2 pr-10 border rounded-md outline-none focus:border-red-500 bg-neutral-50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
               <button 
                 type="submit" 

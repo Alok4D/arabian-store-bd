@@ -1,9 +1,22 @@
-{
+﻿{
   "info": {
     "_postman_id": "c1f7a188-75c6-474c-83b8-3e5f27150a00",
     "name": "Arabian Store BD API",
+    "description": "Complete API collection for Arabian Store BD backend. Base URL: http://localhost:5000/api",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
   "item": [
     {
       "name": "Auth",
@@ -12,29 +25,71 @@
           "name": "Admin Login",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n    \"email\": \"admin@arabianstore.com\",\n    \"password\": \"admin123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/login",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "auth",
-                "login"
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login as admin and receive a JWT token."
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "profile"]
+            },
+            "description": "Get the admin profile information."
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Admin Name", "type": "text" },
+                { "key": "email", "value": "admin@arabianstore.com", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
               ]
-            }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "profile"]
+            },
+            "description": "Update admin name, email, and optionally upload a profile image."
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"oldPassword\": \"admin123\",\n    \"newPassword\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/password",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "password"]
+            },
+            "description": "Change admin password. Requires current (old) password."
           }
         }
       ]
@@ -48,17 +103,11 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/api/products",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "products"
-              ]
-            }
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "Retrieve a list of all products."
           }
         },
         {
@@ -67,137 +116,76 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/api/products/PRODUCT_ID",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "products",
-                "PRODUCT_ID"
-              ]
-            }
+              "raw": "{{base_url}}/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id"],
+              "variable": [{ "key": "id", "value": "PRODUCT_ID" }]
+            },
+            "description": "Retrieve a single product by its ID."
           }
         },
         {
           "name": "Create Product",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "body": {
               "mode": "formdata",
               "formdata": [
-                {
-                  "key": "title",
-                  "value": "1 কেজি মিসরীয় মেডজুল খেজুর",
-                  "type": "text"
-                },
-                {
-                  "key": "slug",
-                  "value": "1kg-medjool",
-                  "type": "text"
-                },
-                {
-                  "key": "description",
-                  "value": "Premium Medjool Dates",
-                  "type": "text"
-                },
-                {
-                  "key": "price",
-                  "value": "1650",
-                  "type": "text"
-                },
-                {
-                  "key": "weight",
-                  "value": "1 KG",
-                  "type": "text"
-                },
-                {
-                  "key": "stock",
-                  "value": "200",
-                  "type": "text"
-                },
-                {
-                  "key": "shippingFee",
-                  "value": "130",
-                  "type": "text"
-                },
-                {
-                  "key": "image",
-                  "type": "file",
-                  "src": []
-                }
+                { "key": "title", "value": "1 kg Medjool Dates", "type": "text" },
+                { "key": "slug", "value": "1kg-medjool", "type": "text" },
+                { "key": "description", "value": "Premium Medjool Dates from Egypt", "type": "text" },
+                { "key": "price", "value": "1650", "type": "text" },
+                { "key": "weight", "value": "1 KG", "type": "text" },
+                { "key": "stock", "value": "200", "type": "text" },
+                { "key": "shippingFee", "value": "130", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
               ]
             },
             "url": {
-              "raw": "http://localhost:5000/api/products",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "products"
-              ]
-            }
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "Create a new product. Accepts multipart/form-data with an optional image file."
           }
         },
         {
           "name": "Update Product",
           "request": {
             "method": "PATCH",
-            "header": [],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "body": {
               "mode": "formdata",
               "formdata": [
-                {
-                  "key": "stock",
-                  "value": "150",
-                  "type": "text"
-                },
-                {
-                  "key": "image",
-                  "type": "file",
-                  "src": []
-                }
+                { "key": "title", "value": "Updated Product Title", "type": "text" },
+                { "key": "price", "value": "1800", "type": "text" },
+                { "key": "stock", "value": "150", "type": "text" },
+                { "key": "shippingFee", "value": "130", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
               ]
             },
             "url": {
-              "raw": "http://localhost:5000/api/products/PRODUCT_ID",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "products",
-                "PRODUCT_ID"
-              ]
-            }
+              "raw": "{{base_url}}/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id"],
+              "variable": [{ "key": "id", "value": "PRODUCT_ID" }]
+            },
+            "description": "Update a product by ID. All fields optional. Accepts multipart/form-data."
           }
         },
         {
           "name": "Delete Product",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "url": {
-              "raw": "http://localhost:5000/api/products/PRODUCT_ID",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "products",
-                "PRODUCT_ID"
-              ]
-            }
+              "raw": "{{base_url}}/products/:id",
+              "host": ["{{base_url}}"],
+              "path": ["products", ":id"],
+              "variable": [{ "key": "id", "value": "PRODUCT_ID" }]
+            },
+            "description": "Delete a product by ID."
           }
         }
       ]
@@ -209,47 +197,44 @@
           "name": "Create Order",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n    \"customerName\": \"John Doe\",\n    \"phone\": \"01700000000\",\n    \"whatsapp\": \"01700000000\",\n    \"address\": \"Dhaka, Bangladesh\",\n    \"note\": \"Deliver fast\",\n    \"quantity\": 2,\n    \"subtotal\": 3300,\n    \"shippingFee\": 130,\n    \"total\": 3430,\n    \"paymentMethod\": \"COD\",\n    \"productId\": \"PRODUCT_ID\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/orders",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "orders"
-              ]
-            }
+              "raw": "{{base_url}}/orders",
+              "host": ["{{base_url}}"],
+              "path": ["orders"]
+            },
+            "description": "Place a new customer order. No authentication required (public endpoint)."
           }
         },
         {
           "name": "Get All Orders",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "url": {
-              "raw": "http://localhost:5000/api/orders",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "orders"
-              ]
-            }
+              "raw": "{{base_url}}/orders",
+              "host": ["{{base_url}}"],
+              "path": ["orders"]
+            },
+            "description": "Retrieve all orders (admin only)."
+          }
+        },
+        {
+          "name": "Get Order By ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/orders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id"],
+              "variable": [{ "key": "id", "value": "ORDER_ID" }]
+            },
+            "description": "Retrieve a single order by its ID."
           }
         },
         {
@@ -257,29 +242,90 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n    \"status\": \"CONFIRMED\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/orders/ORDER_ID/status",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "orders",
-                "ORDER_ID",
-                "status"
-              ]
-            }
+              "raw": "{{base_url}}/orders/:id/status",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id", "status"],
+              "variable": [{ "key": "id", "value": "ORDER_ID" }]
+            },
+            "description": "Update order status. Values: PENDING, CONFIRMED, PACKAGING, SHIPPED, DELIVERED, CANCELLED."
+          }
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/orders/:id",
+              "host": ["{{base_url}}"],
+              "path": ["orders", ":id"],
+              "variable": [{ "key": "id", "value": "ORDER_ID" }]
+            },
+            "description": "Delete an order by ID (admin only)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/customers",
+              "host": ["{{base_url}}"],
+              "path": ["customers"]
+            },
+            "description": "Retrieve all unique customers derived from orders (admin only)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipping",
+      "item": [
+        {
+          "name": "Get Shipping Settings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/shipping",
+              "host": ["{{base_url}}"],
+              "path": ["shipping"]
+            },
+            "description": "Get current shipping fee settings (insideDhaka and outsideDhaka)."
+          }
+        },
+        {
+          "name": "Update Shipping Settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"insideDhaka\": 80,\n    \"outsideDhaka\": 130\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/shipping",
+              "host": ["{{base_url}}"],
+              "path": ["shipping"]
+            },
+            "description": "Update shipping fees for inside and outside Dhaka (admin only)."
           }
         }
       ]
@@ -291,20 +337,13 @@
           "name": "Overview Metrics",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "url": {
-              "raw": "http://localhost:5000/api/dashboard/overview",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5000",
-              "path": [
-                "api",
-                "dashboard",
-                "overview"
-              ]
-            }
+              "raw": "{{base_url}}/dashboard/overview",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard", "overview"]
+            },
+            "description": "Get dashboard overview: total orders, revenue, customers, products, and recent orders."
           }
         }
       ]
