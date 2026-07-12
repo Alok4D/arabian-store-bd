@@ -15,7 +15,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState('admin@arabianstore.com');
   const [password, setPassword] = useState('admin123');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
 
