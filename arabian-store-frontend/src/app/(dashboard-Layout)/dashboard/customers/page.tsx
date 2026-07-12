@@ -3,29 +3,11 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserIcon } from "lucide-react";
+import { useGetCustomersQuery } from "@/lib/feature/customers/customersApi";
 
 export default function CustomersPage() {
-  const [customers, setCustomers] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchCustomers = async () => {
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/customers`);
-      const data = await res.json();
-      if (data.success) {
-        setCustomers(data.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch customers", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
+  const { data, isLoading } = useGetCustomersQuery({});
+  const customers = data?.data || [];
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">

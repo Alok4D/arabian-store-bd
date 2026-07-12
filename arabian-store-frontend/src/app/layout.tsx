@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_Bengali } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
+import { ReduxProvider } from '@/components/providers/ReduxProvider';
 import './globals.css';
 
 const notoSansBengali = Noto_Sans_Bengali({ 
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="bn">
       <body className={notoSansBengali.className}>
-        {children}
-        {/* <FloatingContact /> */}
-        <Toaster position="top-center" />
+        <ReduxProvider>
+          {children}
+          {/* <FloatingContact /> */}
+          <Toaster position="top-center" />
+        </ReduxProvider>
       </body>
     </html>
   );

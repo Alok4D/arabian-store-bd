@@ -4,48 +4,24 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useGetProductsQuery, useDeleteProductMutation } from "@/lib/feature/products/productsApi";
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-
-  const fetchProducts = async () => {
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/products`);
-      const data = await res.json();
-      if (data.success) {
-        setProducts(data.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch products", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { data, isLoading } = useGetProductsQuery({});
+  const [deleteProduct] = useDeleteProductMutation();
+  const products = data?.data || [];
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/products/${id}`, {
-        method: "DELETE"
-      });
-      const data = await res.json();
-      if (data.success) {
-        fetchProducts(); // Refresh list
-      } else {
+      const res = await deleteProduct(id).unwrap();
+      if (!res.success) {
         alert("Failed to delete product");
       }
     } catch (error) {
       console.error("Delete error:", error);
+      alert("Failed to delete product");
     }
   };
 

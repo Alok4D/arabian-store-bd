@@ -6,39 +6,38 @@ import { Package, Lock, Mail, Loader2 } from 'lucide-react';
 import Cookies from 'js-cookie';
 import '../../globals.css';
 import Image from 'next/image';
+import { useLoginMutation } from '@/lib/feature/auth/authApi';
+import { useAppDispatch } from '@/lib/hooks/redux';
+import { setUser } from '@/lib/feature/auth/authSlice';
 
 export default function LoginPage() {
+
   const [email, setEmail] = useState('admin@arabianstore.com');
   const [password, setPassword] = useState('admin123');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
 
+  const [login, { isLoading: isLoggingIn }] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
+      const data = await login({ email, password }).unwrap();
 
       if (data.success) {
         Cookies.set('admin_token', data.token, { expires: 1 });
+        dispatch(setUser({ token: data.token }));
         router.push('/dashboard');
         router.refresh();
       } else {
         setError(data.message || 'Login failed');
       }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    } finally {
-      setLoading(false);
+    } catch (err: any) {
+      setError(err?.data?.message || 'An error occurred. Please try again.');
     }
   };
 
@@ -53,7 +52,7 @@ export default function LoginPage() {
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* <div className="relative z-20 text-center text-white px-12 flex flex-col items-center">
-          <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center justify-center mb-8 bg-white p-2 rounded-full">
             <img src="/single-logo.jpg" alt="Arabian Store" className="object-contain w-[120px] md:w-[150px] rounded-full shadow-lg border-2 border-white/50" />
           </div>
           <h1 className="text-4xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
@@ -129,10 +128,10 @@ export default function LoginPage() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={isLoggingIn}
                   className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-[#e35a34] hover:bg-[#d04925] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e35a34] disabled:opacity-50 transition-colors"
                 >
-                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Sign in to Dashboard'}
+                  {isLoggingIn ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Sign in to Dashboard'}
                 </button>
               </div>
             </form>

@@ -24,6 +24,7 @@ import {
   Settings,
   Package
 } from "lucide-react";
+import { useGetProfileQuery } from "@/lib/feature/auth/authApi";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -33,25 +34,17 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   const [user, setUser] = useState({ name: "Admin", role: "admin", avatar: "" });
 
+  const { data: profileData } = useGetProfileQuery({});
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const res = await fetch(`${apiUrl}/auth/profile`);
-        const data = await res.json();
-        if (data.success && data.data) {
-          setUser({
-            name: data.data.name || "Admin",
-            role: "admin",
-            avatar: data.data.image || ""
-          });
-        }
-      } catch (error) {
-        console.error("Failed to fetch admin profile", error);
-      }
-    };
-    fetchProfile();
-  }, []);
+    if (profileData?.success && profileData?.data) {
+      setUser({
+        name: profileData.data.name || "Admin",
+        role: "admin",
+        avatar: profileData.data.image || ""
+      });
+    }
+  }, [profileData]);
 
   useEffect(() => {
     const checkScreenSize = () => {

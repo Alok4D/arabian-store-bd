@@ -3,48 +3,23 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
+import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from "@/lib/feature/orders/ordersApi";
 
 export default function OrdersPage() {
-  
-  const [orders, setOrders] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchOrders = async () => {
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/orders`);
-      const data = await res.json();
-      if (data.success) {
-        setOrders(data.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch orders", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  const { data, isLoading } = useGetOrdersQuery({});
+  const [updateOrderStatus] = useUpdateOrderStatusMutation();
+  const [deleteOrder] = useDeleteOrderMutation();
+  const orders = data?.data || [];
 
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/orders/${id}/status`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus })
-      });
-      const data = await res.json();
-      if (data.success) {
-        // Optimistic update
-        setOrders(orders.map(order => order.id === id ? { ...order, status: newStatus } : order));
-      } else {
+      const res = await updateOrderStatus({ id, status: newStatus }).unwrap();
+      if (!res.success) {
         alert("Failed to update status");
       }
     } catch (error) {
       console.error("Update error:", error);
+      alert("Failed to update status");
     }
   };
 
@@ -52,18 +27,13 @@ export default function OrdersPage() {
     if (!confirm("Are you sure you want to delete this order?")) return;
     
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/orders/${id}`, {
-        method: "DELETE"
-      });
-      const data = await res.json();
-      if (data.success) {
-        fetchOrders(); // Refresh list
-      } else {
+      const res = await deleteOrder(id).unwrap();
+      if (!res.success) {
         alert("Failed to delete order");
       }
     } catch (error) {
       console.error("Delete error:", error);
+      alert("Failed to delete order");
     }
   };
 

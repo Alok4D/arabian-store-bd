@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { Lock, ShieldCheck, Truck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useGetProductsQuery } from '@/lib/feature/products/productsApi';
+import { useGetShippingQuery } from '@/lib/feature/shipping/shippingApi';
+import { useCreateOrderMutation } from '@/lib/feature/orders/ordersApi';
 
 export default function CheckoutPage() {
 
@@ -10,8 +13,6 @@ export default function CheckoutPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingProducts, setLoadingProducts] = useState(true);
 
   // Form State
   const [fullName, setFullName] = useState('');
@@ -23,36 +24,35 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [errorMessage, setErrorMessage] = useState('');
 
+  const { data: productsData, isLoading: loadingProducts } = useGetProductsQuery({});
+  const { data: shippingData } = useGetShippingQuery({});
+  const [createOrder, { isLoading: isCreatingOrder }] = useCreateOrderMutation();
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const res = await fetch(`${apiUrl}/products`);
-        const data = await res.json();
-        if (data.success && data.data.length > 0) {
-          const activeProducts = data.data.filter((p: any) => p.isActive);
-          setProducts(activeProducts);
-          setSelectedProduct(activeProducts[0]?.id || data.data[0].id);
-          const initialQuantities: Record<string, number> = {};
-          data.data.forEach((p: any) => { initialQuantities[p.id] = 1; });
-          setQuantities(initialQuantities);
-          const shipRes = await fetch(`${apiUrl}/shipping`);
-          const shipData = await shipRes.json();
-          if (shipData.success && shipData.data) {
-            setShippingSettings({
-              insideDhaka: Number(shipData.data.insideDhaka),
-              outsideDhaka: Number(shipData.data.outsideDhaka)
-            });
-          }
-        }
-      } catch (error) {
-        console.error("Failed to load data", error);
-      } finally {
-        setLoadingProducts(false);
+    if (productsData?.success && productsData?.data?.length > 0) {
+      const activeProducts = productsData.data.filter((p: any) => p.isActive);
+      setProducts(activeProducts);
+      if (activeProducts.length > 0 && !selectedProduct) {
+        setSelectedProduct(activeProducts[0].id);
       }
-    };
-    fetchProducts();
-  }, []);
+      
+      const initialQuantities: Record<string, number> = {};
+      productsData.data.forEach((p: any) => { initialQuantities[p.id] = 1; });
+      // Only set if quantities is empty to preserve user changes
+      if (Object.keys(quantities).length === 0) {
+        setQuantities(initialQuantities);
+      }
+    }
+  }, [productsData]);
+
+  useEffect(() => {
+    if (shippingData?.success && shippingData?.data) {
+      setShippingSettings({
+        insideDhaka: Number(shippingData.data.insideDhaka),
+        outsideDhaka: Number(shippingData.data.outsideDhaka)
+      });
+    }
+  }, [shippingData]);
 
   const selectedProductData = products.find(p => p.id === selectedProduct);
   const selectedProductPrice = selectedProductData ? Number(selectedProductData.discountPrice || selectedProductData.price) : 0;
@@ -67,37 +67,29 @@ export default function CheckoutPage() {
       return;
     }
     setErrorMessage('');
-    setIsLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/orders`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName: fullName,
-          phone: mobileNumber,
-          whatsapp: whatsappNumber,
-          district,
-          address: fullAddress + ', ' + district,
-          quantity: selectedProductQuantity,
-          subtotal,
-          shippingFee: deliveryCharge,
-          total: totalPrice,
-          paymentMethod,
-          productId: selectedProduct
-        })
-      });
-      const data = await res.json();
+      const data = await createOrder({
+        customerName: fullName,
+        phone: mobileNumber,
+        whatsapp: whatsappNumber,
+        district,
+        address: fullAddress + ', ' + district,
+        quantity: selectedProductQuantity,
+        subtotal,
+        shippingFee: deliveryCharge,
+        total: totalPrice,
+        paymentMethod,
+        productId: selectedProduct
+      }).unwrap();
+      
       if (data.success) {
         router.push(`/checkout/success?orderId=${data.data.orderId}&method=${paymentMethod}&product=${selectedProductData?.title}&qty=${selectedProductQuantity}`);
       } else {
         setErrorMessage(data.message || 'অর্ডার করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setErrorMessage('সার্ভারের সাথে কানেক্ট করা যাচ্ছে না।');
-    } finally {
-      setIsLoading(false);
+      setErrorMessage(error?.data?.message || 'সার্ভারের সাথে কানেক্ট করা যাচ্ছে না।');
     }
   };
 
@@ -380,11 +372,11 @@ export default function CheckoutPage() {
               <div>
                 <button
                   onClick={handleSubmitOrder}
-                  disabled={isLoading || !selectedProductData}
-                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-bold py-3 px-4 rounded-none transition-all flex items-center justify-center gap-2 text-[17px]  ${isLoading || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
+                  disabled={isCreatingOrder || !selectedProductData}
+                  className={`w-full bg-[#008013] hover:bg-[#006810] text-white font-bold py-3 px-4 rounded-none transition-all flex items-center justify-center gap-2 text-[17px]  ${isCreatingOrder || !selectedProductData ? 'opacity-70 cursor-not-allowed' : 'active:scale-95'}`}
                 >
                   <Lock className="h-4 w-4" />
-                  <span>{isLoading ? 'প্রসেস হচ্ছে...' : `অর্ডার করুন — ${totalPrice.toLocaleString()}.00৳`}</span>
+                  <span>{isCreatingOrder ? 'প্রসেস হচ্ছে...' : `অর্ডার করুন — ${totalPrice.toLocaleString()}.00৳`}</span>
                 </button>
               </div>
 

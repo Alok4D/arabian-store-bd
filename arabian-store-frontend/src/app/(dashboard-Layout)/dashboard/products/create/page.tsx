@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, UploadCloud } from "lucide-react";
 import Link from "next/link";
+import { useCreateProductMutation } from "@/lib/feature/products/productsApi";
 
 export default function CreateProductPage() {
   const router = useRouter();
@@ -40,9 +41,10 @@ export default function CreateProductPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     try {
       const submitData = new FormData();
@@ -61,25 +63,16 @@ export default function CreateProductPage() {
         submitData.append("image", imageFile);
       }
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/products`, {
-        method: "POST",
-        // Note: Do not set Content-Type header manually when sending FormData, 
-        // the browser will automatically set it to multipart/form-data with the correct boundary
-        body: submitData
-      });
-
-      const data = await res.json();
+      const data = await createProduct(submitData).unwrap();
+      
       if (data.success) {
         router.push("/dashboard/products");
       } else {
         alert(data.message || "Failed to create product");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Create error:", error);
-      alert("Something went wrong");
-    } finally {
-      setIsLoading(false);
+      alert(error?.data?.message || "Something went wrong");
     }
   };
 
@@ -242,11 +235,11 @@ export default function CreateProductPage() {
               </Link>
               <button 
                 type="submit"
-                disabled={isLoading}
-                className={`px-6 py-2.5 bg-[#009e19] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                disabled={isCreating}
+                className={`px-6 py-2.5 bg-[#009e19] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isCreating ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Save className="w-4 h-4" />
-                {isLoading ? "Saving..." : "Save Product"}
+                {isCreating ? "Saving..." : "Save Product"}
               </button>
             </div>
 

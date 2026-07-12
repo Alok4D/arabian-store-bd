@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Settings, User, Lock, Save, Camera, Truck } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useGetProfileQuery, useUpdateProfileMutation, useUpdatePasswordMutation } from "@/lib/feature/auth/authApi";
+import { useGetShippingQuery, useUpdateShippingMutation } from "@/lib/feature/shipping/shippingApi";
 
 export default function SettingsPage() {
+  
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
   const [profileSaving, setProfileSaving] = useState(false);
   const [passwordSaving, setPasswordSaving] = useState(false);
 
@@ -20,40 +22,31 @@ export default function SettingsPage() {
   const [shippingData, setShippingData] = useState({ insideDhaka: 80, outsideDhaka: 130 });
   const [shippingSaving, setShippingSaving] = useState(false);
 
+  const { data: profileResponse, isLoading: isLoadingProfile } = useGetProfileQuery({});
+  const { data: shippingResponse, isLoading: isLoadingShipping } = useGetShippingQuery({});
+  const [updateProfile] = useUpdateProfileMutation();
+  const [updatePassword] = useUpdatePasswordMutation();
+  const [updateShipping] = useUpdateShippingMutation();
+
+  const isLoading = isLoadingProfile || isLoadingShipping;
+
   useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      
-      // Fetch profile
-      const res = await fetch(`${apiUrl}/auth/profile`);
-      const data = await res.json();
-      if (data.success) {
-        setProfileData({ name: data.data.name, email: data.data.email });
-        if (data.data.image) {
-          setImagePreview(data.data.image);
-        }
+    if (profileResponse?.success) {
+      setProfileData({ name: profileResponse.data.name, email: profileResponse.data.email });
+      if (profileResponse.data.image) {
+        setImagePreview(profileResponse.data.image);
       }
-
-      // Fetch shipping settings
-      const shipRes = await fetch(`${apiUrl}/shipping`);
-      const shipData = await shipRes.json();
-      if (shipData.success && shipData.data) {
-        setShippingData({
-          insideDhaka: Number(shipData.data.insideDhaka),
-          outsideDhaka: Number(shipData.data.outsideDhaka),
-        });
-      }
-
-    } catch (error) {
-      console.error("Failed to fetch settings", error);
-    } finally {
-      setIsLoading(false);
     }
-  };
+  }, [profileResponse]);
+
+  useEffect(() => {
+    if (shippingResponse?.success && shippingResponse?.data) {
+      setShippingData({
+        insideDhaka: Number(shippingResponse.data.insideDhaka),
+        outsideDhaka: Number(shippingResponse.data.outsideDhaka),
+      });
+    }
+  }, [shippingResponse]);
 
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
@@ -86,12 +79,8 @@ export default function SettingsPage() {
         formData.append("image", profileImage);
       }
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/auth/profile`, {
-        method: "PUT",
-        body: formData,
-      });
-      const data = await res.json();
+      const data = await updateProfile(formData).unwrap();
+      
       if (data.success) {
         alert("Profile updated successfully!");
         // Update local storage if necessary, then refresh page to apply layout changes
@@ -99,9 +88,9 @@ export default function SettingsPage() {
       } else {
         alert(data.message || "Failed to update profile");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Error updating profile");
+      alert(error?.data?.message || "Error updating profile");
     } finally {
       setProfileSaving(false);
     }
@@ -115,25 +104,20 @@ export default function SettingsPage() {
     }
     setPasswordSaving(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/auth/password`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          oldPassword: passwordData.oldPassword,
-          newPassword: passwordData.newPassword,
-        }),
-      });
-      const data = await res.json();
+      const data = await updatePassword({
+        oldPassword: passwordData.oldPassword,
+        newPassword: passwordData.newPassword,
+      }).unwrap();
+      
       if (data.success) {
         alert("Password updated successfully! Please login again.");
         router.push("/login"); // Force login after password change
       } else {
         alert(data.message || "Failed to update password");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Error updating password");
+      alert(error?.data?.message || "Error updating password");
     } finally {
       setPasswordSaving(false);
     }
@@ -143,24 +127,19 @@ export default function SettingsPage() {
     e.preventDefault();
     setShippingSaving(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/shipping`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          insideDhaka: shippingData.insideDhaka,
-          outsideDhaka: shippingData.outsideDhaka,
-        }),
-      });
-      const data = await res.json();
+      const data = await updateShipping({
+        insideDhaka: shippingData.insideDhaka,
+        outsideDhaka: shippingData.outsideDhaka,
+      }).unwrap();
+      
       if (data.success) {
         alert("Shipping settings updated successfully!");
       } else {
         alert(data.message || "Failed to update shipping settings");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Error updating shipping settings");
+      alert(error?.data?.message || "Error updating shipping settings");
     } finally {
       setShippingSaving(false);
     }

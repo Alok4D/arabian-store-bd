@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, UploadCloud } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
+import { useGetProductByIdQuery, useUpdateProductMutation } from "@/lib/feature/products/productsApi";
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const { id } = use(params);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
+  const { data: productData, isLoading: isFetching } = useGetProductByIdQuery(id);
+  const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -26,36 +27,24 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
   });
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const res = await fetch(`${apiUrl}/products/${id}`);
-        const data = await res.json();
-        if (data.success && data.data) {
-          const product = data.data;
-          setFormData({
-            title: product.title || "",
-            slug: product.slug || "",
-            description: product.description || "",
-            price: product.price ? product.price.toString() : "",
-            discountPrice: product.discountPrice ? product.discountPrice.toString() : "",
-            weight: product.weight || "",
-            stock: product.stock ? product.stock.toString() : "",
-            shippingFee: product.shippingFee ? product.shippingFee.toString() : ""
-          });
-          
-          if (product.image) {
-            setImagePreview(product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch product:", error);
-      } finally {
-        setIsFetching(false);
+    if (productData?.success && productData?.data) {
+      const product = productData.data;
+      setFormData({
+        title: product.title || "",
+        slug: product.slug || "",
+        description: product.description || "",
+        price: product.price ? product.price.toString() : "",
+        discountPrice: product.discountPrice ? product.discountPrice.toString() : "",
+        weight: product.weight || "",
+        stock: product.stock ? product.stock.toString() : "",
+        shippingFee: product.shippingFee ? product.shippingFee.toString() : ""
+      });
+      
+      if (product.image) {
+        setImagePreview(product.image.startsWith('/uploads/') ? `http://localhost:5000${product.image}` : product.image);
       }
-    };
-    fetchProduct();
-  }, [id]);
+    }
+  }, [productData]);
 
   const generateSlug = (title: string) => {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now().toString().slice(-4);
@@ -77,7 +66,6 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     try {
       const submitData = new FormData();
@@ -96,23 +84,16 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         submitData.append("image", imageFile);
       }
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-      const res = await fetch(`${apiUrl}/products/${id}`, {
-        method: "PATCH",
-        body: submitData
-      });
-
-      const data = await res.json();
+      const data = await updateProduct({ id, data: submitData }).unwrap();
+      
       if (data.success) {
         router.push("/dashboard/products");
       } else {
         alert(data.message || "Failed to update product");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Update error:", error);
-      alert("Something went wrong");
-    } finally {
-      setIsLoading(false);
+      alert(error?.data?.message || "Something went wrong");
     }
   };
 
@@ -289,11 +270,11 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
               </Link>
               <button 
                 type="submit"
-                disabled={isLoading}
-                className={`px-6 py-2.5 bg-[#009e19] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                disabled={isUpdating}
+                className={`px-6 py-2.5 bg-[#009e19] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isUpdating ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Save className="w-4 h-4" />
-                {isLoading ? "Saving..." : "Update Product"}
+                {isUpdating ? "Saving..." : "Update Product"}
               </button>
             </div>
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Receipt, Package, Users, DollarSign } from "lucide-react";
+import { useGetOverviewQuery } from "@/lib/feature/dashboard/dashboardApi";
 
 export default function DashboardPage() {
   const [overview, setOverview] = useState({
@@ -14,26 +15,13 @@ export default function DashboardPage() {
     cancelledOrders: 0,
     totalRevenue: 0
   });
-  const [isLoading, setIsLoading] = useState(true);
-
+  const { data, isLoading } = useGetOverviewQuery({});
+  
   useEffect(() => {
-    const fetchOverview = async () => {
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const res = await fetch(`${apiUrl}/dashboard/overview`);
-        const data = await res.json();
-        if (data.success) {
-          setOverview(data.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch dashboard overview", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchOverview();
-  }, []);
+    if (data?.success) {
+      setOverview(data.data);
+    }
+  }, [data]);
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
