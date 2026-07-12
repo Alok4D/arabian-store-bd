@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Receipt, Package, Users, DollarSign } from "lucide-react";
 import { useGetOverviewQuery } from "@/lib/feature/dashboard/dashboardApi";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function DashboardPage() {
+  
   const [overview, setOverview] = useState({
     totalProducts: 0,
     totalOrders: 0,
@@ -13,7 +15,8 @@ export default function DashboardPage() {
     confirmedOrders: 0,
     deliveredOrders: 0,
     cancelledOrders: 0,
-    totalRevenue: 0
+    totalRevenue: 0,
+    graphData: []
   });
   const { data, isLoading } = useGetOverviewQuery({});
   
@@ -30,7 +33,38 @@ export default function DashboardPage() {
       </div>
       
       {isLoading ? (
-        <div className="text-center py-12 text-neutral-500">Loading metrics...</div>
+        <div className="animate-pulse space-y-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="border border-neutral-200 rounded-xl p-6 space-y-4">
+                <div className="flex justify-between items-center">
+                  <div className="h-4 w-24 bg-neutral-200 rounded" />
+                  <div className="h-4 w-4 bg-neutral-200 rounded-full" />
+                </div>
+                <div className="h-8 w-16 bg-neutral-100 rounded" />
+                <div className="h-3 w-32 bg-neutral-100 rounded" />
+              </div>
+            ))}
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
+            <div className="col-span-4 border border-neutral-200 rounded-xl p-6 space-y-4">
+              <div className="h-5 w-40 bg-neutral-200 rounded" />
+              <div className="h-[280px] w-full bg-neutral-100 rounded" />
+            </div>
+            <div className="col-span-3 border border-neutral-200 rounded-xl p-6 space-y-4">
+              <div className="h-5 w-48 bg-neutral-200 rounded mb-6" />
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="flex justify-between items-center border-b pb-3 border-neutral-50 last:border-0">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-neutral-200" />
+                    <div className="h-4 w-20 bg-neutral-200 rounded" />
+                  </div>
+                  <div className="h-4 w-8 bg-neutral-200 rounded" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
         <>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -82,34 +116,64 @@ export default function DashboardPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
             <Card className="col-span-4 border-[#faecd8]">
               <CardHeader>
-                <CardTitle className="text-[#a46404]">Order Status Breakdown</CardTitle>
+                <CardTitle className="text-[#a46404]">Revenue (Last 7 Days)</CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-col gap-3">
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-neutral-600 font-medium">Pending</span>
-                  <span className="font-bold text-neutral-800">{overview.pendingOrders}</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-neutral-600 font-medium">Confirmed</span>
-                  <span className="font-bold text-neutral-800">{overview.confirmedOrders}</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                  <span className="text-neutral-600 font-medium">Delivered</span>
-                  <span className="font-bold text-neutral-800">{overview.deliveredOrders}</span>
-                </div>
-                <div className="flex justify-between items-center pb-2">
-                  <span className="text-neutral-600 font-medium">Cancelled</span>
-                  <span className="font-bold text-neutral-800">{overview.cancelledOrders}</span>
-                </div>
+              <CardContent className="h-[300px]">
+                {overview.graphData && overview.graphData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={overview.graphData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                      <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#888' }} dy={10} />
+                      <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#888' }} dx={-10} tickFormatter={(val) => `৳${val}`} />
+                      <Tooltip 
+                        contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                        formatter={(value: number) => [`৳${value}`, 'Revenue']}
+                        labelStyle={{ color: '#888', marginBottom: '4px' }}
+                      />
+                      <Line type="monotone" dataKey="revenue" stroke="#009e19" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-full flex items-center justify-center text-neutral-500">
+                    No data available for the last 7 days.
+                  </div>
+                )}
               </CardContent>
             </Card>
             
             <Card className="col-span-3 border-[#faecd8]">
               <CardHeader>
-                <CardTitle className="text-[#a46404]">Recent Activity</CardTitle>
+                <CardTitle className="text-[#a46404]">Order Status Breakdown</CardTitle>
               </CardHeader>
-              <CardContent className="h-[200px] flex items-center justify-center text-neutral-500">
-                Data synced from API.
+              <CardContent className="flex flex-col gap-4">
+                <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <span className="text-neutral-600 font-medium">Pending</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.pendingOrders}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                    <span className="text-neutral-600 font-medium">Confirmed</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.confirmedOrders}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span className="text-neutral-600 font-medium">Delivered</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.deliveredOrders}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <span className="text-neutral-600 font-medium">Cancelled</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.cancelledOrders}</span>
+                </div>
               </CardContent>
             </Card>
           </div>
