@@ -105,7 +105,7 @@ export default function BannerSection() {
           {/* Right Image */}
           <div className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0">
             <Image
-              src="/Untitled - July 11, 2026 at 16.40.12.png"
+              src="/banner-img/banner-image.jpg"
               alt="Premium Medjool Dates"
               width={800}
               height={800}
