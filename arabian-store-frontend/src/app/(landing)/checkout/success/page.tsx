@@ -29,7 +29,7 @@ function SuccessContent() {
         
         {/* Logo */}
         <div className="w-32 md:w-48 mb-6">
-          <img src="/Arabian-Store-Logo-Wide.webp" alt="Arabian Store" className="w-full h-auto object-contain" />
+          <img src="/logo/navandfooterlogo.png" alt="Arabian Store" className="w-full h-[100px] object-contain" />
         </div>
         
         <h1 className="text-4xl md:text-[45px] font-bold mb-3 text-black">ধন্যবাদ</h1>
