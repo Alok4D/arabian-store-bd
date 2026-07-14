@@ -47,17 +47,17 @@ export default function WhyChooseMedjool() {
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
           {reasons.map((r, i) => (
             <div
               key={i}
-              className="flex flex-col items-center text-center p-4 md:p-6 bg-white rounded-md border border-[#EAE6DF] shadow-sm hover:shadow-md transition-shadow"
+              className="flex flex-col items-center text-center p-3 md:p-6 bg-white rounded-md border border-[#EAE6DF] shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="mb-3 p-3 rounded-full bg-[#F4F0E8] shadow-sm">
+              <div className="mb-2 md:mb-3 p-2 md:p-3 rounded-full bg-[#F4F0E8] shadow-sm">
                 {r.icon}
               </div>
-              <h3 className="font-bold text-[18px] md:text-[20px] text-[#2D251E] mb-2">{r.title}</h3>
-              <p className="text-[15px] md:text-[14px] text-[#555] leading-relaxed">{r.desc}</p>
+              <h3 className="font-bold text-[15px] md:text-[20px] text-[#2D251E] mb-1 md:mb-2 leading-tight">{r.title}</h3>
+              <p className="text-[12px] md:text-[14px] text-[#555] leading-relaxed">{r.desc}</p>
             </div>
           ))}
         </div>
