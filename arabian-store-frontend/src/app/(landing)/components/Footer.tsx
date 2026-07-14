@@ -49,8 +49,8 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="bg-[#D6D19C] py-6 text-[#0D3A20]/80 text-center text-sm border-t border-[#0D3A20]/20">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-center">
+      <div className="bg-[#D6D19C] pb-6 text-[#0D3A20]/80 text-center text-sm">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-center pt-6 border-t border-[#0D3A20]/10">
           <p className="font-semibold tracking-wide">© 2026 Khejur Bari. All rights reserved.</p>
         </div>
       </div>
