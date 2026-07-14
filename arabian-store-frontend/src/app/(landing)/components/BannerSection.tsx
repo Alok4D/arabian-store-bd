@@ -31,11 +31,11 @@ export default function BannerSection() {
 
             {/* Main Title Area */}
             <div className="space-y-0">
-              <h3 className="text-[#1A6E36] text-3xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2">
+              {/* <h3 className="text-[#1A6E36] text-3xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2">
                 মিডিয়াম
-              </h3>
+              </h3> */}
               <h1
-                className="text-[#0D5C22] text-8xl md:text-[130px] lg:text-[120px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3"
+                className="text-[#0D5C22] text-8xl md:text-[130px] lg:text-[100px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3"
                 style={{ WebkitTextStroke: '2px #0D5C22' }}
               >
                 মেডজুল
@@ -103,15 +103,17 @@ export default function BannerSection() {
           </div>
 
           {/* Right Image */}
-          <div className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0">
-            <Image
-              src="/banner-img/banner-image.jpg"
-              alt="Premium Medjool Dates"
-              width={800}
-              height={800}
-              className="w-full h-auto object-contain"
-              priority
-            />
+          <div className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0 lg:pl-4">
+            <div className="relative w-full max-w-[550px] xl:max-w-[650px] overflow-hidden rounded-xl md:rounded-2xl">
+              <Image
+                src="/banner-img/banner-image.jpg"
+                alt="Premium Medjool Dates"
+                width={800}
+                height={800}
+                className="w-full h-auto object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>

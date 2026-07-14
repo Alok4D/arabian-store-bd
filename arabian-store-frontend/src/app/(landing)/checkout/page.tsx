@@ -82,6 +82,7 @@ export default function CheckoutPage() {
       const data = await createOrder({
         customerName: fullName,
         phone: mobileNumber,
+        whatsapp: mobileNumber,
         district,
         address: fullAddress + ', ' + district,
         quantity: selectedProductQuantity,
