@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Lock, ShieldCheck, Truck } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useGetProductsQuery } from '@/lib/feature/products/productsApi';
 import { useGetShippingQuery } from '@/lib/feature/shipping/shippingApi';
@@ -17,7 +17,6 @@ export default function CheckoutPage() {
   // Form State
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [whatsappNumber, setWhatsappNumber] = useState('');
   const [district, setDistrict] = useState('ঢাকা');
   const [shippingSettings, setShippingSettings] = useState({ insideDhaka: 80, outsideDhaka: 130 });
   const [fullAddress, setFullAddress] = useState('');
@@ -53,6 +52,18 @@ export default function CheckoutPage() {
       });
     }
   }, [shippingData]);
+
+  useEffect(() => {
+    const handlePackageSelection = (e: CustomEvent) => {
+      if (e.detail) {
+        setSelectedProduct(e.detail);
+      }
+    };
+    window.addEventListener('selectPackage', handlePackageSelection as EventListener);
+    return () => {
+      window.removeEventListener('selectPackage', handlePackageSelection as EventListener);
+    };
+  }, []);
 
   const selectedProductData = products.find(p => p.id === selectedProduct);
   const selectedProductPrice = selectedProductData ? Number(selectedProductData.discountPrice || selectedProductData.price) : 0;

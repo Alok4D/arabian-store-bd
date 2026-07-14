@@ -63,6 +63,13 @@ export default function Packages() {
       .catch((error) => console.error(error));
   }, []);
 
+  const handleOrderClick = (productId: string) => {
+    // Scroll to the checkout section
+    document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
+    // Dispatch custom event to select this package
+    window.dispatchEvent(new CustomEvent('selectPackage', { detail: productId }));
+  };
+
   return (
     <section className="w-full bg-[#FAF7F0] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -132,6 +139,7 @@ export default function Packages() {
                 {/* CTA Interactive Action Button */}
                 <button
                   type="button"
+                  onClick={() => handleOrderClick(item.id)}
                   className="w-full flex items-center justify-center gap-2 bg-gradient-to-b from-[#008013] to-[#00660F] hover:from-[#00660F] hover:to-[#004D0B] active:scale-95 text-white font-medium rounded-full py-2.5 transition-all duration-200 group shadow-sm"
                 >
                   <ShoppingCart className="w-4 h-4 text-white/90 group-hover:scale-110 transition-transform" />
