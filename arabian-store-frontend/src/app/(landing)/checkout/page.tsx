@@ -154,11 +154,13 @@ export default function CheckoutPage() {
                   onClick={() => setSelectedProduct(product.id)}
                   className={`relative flex items-center gap-2 sm:gap-4 p-3 sm:p-4 md:p-5 cursor-pointer transition-all bg-white rounded-md border ${isSelected ? 'border-[#008013] shadow-[0_0_5px_rgba(0,128,19,0.3)]' : 'border-[#d1d5db] hover:border-[#008013]/50'}`}
                 >
+                  {/* TODO: Uncomment when client confirms shipping details
                   {Number(product.shippingFee) === 0 && (
                     <div className="absolute right-0 top-0 bg-[#008013] text-white text-[10px] sm:text-[11px] font-medium px-1.5 sm:px-2 py-0.5 rounded-bl-md shadow-sm z-10">
                       ফ্রি ডেলিভারি
                     </div>
                   )}
+                  */}
                   {/* Radio */}
                   <div className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-[#008013]' : 'border-[#9ca3af]'}`}>
                     {isSelected && <div className="w-2 h-2 rounded-full bg-[#008013]" />}
@@ -298,11 +300,13 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
+              {/* TODO: Uncomment when client confirms shipping details
               <h3 className="text-[20px] md:text-[24px] font-extrabold text-[#2c3e50] mt-10 mb-4">Shipping</h3>
               <div className="flex justify-between items-center p-3 bg-[#f9f9f9] border border-[#e5e7eb] text-[14px] text-[#555]">
                 <span>সারাদেশে ডেলিভারি চার্জ:</span>
                 <span className="font-medium">৳ {deliveryCharge}</span>
               </div>
+              */}
             </div>
           </div>
 
@@ -340,11 +344,12 @@ export default function CheckoutPage() {
                 <span className="text-[14px] text-[#555] font-medium">৳ {subtotal.toLocaleString()}</span>
               </div>
 
-              {/* Delivery Charge */}
+              {/* TODO: Uncomment when client confirms shipping details
               <div className="flex justify-between items-center border-b border-dashed border-[#ccc] pb-3 mb-3">
                 <span className="text-[14px] text-[#555]">Delivery Charge</span>
                 <span className="text-[14px] text-[#555] font-medium">৳ {deliveryCharge.toLocaleString()}</span>
               </div>
+              */}
 
               {/* Total */}
               <div className="flex justify-between items-center mb-6">
