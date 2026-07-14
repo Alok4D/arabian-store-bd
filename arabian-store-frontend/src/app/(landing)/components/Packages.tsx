@@ -43,7 +43,8 @@ export default function Packages() {
       redirect: 'follow' as RequestRedirect
     };
 
-    fetch("http://localhost:5000/api/products", requestOptions)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+    fetch(`${apiUrl}/products`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.success && result.data) {
