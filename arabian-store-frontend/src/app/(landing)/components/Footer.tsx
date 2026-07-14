@@ -32,12 +32,6 @@ export function Footer() {
                 </div>
                 01817113624
               </a>
-              <a href="tel:01403510331" className="flex items-center gap-2 hover:text-[#0D3A20]/70 transition-colors text-base font-bold">
-                <div className="w-8 h-8 bg-[#0D3A20] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-4 h-4 text-[#D6D19C] fill-current" />
-                </div>
-                01403510331
-              </a>
             </div>
 
             {/* Address */}
@@ -55,9 +49,9 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="bg-[#0B3019] py-5 text-[#D6D19C]/70 text-center text-sm border-t border-black/10">
+      <div className="bg-[#D6D19C] py-6 text-[#0D3A20]/80 text-center text-sm border-t border-[#0D3A20]/20">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-center">
-          <p>© 2026 Khejur Bari. All rights reserved.</p>
+          <p className="font-semibold tracking-wide">© 2026 Khejur Bari. All rights reserved.</p>
         </div>
       </div>
 
