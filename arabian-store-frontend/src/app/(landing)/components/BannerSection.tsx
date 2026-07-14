@@ -35,7 +35,7 @@ export default function BannerSection() {
                 মিডিয়াম
               </h3> */}
               <h1
-                className="text-[#0D5C22] text-8xl md:text-[130px] lg:text-[100px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3"
+                className="text-[#0D5C22] text-7xl  md:text-[130px] lg:text-[100px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3"
                 style={{ WebkitTextStroke: '2px #0D5C22' }}
               >
                 মেডজুল
