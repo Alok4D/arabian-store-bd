@@ -7,16 +7,13 @@ import Image from 'next/image';
 export function CustomerReviews() {
 
   const reviews = [
-    '/review-img/R-1.webp',
-    '/review-img/R-2.webp',
-    '/review-img/R-3.webp',
-    '/review-img/R-4.webp',
-    '/review-img/R-5.webp',
-    '/review-img/R-6.webp',
-    '/review-img/R-7.webp',
-    '/review-img/R-8.webp',
-    '/review-img/R-9.webp',
-    '/review-img/R-10.webp',
+    '/review-img/1 (1).jpg',
+    '/review-img/1 (2).jpg',
+    '/review-img/1 (3).jpg',
+    '/review-img/1 (4).jpg',
+    '/review-img/1 (5).jpg',
+    '/review-img/1 (6).jpg',
+    '/review-img/1 (7).jpg',
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
