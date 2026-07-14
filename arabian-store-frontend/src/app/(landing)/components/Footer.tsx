@@ -30,7 +30,7 @@ export function Footer() {
                 <div className="w-8 h-8 bg-[#C59B27] rounded-full flex items-center justify-center flex-shrink-0">
                   <Phone className="w-4 h-4 text-white fill-current" />
                 </div>
-                09666 767673
+                01817113624
               </a>
               <a href="tel:01403510331" className="flex items-center gap-2 hover:text-[#C59B27] transition-colors text-base font-semibold">
                 <div className="w-8 h-8 bg-[#C59B27] rounded-full flex items-center justify-center flex-shrink-0">

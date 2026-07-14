@@ -5,7 +5,7 @@ import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Navbar() {
-  
+
   const scrollToOrder = (e: React.MouseEvent) => {
     e.preventDefault();
     document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
@@ -29,7 +29,7 @@ export default function Navbar() {
               <Image src="/call-icon.png" alt="Call" width={40} height={40} className="w-10 h-10 object-contain animate-zoomInOut" />
             </div>
             <span className="font-bold text-[18px] md:text-[20px] tracking-wide">
-              09666 767673
+              01817113624
             </span>
           </a>
 
