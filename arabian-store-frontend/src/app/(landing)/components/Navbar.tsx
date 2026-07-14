@@ -16,7 +16,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-2 md:px-8 lg:px-0">
 
         <Link href="/" className="flex items-center leading-none group select-none hover:opacity-90 transition-opacity">
-          <Image src="/logo/navandfooterlogo.png" alt="Arabian Store Logo" width={200} height={50} className="object-contain h-12 sm:h-16 md:h-20 w-auto" />
+          <Image src="/logo/navandfooterlogo.png" alt="Arabian Store Logo" width={200} height={50}
+          priority={true}
+          draggable={false}
+          className="object-contain h-12 sm:h-16 md:h-20 w-auto" />
         </Link>
 
         <div className="flex items-center gap-3 md:gap-6">
