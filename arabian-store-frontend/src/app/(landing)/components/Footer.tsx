@@ -15,7 +15,8 @@ export function Footer() {
             <div className="flex flex-col items-center md:items-start gap-3">
               <div className="flex items-center gap-2">
                 <div className="flex items-center justify-center">
-                  <Image src="/logo/navandfooterlogo.png" alt="Khejur Bari" width={240} height={240} className="object-contain w-[150px] md:w-[200px]" />
+                  <Image src="/logo/navandfooterlogo.png" alt="Khejur Bari" width={240} height={240} className="object-contain w-[150px] 
+                  md:w-[200px] h-auto md:h-[100px]" />
                 </div>
               </div>
               <p className="text-md text-[#0D3A20]/80 leading-relaxed max-w-xs text-center md:text-left font-medium">
