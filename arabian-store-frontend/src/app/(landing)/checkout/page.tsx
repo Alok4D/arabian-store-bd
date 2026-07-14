@@ -130,7 +130,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="px-4 py-8 md:px-8 lg:px-12 text-[#2D251E]" id="order">
+    <div className="px-4 py-8 md:px-8 lg:px-12 text-[#2D251E] scroll-mt-20" id="order">
       <div className="max-w-7xl mx-auto">
 
         {/* Section Header with Decorative Green Lines */}
