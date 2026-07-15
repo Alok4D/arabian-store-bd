@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { CheckCircle2 } from 'lucide-react';
+import { Check } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -56,7 +56,7 @@ export default function BenefitsSection() {
         {/* Left Side: Benefits Content */}
         <div className="lg:col-span-6 flex flex-col justify-center order-2 lg:order-1">
           {/* Main Title Heading */}
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#004D0B] leading-tight mb-8 text-left">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#004D0B] leading-tight mb-8 text-center md:text-left lg:text-left">
             প্রতিদিন মেডজুল খেলে <br className="hidden sm:inline" />
             পাবেন যেসব উপকারিতা
           </h2>
@@ -68,9 +68,9 @@ export default function BenefitsSection() {
                 key={benefit.id} 
                 className="flex items-start gap-3 group"
               >
-                {/* Custom Solid Green Check Icon matching image design */}
-                <div className="mt-1 shrink-0 bg-[#008013] text-white rounded-full p-0.5 flex items-center justify-center">
-                  <CheckCircle2 className="w-4 h-4 fill-current text-[#008013]" />
+                {/* Custom Solid Green Check Icon matching banner design */}
+                <div className="mt-1 w-4 h-4 rounded-full bg-[#0F751E] flex items-center justify-center flex-shrink-0 shadow-sm ring-1 ring-offset-1 ring-offset-[#F4F0E8] ring-[#C59B27]">
+                  <Check className="w-2.5 h-2.5 text-white stroke-[4]" />
                 </div>
                 
                 {/* Benefit Copy Text */}
