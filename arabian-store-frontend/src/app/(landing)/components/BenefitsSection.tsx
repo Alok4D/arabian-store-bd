@@ -1,13 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -34,6 +34,21 @@ const slideImages = [
 ];
 
 export default function BenefitsSection() {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   return (
     <section className="w-full bg-[#F4F0E8] py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -69,8 +84,9 @@ export default function BenefitsSection() {
 
         {/* Right Side: Product Visual Element */}
         <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative mt-0 lg:mt-0 w-full">
-          <div className="w-full relative sm:px-12 transition-transform duration-300">
+          <div className="w-full relative transition-transform duration-300">
             <Carousel
+              setApi={setApi}
               opts={{
                 align: "start",
                 loop: true,
@@ -91,7 +107,7 @@ export default function BenefitsSection() {
                         alt={`Benefit Slide ${index + 1}`}
                         width={800}
                         height={800}
-                        className="w-full h-[350px] sm:h-[450px] object-cover rounded-xl"
+                        className="w-full h-auto object-contain rounded-xl"
                         priority={index === 0}
                         draggable={false}
                       />
@@ -99,8 +115,22 @@ export default function BenefitsSection() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
+              
+              {/* Pagination Dots */}
+              <div className="flex justify-center gap-2 mt-4 sm:mt-6">
+                {slideImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => api?.scrollTo(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      current === index 
+                        ? "bg-[#008013] w-6" 
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </Carousel>
           </div>
         </div>
