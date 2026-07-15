@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Save, UploadCloud } from "lucide-react";
 import Link from "next/link";
 import { useCreateProductMutation } from "@/lib/feature/products/productsApi";
+import Swal from 'sweetalert2';
 
 export default function CreateProductPage() {
   const router = useRouter();
@@ -66,13 +67,21 @@ export default function CreateProductPage() {
       const data = await createProduct(submitData).unwrap();
       
       if (data.success) {
-        router.push("/dashboard/products");
+        Swal.fire({
+          title: 'Success!',
+          text: 'Product created successfully',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          router.push("/dashboard/products");
+        });
       } else {
-        alert(data.message || "Failed to create product");
+        Swal.fire('Error!', data.message || "Failed to create product", 'error');
       }
     } catch (error: any) {
       console.error("Create error:", error);
-      alert(error?.data?.message || "Something went wrong");
+      Swal.fire('Error!', error?.data?.message || "Something went wrong", 'error');
     }
   };
 

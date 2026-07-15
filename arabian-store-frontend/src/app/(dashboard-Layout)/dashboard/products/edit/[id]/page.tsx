@@ -7,6 +7,7 @@ import { ArrowLeft, Save, UploadCloud } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
 import { useGetProductByIdQuery, useUpdateProductMutation } from "@/lib/feature/products/productsApi";
+import Swal from 'sweetalert2';
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -87,13 +88,21 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
       const data = await updateProduct({ id, data: submitData }).unwrap();
       
       if (data.success) {
-        router.push("/dashboard/products");
+        Swal.fire({
+          title: 'Updated!',
+          text: 'Product updated successfully',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          router.push("/dashboard/products");
+        });
       } else {
-        alert(data.message || "Failed to update product");
+        Swal.fire('Error!', data.message || "Failed to update product", 'error');
       }
     } catch (error: any) {
       console.error("Update error:", error);
-      alert(error?.data?.message || "Something went wrong");
+      Swal.fire('Error!', error?.data?.message || "Something went wrong", 'error');
     }
   };
 
