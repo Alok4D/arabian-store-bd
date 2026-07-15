@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useGetProductsQuery, useDeleteProductMutation } from "@/lib/feature/products/productsApi";
+import Swal from 'sweetalert2';
 
 interface Product {
   id: string;
@@ -22,16 +23,28 @@ export default function ProductsPage() {
   const products = data?.data || [];
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this product?")) return;
-    
-    try {
-      const res = await deleteProduct(id).unwrap();
-      if (!res.success) {
-        alert("Failed to delete product");
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete this product? This cannot be undone!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await deleteProduct(id).unwrap();
+        if (!res.success) {
+          Swal.fire('Error!', 'Failed to delete product', 'error');
+        } else {
+          Swal.fire('Deleted!', 'The product has been deleted.', 'success');
+        }
+      } catch (error) {
+        console.error("Delete error:", error);
+        Swal.fire('Error!', 'Failed to delete product', 'error');
       }
-    } catch (error) {
-      console.error("Delete error:", error);
-      alert("Failed to delete product");
     }
   };
 
