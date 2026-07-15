@@ -31,9 +31,9 @@ export default function BannerSection() {
 
             {/* Main Title Area */}
             <div className="space-y-0">
-              {/* <h3 className="text-[#1A6E36] text-3xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2">
-                মিডিয়াম
-              </h3> */}
+              <h3 className="text-[#1A6E36] text-3xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2">
+                 মিশরী
+              </h3>
               <h1
                 className="text-[#0D5C22] text-7xl  md:text-[130px] lg:text-[100px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3"
                 style={{ WebkitTextStroke: '2px #0D5C22' }}

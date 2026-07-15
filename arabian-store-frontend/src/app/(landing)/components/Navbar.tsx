@@ -25,7 +25,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3 md:gap-6">
 
           <a
-            href="tel:09666767673"
+            href="tel:01817113624"
             className="hidden sm:flex items-center gap-3 text-[#2D251E] hover:text-[#1A6E36] transition-colors duration-200"
           >
             <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center">
