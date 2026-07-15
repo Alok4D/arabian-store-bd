@@ -53,10 +53,10 @@ export default function BenefitsSection() {
         </div>
 
         {/* Right Side: Product Visual Element */}
-        <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative w-full mt-8 lg:mt-0">
+        <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative w-full mt-0 lg:mt-0">
           <div className="w-full relative scale-100 sm:scale-110 md:scale-125 transition-transform duration-300">
             <Image
-              src="/banner-img/Gemini_Generated_Image_b1v564b1v564b1v5-removebg-preview.png"
+              src="/khejur.png"
               alt="Medjool Dates Bowl With Benefits"
               width={800}
               height={800}
