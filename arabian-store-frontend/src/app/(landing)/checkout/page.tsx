@@ -29,7 +29,19 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (productsData?.success && productsData?.data?.length > 0) {
-      const activeProducts = productsData.data.filter((p: any) => p.isActive);
+      let activeProducts = productsData.data.filter((p: any) => p.isActive);
+      
+      // Sort by weight (ascending)
+      const getWeight = (title: string) => {
+        if (!title) return 999;
+        const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        const englishTitle = title.replace(/[০-৯]/g, w => bengaliDigits.indexOf(w).toString());
+        const match = englishTitle.match(/(\d+(?:\.\d+)?)\s*(kg|কেজি|গ্রাম|gm|g)/i);
+        return match ? parseFloat(match[1]) : 999;
+      };
+
+      activeProducts.sort((a: any, b: any) => getWeight(a.title) - getWeight(b.title));
+
       setProducts(activeProducts);
       if (activeProducts.length > 0 && !selectedProduct) {
         setSelectedProduct(activeProducts[0].id);
