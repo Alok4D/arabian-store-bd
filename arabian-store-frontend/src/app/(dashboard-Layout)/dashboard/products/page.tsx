@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Eye } from "lucide-react";
 import Link from "next/link";
 import { useGetProductsQuery, useDeleteProductMutation } from "@/lib/feature/products/productsApi";
 import Swal from 'sweetalert2';
@@ -109,6 +109,13 @@ export default function ProductsPage() {
                       <td className="py-3 px-4 text-neutral-600">{Number(product.shippingFee)}৳</td>
                       <td className="py-3 px-4 text-right">
                         <div className="flex justify-end gap-2">
+                          <Link 
+                            href={`/dashboard/products/${product.id}`}
+                            className="p-2 text-neutral-500 hover:text-green-600 hover:bg-green-50 rounded transition-colors"
+                            title="View Details"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Link>
                           <Link 
                             href={`/dashboard/products/edit/${product.id}`}
                             className="p-2 text-neutral-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
