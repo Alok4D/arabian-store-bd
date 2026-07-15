@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
 import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from "@/lib/feature/orders/ordersApi";
+import Swal from 'sweetalert2';
 
 interface Order {
   id: string;
@@ -27,25 +28,45 @@ export default function OrdersPage() {
     try {
       const res = await updateOrderStatus({ id, status: newStatus }).unwrap();
       if (!res.success) {
-        alert("Failed to update status");
+        Swal.fire('Error!', 'Failed to update status', 'error');
+      } else {
+        Swal.fire({
+          title: 'Updated!',
+          text: 'Order status updated successfully',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
       }
     } catch (error) {
       console.error("Update error:", error);
-      alert("Failed to update status");
+      Swal.fire('Error!', 'Failed to update status', 'error');
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this order?")) return;
-    
-    try {
-      const res = await deleteOrder(id).unwrap();
-      if (!res.success) {
-        alert("Failed to delete order");
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete this order? This cannot be undone!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await deleteOrder(id).unwrap();
+        if (!res.success) {
+          Swal.fire('Error!', 'Failed to delete order', 'error');
+        } else {
+          Swal.fire('Deleted!', 'The order has been deleted.', 'success');
+        }
+      } catch (error) {
+        console.error("Delete error:", error);
+        Swal.fire('Error!', 'Failed to delete order', 'error');
       }
-    } catch (error) {
-      console.error("Delete error:", error);
-      alert("Failed to delete order");
     }
   };
 

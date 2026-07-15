@@ -16,6 +16,7 @@ interface Product {
 }
 
 export default function ProductsPage() {
+  
   const { data, isLoading } = useGetProductsQuery({});
   const [deleteProduct] = useDeleteProductMutation();
   const products = data?.data || [];
