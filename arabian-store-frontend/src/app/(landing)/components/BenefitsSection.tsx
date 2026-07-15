@@ -2,6 +2,14 @@
 
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface BenefitItem {
   id: number;
@@ -16,6 +24,13 @@ const benefitsData: BenefitItem[] = [
   { id: 5, text: 'রোগ প্রতিরোধ ক্ষমতা বাড়ায়' },
   { id: 6, text: 'হাড় ও দাঁত শক্ত করে' },
   { id: 7, text: 'স্ট্রোকের ঝুঁকি কমায়' },
+];
+
+const slideImages = [
+  "/benefits-Section-img/IMG-20260709-WA0006.jpg",
+  "/benefits-Section-img/IMG-20260709-WA0007.jpg",
+  "/benefits-Section-img/IMG-20260709-WA0008 (1).jpg",
+  "/benefits-Section-img/IMG-20260709-WA0009.jpg",
 ];
 
 export default function BenefitsSection() {
@@ -53,17 +68,40 @@ export default function BenefitsSection() {
         </div>
 
         {/* Right Side: Product Visual Element */}
-        <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative w-full mt-0 lg:mt-0">
-          <div className="w-full relative scale-100 sm:scale-110 md:scale-125 transition-transform duration-300">
-            <Image
-              src="/khejur.png"
-              alt="Medjool Dates Bowl With Benefits"
-              width={800}
-              height={800}
-              className="w-full h-[450px] object-contain"
-              priority
-              draggable={false}
-            />
+        <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative mt-0 lg:mt-0 w-full">
+          <div className="w-full relative sm:px-12 transition-transform duration-300">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-0">
+                {slideImages.map((src, index) => (
+                  <CarouselItem key={index} className="pl-0">
+                    <div className="w-full flex justify-center">
+                      <Image
+                        src={src}
+                        alt={`Benefit Slide ${index + 1}`}
+                        width={800}
+                        height={800}
+                        className="w-full h-[350px] sm:h-[450px] object-cover rounded-xl"
+                        priority={index === 0}
+                        draggable={false}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
           </div>
         </div>
 
