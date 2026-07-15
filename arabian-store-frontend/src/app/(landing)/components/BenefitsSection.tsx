@@ -27,7 +27,7 @@ export default function BenefitsSection() {
         <div className="lg:col-span-6 flex flex-col justify-center order-2 lg:order-1">
           {/* Main Title Heading */}
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#004D0B] leading-tight mb-8 text-left">
-            প্রতিদিন মেদজুল খেলে <br className="hidden sm:inline" />
+            প্রতিদিন মেডজুল খেলে <br className="hidden sm:inline" />
             পাবেন যেসব উপকারিতা
           </h2>
 
