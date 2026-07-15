@@ -37,7 +37,7 @@ export default function Navbar() {
           </a>
 
           <a
-            href="tel:09666767673"
+            href="tel:01817113624"
             className="sm:hidden flex items-center justify-center w-8 h-8"
           >
             <Image src="/call-icon.png" alt="Call" width={32} height={32} className="w-8 h-8 object-contain animate-zoomInOut" />
