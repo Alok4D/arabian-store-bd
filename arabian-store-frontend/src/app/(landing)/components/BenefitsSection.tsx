@@ -50,7 +50,7 @@ export default function BenefitsSection() {
   }, [api]);
 
   return (
-    <section className="w-full bg-[#F4F0E8] py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="w-full bg-[#F4F0E8] py-8 md:py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
         {/* Left Side: Benefits Content */}
