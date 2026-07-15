@@ -25,6 +25,7 @@ import {
   Package
 } from "lucide-react";
 import { useGetProfileQuery } from "@/lib/feature/auth/authApi";
+import Image from "next/image";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -80,7 +81,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className={`h-16 flex items-center ${isCollapsed ? "justify-center" : "px-6"} border-b shrink-0 overflow-hidden`}>
           <Link href="/" className="flex items-center gap-2 overflow-hidden">
             <div className="flex justify-center text-[#009e19] font-bold overflow-hidden shrink-0">
-               <Package className="w-8 h-8" />
+                 <Image src="https://res.cloudinary.com/dlvywmmyv/image/upload/v1783573994/arabian-store-bd/products/image-1783573993347.jpg" alt="Logo" width={50} height={50} />
             </div>
             {!isCollapsed && <span className="text-xl font-bold tracking-tight whitespace-nowrap text-[#a46404]">Arabian Store</span>}
           </Link>
