@@ -29,6 +29,17 @@ export default function BannerSection() {
           {/* Left Content */}
           <div className="order-2 lg:order-1 space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
 
+            {/* Mobile Order Button (Visible below banner on mobile/tablet) */}
+            <div className="flex justify-center lg:hidden w-full">
+              <button
+                onClick={scrollToOrder}
+                className="inline-flex items-center justify-center gap-2 bg-[#0D5C22] hover:bg-[#0B4A1C] text-white font-bold text-[16px] md:text-[18px] px-7 py-3 md:py-3.5 rounded-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 w-max"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                এখনই অর্ডার করুন
+              </button>
+            </div>
+
             {/* Main Title Area */}
             <div className="space-y-0">
               <h3 className="text-[#1A6E36] text-4xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2">
@@ -78,7 +89,7 @@ export default function BannerSection() {
             {/* Order Button */}
             <button
               onClick={scrollToOrder}
-              className="inline-flex items-center justify-center gap-2 bg-[#0D5C22] hover:bg-[#0B4A1C] text-white font-bold text-[16px] md:text-[18px] px-7 py-3 md:py-3.5 rounded-md transition-all duration-300  hover:-translate-y-0.5 active:translate-y-0 w-max"
+              className="hidden lg:inline-flex items-center justify-center gap-2 bg-[#0D5C22] hover:bg-[#0B4A1C] text-white font-bold text-[16px] md:text-[18px] px-7 py-3 md:py-3.5 rounded-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 w-max"
             >
               <ShoppingCart className="w-5 h-5" />
               এখনই অর্ডার করুন
