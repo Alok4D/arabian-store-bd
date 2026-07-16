@@ -22,7 +22,7 @@ export default function BannerSection() {
   ];
 
   return (
-    <section className="bg-[#FAF7F2] w-full pt-0 md:pt-12 pb-16 md:pb-24 px-4 md:px-8 lg:px-16 overflow-hidden">
+    <section className="bg-[#FAF7F2] w-full pt-0 md:pt-12 pb-12 md:pb-24 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-8 items-center">
 
@@ -96,7 +96,7 @@ export default function BannerSection() {
             </button>
 
             {/* Bottom Badges */}
-            <div className="flex flex-wrap items-center gap-3 pt-4">
+            <div className="flex flex-wrap items-center gap-3 pt-0 md:pt-4">
               <div className="flex items-center gap-2 bg-[#F3EBE0] rounded-none px-3 py-2 shadow-xs">
                 <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-[#0D5C22]" />
                 <span className="text-[#2D251E] text-[14px] md:text-[16px] font-extrabold tracking-wide">100% খাঁটি</span>
