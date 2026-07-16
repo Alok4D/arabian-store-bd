@@ -96,18 +96,18 @@ export default function BannerSection() {
             </button>
 
             {/* Bottom Badges */}
-            <div className="flex flex-wrap items-center gap-2 md:gap-3 pt-0 md:pt-4 w-full">
-              <div className="flex-auto md:flex-none flex items-center justify-center md:justify-start gap-1.5 md:gap-2 bg-[#F3EBE0] rounded-none px-2 md:px-3 py-2 shadow-xs">
-                <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-[#0D5C22] shrink-0" />
-                <span className="text-[#2D251E] text-[13px] md:text-[16px] font-extrabold tracking-wide whitespace-nowrap">100% খাঁটি</span>
+            <div className="flex flex-wrap items-center gap-2.5 md:gap-3 pt-0 md:pt-4 w-full">
+              <div className="flex-auto md:flex-none flex items-center justify-center md:justify-start gap-2 bg-[#F3EBE0] rounded-none px-3 py-2.5 md:py-2 shadow-xs">
+                <ShieldCheck className="w-[18px] h-[18px] md:w-5 md:h-5 text-[#0D5C22] shrink-0" />
+                <span className="text-[#2D251E] text-[15px] md:text-[16px] font-extrabold tracking-wide whitespace-nowrap">100% খাঁটি</span>
               </div>
-              <div className="flex-auto md:flex-none flex items-center justify-center md:justify-start gap-1.5 md:gap-2 bg-[#F3EBE0] rounded-none px-2 md:px-3 py-2 shadow-xs">
-                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-[#0D5C22] shrink-0" />
-                <span className="text-[#2D251E] text-[13px] md:text-[16px] font-extrabold tracking-wide whitespace-nowrap">হাইজেনিক প্যাকেজিং</span>
+              <div className="flex-auto md:flex-none flex items-center justify-center md:justify-start gap-2 bg-[#F3EBE0] rounded-none px-3 py-2.5 md:py-2 shadow-xs">
+                <Sparkles className="w-[18px] h-[18px] md:w-5 md:h-5 text-[#0D5C22] shrink-0" />
+                <span className="text-[#2D251E] text-[15px] md:text-[16px] font-extrabold tracking-wide whitespace-nowrap">হাইজেনিক প্যাকেজিং</span>
               </div>
-              <div className="flex-auto md:flex-none flex items-center justify-center md:justify-start gap-1.5 md:gap-2 bg-[#F3EBE0] rounded-none px-2 md:px-3 py-2 shadow-xs">
-                <Truck className="w-4 h-4 md:w-5 md:h-5 text-[#0D5C22] shrink-0" />
-                <span className="text-[#2D251E] text-[13px] md:text-[16px] font-extrabold tracking-wide whitespace-nowrap">দ্রুত ডেলিভারি</span>
+              <div className="flex-auto md:flex-none flex items-center justify-center md:justify-start gap-2 bg-[#F3EBE0] rounded-none px-3 py-2.5 md:py-2 shadow-xs">
+                <Truck className="w-[18px] h-[18px] md:w-5 md:h-5 text-[#0D5C22] shrink-0" />
+                <span className="text-[#2D251E] text-[15px] md:text-[16px] font-extrabold tracking-wide whitespace-nowrap">দ্রুত ডেলিভারি</span>
               </div>
             </div>
 
