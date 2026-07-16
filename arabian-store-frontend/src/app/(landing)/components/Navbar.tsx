@@ -26,21 +26,14 @@ export default function Navbar() {
 
           <a
             href="tel:01817113624"
-            className="hidden sm:flex items-center gap-3 text-[#2D251E] hover:text-[#1A6E36] transition-colors duration-200"
+            className="flex items-center gap-1.5 md:gap-3 text-[#2D251E] hover:text-[#1A6E36] transition-colors duration-200"
           >
-            <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center">
-              <Image src="/call-icon.png" alt="Call" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10 object-contain animate-zoomInOut" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center shrink-0">
+              <Image src="/call-icon.png" alt="Call" width={40} height={40} className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 object-contain animate-zoomInOut" />
             </div>
-            <span className="font-bold text-[16px] md:text-[18px] tracking-wide">
+            <span className="font-bold text-[13px] sm:text-[16px] md:text-[18px] tracking-wide whitespace-nowrap">
               01817113624
             </span>
-          </a>
-
-          <a
-            href="tel:01817113624"
-            className="sm:hidden flex items-center justify-center w-8 h-8"
-          >
-            <Image src="/call-icon.png" alt="Call" width={32} height={32} className="w-8 h-8 object-contain animate-zoomInOut" />
           </a>
 
           {/* Order Button */}
