@@ -1,4 +1,3 @@
-
 import CheckoutPage from './checkout/page';
 import { CustomerReviews } from './components/CustomerReviews';
 import { Footer } from './components/Footer';

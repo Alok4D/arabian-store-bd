@@ -18,6 +18,8 @@ export function CustomerReviews() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,6 +45,31 @@ export function CustomerReviews() {
   const nextSlide = () => setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
   const prevSlide = () => setCurrentIndex((prev) => Math.max(prev - 1, 0));
 
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: any) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: any) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      nextSlide();
+    }
+    if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
   return (
     <section className="bg-[#F4F0E8] py-10 md:py-14 px-4 md:px-6 lg:px-0">
       <div className="max-w-7xl mx-auto">
@@ -65,7 +92,12 @@ export function CustomerReviews() {
             <ChevronLeft size={22} />
           </button>
 
-          <div className="overflow-hidden px-0 py-2">
+          <div 
+            className="overflow-hidden px-0 py-2 touch-pan-y"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
