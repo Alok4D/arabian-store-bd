@@ -77,6 +77,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'kalpurush', sans-serif;
   }
 }
 
@@ -97,4 +98,21 @@
 
 button, a{
   cursor: pointer;
+}
+
+@font-face {
+  font-family: 'kalpurush';
+  src: url('/font/Kalpurush.ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'adornoirrit';
+  src: url('/font/ador-noirrit.ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }

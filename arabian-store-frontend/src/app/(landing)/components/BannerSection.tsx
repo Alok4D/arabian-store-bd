@@ -42,11 +42,11 @@ export default function BannerSection() {
 
             {/* Main Title Area */}
             <div className="flex items-baseline gap-3 md:block space-y-0">
-              <h3 className="text-[#1A6E36] text-4xl md:text-[50px] font-normal tracking-wide italic leading-none pl-1 md:pl-2 whitespace-nowrap">
+              <h3 className="text-[#1A6E36] text-4xl md:text-[50px] font-normal tracking-wide  leading-none   whitespace-nowrap">
                  মিশরী
               </h3>
               <h1
-                className="text-[#0D5C22] text-[60px] sm:text-7xl md:text-[130px] lg:text-[100px] font-black italic leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3 whitespace-nowrap"
+                className="text-[#0D5C22] text-[60px] sm:text-7xl md:text-[130px] lg:text-[100px] font-black  leading-none tracking-tighter drop-shadow-sm -ml-1.5 md:-ml-3 whitespace-nowrap"
                 style={{ WebkitTextStroke: '2px #0D5C22' }}
               >
                 মেডজুল

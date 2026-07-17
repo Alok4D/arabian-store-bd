@@ -46,7 +46,7 @@ export default function BenefitsSection() {
 
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap());
-    });
+    }); 
   }, [api]);
 
   return (
