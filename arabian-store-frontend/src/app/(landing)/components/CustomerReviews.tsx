@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import ScrollAnimate from './ScrollAnimate';
 
 export function CustomerReviews() {
 
@@ -76,15 +75,15 @@ export function CustomerReviews() {
       <div className="max-w-7xl mx-auto">
 
         {/* Section Header with Decorative Green Lines */}
-        <ScrollAnimate animation="animate__fadeInDown" className="flex items-center justify-center gap-3 md:gap-4 mb-8 md:mb-12">
+        <div className="flex items-center justify-center gap-3 md:gap-4 mb-8 md:mb-12">
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
           <h2 className="text-[20px] sm:text-2xl md:text-[30px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
             কাস্টমার রিভিউ
           </h2>
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
-        </ScrollAnimate>
+        </div>
 
-        <ScrollAnimate animation="animate__fadeInUp">
+        <div>
           <div className="relative group">
             <button
               onClick={prevSlide}
@@ -133,7 +132,7 @@ export function CustomerReviews() {
               />
             ))}
           </div>
-        </ScrollAnimate>
+        </div>
 
       </div>
     </section>
