@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ShoppingCart } from 'lucide-react';
+import ScrollAnimate from './ScrollAnimate';
 
 interface ApiProduct {
   id: string;
@@ -76,13 +77,13 @@ export default function Packages() {
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header with Decorative Green Lines */}
-        <div className="flex items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16">
+        <ScrollAnimate animation="animate__fadeInDown" className="flex items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16">
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
           <h2 className="text-[20px] sm:text-2xl md:text-[30px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
             আমাদের প্যাকেজ সমূহ
           </h2>
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
-        </div>
+        </ScrollAnimate>
 
         {/* Dynamic Responsive Grid Layout */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-6 items-stretch px-1 sm:px-0 mt-4">
@@ -91,8 +92,9 @@ export default function Packages() {
             const displayPrice = item.discountPrice ? item.discountPrice : item.price;
 
             return (
-              <div
-                key={item.id}
+              <ScrollAnimate 
+                key={item.id} 
+                animation="animate__fadeInUp"
                 className={`relative flex flex-col justify-between items-center bg-white rounded-xl p-3 sm:p-6 transition-all duration-300 shadow-sm ${
                   isPopular
                     ? 'ring-[1.5px] sm:ring-2 ring-[#008013] ring-inset border border-transparent scale-100 lg:scale-[1.03] shadow-md z-10'
@@ -147,7 +149,7 @@ export default function Packages() {
                   <span className="text-[11px] sm:text-sm tracking-wide">অর্ডার করুন</span>
                 </button>
 
-              </div>
+              </ScrollAnimate>
             );
           })}
         </div>

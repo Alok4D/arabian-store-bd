@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/sonner';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
+import { LenisProvider } from '@/components/providers/LenisProvider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -17,9 +18,11 @@ export default function RootLayout({
     <html lang="bn">
       <body>
         <ReduxProvider>
-          {children}
-          {/* <FloatingContact /> */}
-          <Toaster position="top-center" />
+          <LenisProvider>
+            {children}
+            {/* <FloatingContact /> */}
+            <Toaster position="top-center" />
+          </LenisProvider>
         </ReduxProvider>
       </body>
     </html>

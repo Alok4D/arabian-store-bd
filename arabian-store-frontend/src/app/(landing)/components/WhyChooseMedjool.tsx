@@ -1,6 +1,7 @@
 "use client";
 
 import { Leaf, Heart, Zap, Star } from 'lucide-react';
+import ScrollAnimate from './ScrollAnimate';
 
 const reasons = [
   {
@@ -39,18 +40,19 @@ export default function WhyChooseMedjool() {
       <div className="max-w-7xl mx-auto">
 
         {/* Section Header with Decorative Green Lines */}
-        <div className="flex items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16">
+        <ScrollAnimate animation="animate__fadeInDown" className="flex items-center justify-center gap-3 md:gap-4 mb-12 md:mb-16">
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-r from-transparent to-[#008013]" />
           <h2 className="text-[20px] sm:text-2xl md:text-[30px] font-extrabold text-[#1A1A1A] text-center tracking-wide px-2">
             কেন আমাদের মেডজুল খেজুর বেছে নেবেন?
           </h2>
           <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-gradient-to-l from-transparent to-[#008013]" />
-        </div>
+        </ScrollAnimate>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
           {reasons.map((r, i) => (
-            <div
+            <ScrollAnimate 
               key={i}
+              animation="animate__zoomIn"
               className="flex flex-col items-center text-center p-3 md:p-6 bg-white rounded-md border border-[#EAE6DF] shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="mb-2 md:mb-3 p-2 md:p-3 rounded-full bg-[#F4F0E8] shadow-sm">
@@ -58,7 +60,7 @@ export default function WhyChooseMedjool() {
               </div>
               <h3 className="font-bold text-[15px] md:text-[20px] text-[#2D251E] mb-1 md:mb-2 leading-tight">{r.title}</h3>
               <p className="text-[12px] md:text-[14px] text-[#555] leading-relaxed">{r.desc}</p>
-            </div>
+            </ScrollAnimate>
           ))}
         </div>
 

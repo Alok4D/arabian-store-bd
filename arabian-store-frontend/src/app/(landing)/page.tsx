@@ -11,7 +11,7 @@ import BenefitsSection from './components/BenefitsSection';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overflow-x-hidden">
       <Navbar /> 
       <BannerSection />
       <WhyChooseMedjool />
@@ -27,3 +27,4 @@ export default function Home() {
     </main>
   );
 }
+

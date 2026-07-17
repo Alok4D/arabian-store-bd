@@ -10,6 +10,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import ScrollAnimate from './ScrollAnimate';
 
 interface BenefitItem {
   id: number;
@@ -54,7 +55,7 @@ export default function BenefitsSection() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         
         {/* Left Side: Benefits Content */}
-        <div className="lg:col-span-6 flex flex-col justify-center order-2 lg:order-1">
+        <ScrollAnimate animation="animate__fadeInLeft" className="lg:col-span-6 flex flex-col justify-center order-2 lg:order-1">
           {/* Main Title Heading */}
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#004D0B] leading-tight mb-8 text-center md:text-left lg:text-left">
             প্রতিদিন মেডজুল খেলে <br className="hidden sm:inline" />
@@ -80,10 +81,10 @@ export default function BenefitsSection() {
               </li>
             ))}
           </ul>
-        </div>
+        </ScrollAnimate>
 
         {/* Right Side: Product Visual Element */}
-        <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative mt-0 lg:mt-0 w-full">
+        <ScrollAnimate animation="animate__fadeInRight" className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 select-none relative mt-0 lg:mt-0 w-full">
           <div className="w-full relative transition-transform duration-300">
             <Carousel
               setApi={setApi}
@@ -133,7 +134,7 @@ export default function BenefitsSection() {
               </div>
             </Carousel>
           </div>
-        </div>
+        </ScrollAnimate>
 
       </div>
     </section>

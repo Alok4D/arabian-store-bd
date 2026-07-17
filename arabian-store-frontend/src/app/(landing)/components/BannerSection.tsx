@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Check, ShoppingCart, ShieldCheck, Truck, Sparkles } from 'lucide-react';
+import ScrollAnimate from './ScrollAnimate';
 
 export default function BannerSection() {
 
@@ -27,7 +28,7 @@ export default function BannerSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-8 items-center">
 
           {/* Left Content */}
-          <div className="order-2 lg:order-1 space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
+          <ScrollAnimate animation="animate__fadeInLeft" className="order-2 lg:order-1 space-y-6 md:space-y-8 relative z-10 lg:pl-8 xl:pl-12">
 
             {/* Mobile Order Button (Visible below banner on mobile/tablet) */}
             <div className="flex justify-center lg:hidden w-full">
@@ -111,10 +112,10 @@ export default function BannerSection() {
               </div>
             </div>
 
-          </div>
+          </ScrollAnimate>
 
           {/* Right Image */}
-          <div className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0 lg:pl-4">
+          <ScrollAnimate animation="animate__zoomIn" className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0 lg:pl-4">
             <div className="relative w-full max-w-[550px] xl:max-w-[650px] overflow-hidden rounded-xl md:rounded-2xl">
               <Image
                 src="/banner-img/banner-image.jpg"
@@ -125,7 +126,7 @@ export default function BannerSection() {
                 priority
               />
             </div>
-          </div>
+          </ScrollAnimate>
         </div>
       </div>
     </section>
