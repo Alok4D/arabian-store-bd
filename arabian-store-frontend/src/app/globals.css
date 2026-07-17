@@ -116,3 +116,12 @@ button, a{
   font-style: normal;
   font-display: swap;
 }
+
+@media print {
+  @page {
+    margin: 0.5cm; /* Removes browser-generated headers and footers (URL, page numbers, date) */
+  }
+  header, footer, nav {
+    display: none !important; /* Removes website headers and footers from the print view */
+  }
+}
