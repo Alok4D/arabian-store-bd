@@ -18,7 +18,6 @@ export default function Home() {
         <WhyChooseMedjool />
         <Packages />
         <BenefitsSection />
-        {/* <HealthBenefits /> */}
         <div className="bg-[#FAF7F0]">
           <CheckoutPage />
         </div>
