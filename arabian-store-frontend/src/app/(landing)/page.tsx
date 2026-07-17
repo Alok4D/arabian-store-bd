@@ -11,20 +11,22 @@ import BenefitsSection from './components/BenefitsSection';
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <>
       <Navbar /> 
-      <BannerSection />
-      <WhyChooseMedjool />
-      <Packages />
-      <BenefitsSection />
-      {/* <HealthBenefits /> */}
-      <div className="bg-[#FAF7F0]">
-        <CheckoutPage />
-      </div>
-      <CustomerReviews />
-      <Footer />
-      <LiveChatWidget />
-    </main>
+      <main className="min-h-screen overflow-x-hidden">
+        <BannerSection />
+        <WhyChooseMedjool />
+        <Packages />
+        <BenefitsSection />
+        {/* <HealthBenefits /> */}
+        <div className="bg-[#FAF7F0]">
+          <CheckoutPage />
+        </div>
+        <CustomerReviews />
+        <Footer />
+        <LiveChatWidget />
+      </main>
+    </>
   );
 }
 
