@@ -50,9 +50,9 @@ export default function Packages() {
         if (result.success && result.data) {
           const apiProducts: ApiProduct[] = result.data;
           
-          // The original UI design strictly requires 4 items in this exact order: 1kg, 2kg, 5kg, 3kg.
+          // The original UI design strictly requires 4 items in this exact order: 1kg, 2kg, 3kg, 5kg.
           // We map the API data to match this layout perfectly.
-          const desiredOrder = ['1 KG', '2 KG', '5 KG', '3 KG'];
+          const desiredOrder = ['1 KG', '2 KG', '3 KG', '5 KG'];
           const matchedProducts = desiredOrder
             .map(weight => apiProducts.find(p => p.weight === weight))
             .filter(Boolean) as ApiProduct[];
