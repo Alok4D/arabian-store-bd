@@ -2,22 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash2, Search, Filter } from "lucide-react";
 import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from "@/lib/feature/orders/ordersApi";
 import Swal from 'sweetalert2';
 
-interface Order {
-  id: string;
-  orderId: string;
-  createdAt: string;
-  customerName: string;
-  phone: string;
-  address?: string;
-  product?: { title: string };
-  quantity: number;
-  total: number;
-  status: string;
-}
+import OrderFilters from "./components/OrderFilters";
+import OrderStatusTabs from "./components/OrderStatusTabs";
+import OrderTable from "./components/OrderTable";
+import OrderPagination from "./components/OrderPagination";
+import OrderSkeleton from "./components/OrderSkeleton";
 
 export default function OrdersPage() {
   const [page, setPage] = useState(1);
@@ -100,7 +92,6 @@ export default function OrdersPage() {
       case 'above5000':
         setMinAmount('5000'); setMaxAmount(''); break;
       case 'custom':
-        // Leave minAmount/maxAmount as they are for custom input
         break;
       default:
         setMinAmount(''); setMaxAmount('');
@@ -138,7 +129,7 @@ export default function OrdersPage() {
     sortOrder: sortOrder as 'asc'|'desc',
   });
 
-  const orders: Order[] = data?.data || [];
+  const orders = data?.data || [];
   const meta = data?.meta;
 
   const resetFilters = () => {
@@ -201,239 +192,61 @@ export default function OrdersPage() {
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'PENDING': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'CONFIRMED': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'PACKAGING': return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'SHIPPED': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
-      case 'DELIVERED': return 'bg-green-100 text-green-800 border-green-200';
-      case 'CANCELLED': return 'bg-red-100 text-red-800 border-red-200';
-      case 'RETURNED': return 'bg-gray-200 text-gray-800 border-gray-300';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">Orders</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">All Orders</h1>
       </div>
 
-      <Card className="border-[#faecd8]">
+      <Card className="border border-neutral-200 shadow-sm rounded-xl overflow-hidden bg-white">
         <CardHeader className="p-0 border-b border-neutral-100">
           <div className="p-6 pb-4">
-            <CardTitle className="text-[#2D251E] mb-6">Manage Orders</CardTitle>
+            {/* <CardTitle className="text-[#2D251E] mb-6">Manage Orders</CardTitle> */}
 
-            <div className="flex flex-col gap-4">
-              {/* Search and Primary Filters */}
-              <div className="flex flex-col lg:flex-row gap-4">
-                {/* Search Bar */}
-                <div className="relative w-full lg:w-[320px] flex-shrink-0">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                    <Search className="h-4 w-4 text-neutral-400" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Search by ID, Customer Name, Phone, or Product..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full pl-10 pr-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#008013]/20 focus:border-[#008013] transition-all"
-                  />
-                </div>
-                
-                {/* Secondary Filters row */}
-                <div className="flex flex-wrap items-center gap-3 w-full justify-start lg:justify-end">
-                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all flex-grow lg:flex-grow-0">
-                    <span className="text-xs font-semibold text-neutral-500 whitespace-nowrap">Date:</span>
-                    <select 
-                      value={dateRange} 
-                      onChange={(e) => { setDateRange(e.target.value); setPage(1); }}
-                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer w-full"
-                    >
-                      <option value="">All Time</option>
-                      <option value="today">Today</option>
-                      <option value="yesterday">Yesterday</option>
-                      <option value="last7days">Last 7 Days</option>
-                      <option value="last30days">Last 30 Days</option>
-                      <option value="thisMonth">This Month</option>
-                      <option value="lastMonth">Last Month</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all flex-grow lg:flex-grow-0">
-                    <span className="text-xs font-semibold text-neutral-500 whitespace-nowrap">Amount:</span>
-                    <select 
-                      value={amountRange} 
-                      onChange={(e) => setAmountRange(e.target.value)}
-                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer w-full"
-                    >
-                      <option value="">Any</option>
-                      <option value="under500">Under ৳500</option>
-                      <option value="500to1000">৳500 - ৳1000</option>
-                      <option value="1000to5000">৳1000 - ৳5000</option>
-                      <option value="above5000">Above ৳5000</option>
-                      <option value="custom">Custom...</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all flex-grow lg:flex-grow-0">
-                    <span className="text-xs font-semibold text-neutral-500 whitespace-nowrap">Sort:</span>
-                    <select 
-                      value={sortOption} 
-                      onChange={(e) => { setSortOption(e.target.value); setPage(1); }}
-                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer w-full"
-                    >
-                      <option value="newest">Newest</option>
-                      <option value="oldest">Oldest</option>
-                      <option value="highestAmount">Highest Amount</option>
-                      <option value="lowestAmount">Lowest Amount</option>
-                      <option value="customerAZ">Customer (A-Z)</option>
-                      <option value="customerZA">Customer (Z-A)</option>
-                    </select>
-                  </div>
-
-                  {hasActiveFilters && (
-                    <button 
-                      onClick={resetFilters}
-                      className="text-sm px-4 py-2 font-medium text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl transition-colors whitespace-nowrap border border-transparent hover:border-red-100"
-                    >
-                      Reset Filters
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Custom Amount Inputs (shows only if 'custom' is selected) */}
-              {amountRange === 'custom' && (
-                <div className="flex items-center gap-3 pt-2 animate-in fade-in slide-in-from-top-2">
-                  <span className="text-xs font-medium text-neutral-500">Custom Range:</span>
-                  <input type="number" placeholder="Min ৳" value={minAmount} onChange={e => { setMinAmount(e.target.value); setPage(1); }} className="w-24 text-sm py-1.5 px-3 bg-neutral-50 border border-neutral-200 rounded-lg outline-none focus:border-[#008013] focus:ring-2 focus:ring-[#008013]/20 transition-colors" />
-                  <span className="text-neutral-400">-</span>
-                  <input type="number" placeholder="Max ৳" value={maxAmount} onChange={e => { setMaxAmount(e.target.value); setPage(1); }} className="w-24 text-sm py-1.5 px-3 bg-neutral-50 border border-neutral-200 rounded-lg outline-none focus:border-[#008013] focus:ring-2 focus:ring-[#008013]/20 transition-colors" />
-                </div>
-              )}
-            </div>
+            <OrderFilters 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              amountRange={amountRange}
+              setAmountRange={setAmountRange}
+              sortOption={sortOption}
+              setSortOption={setSortOption}
+              setPage={setPage}
+              minAmount={minAmount}
+              setMinAmount={setMinAmount}
+              maxAmount={maxAmount}
+              setMaxAmount={setMaxAmount}
+              resetFilters={resetFilters}
+              hasActiveFilters={hasActiveFilters}
+            />
           </div>
           
-          {/* Status Tabs */}
-          <div className="px-6 pb-0 bg-neutral-50/50">
-            <div className="flex items-center gap-2 overflow-x-auto pt-4 pb-4">
-              {['All', 'PENDING', 'CONFIRMED', 'PACKAGING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED'].map(status => (
-                <button
-                  key={status}
-                  onClick={() => {
-                    setFilterStatus(status);
-                    setPage(1);
-                  }}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap border ${
-                    filterStatus === status 
-                      ? 'bg-[#008013] text-white border-[#008013] shadow-md shadow-[#008013]/20' 
-                      : 'bg-white text-neutral-500 border-neutral-200 hover:bg-neutral-100 hover:text-neutral-800'
-                  }`}
-                >
-                  {status}
-                </button>
-              ))}
-            </div>
-          </div>
+          <OrderStatusTabs 
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            setPage={setPage}
+          />
         </CardHeader>
-        <CardContent>
+
+        <CardContent className="p-0">
           {isLoading ? (
-            <div className="py-8 text-center text-neutral-500">Loading orders...</div>
+            <OrderSkeleton />
           ) : orders.length === 0 ? (
             <div className="py-8 text-center text-neutral-500">No orders found matching your filters.</div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[800px]">
-                <thead>
-                  <tr className="border-b border-neutral-200">
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Order ID</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Date</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Customer</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Product</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Total</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Status</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order.id} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
-                      <td className="py-4 px-4 font-bold text-neutral-700">{order.orderId}</td>
-                      <td className="py-4 px-4 text-sm text-neutral-500 whitespace-nowrap">
-                        {new Date(order.createdAt).toLocaleString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true
-                        })}
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="font-medium text-neutral-800">{order.customerName}</div>
-                        <div className="text-xs text-neutral-500">{order.phone}</div>
-                      </td>
-                      <td className="py-4 px-4 text-sm">
-                        <span className="font-medium">{order.product?.title || 'Unknown Product'}</span>
-                        <span className="text-neutral-500 ml-1">x{order.quantity}</span>
-                      </td>
-                      <td className="py-4 px-4 font-bold text-[#008013]">{Number(order.total).toLocaleString()}৳</td>
-                      <td className="py-4 px-4">
-                        <select 
-                          value={order.status}
-                          onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                          className={`text-xs font-bold py-1.5 px-3 rounded-full border outline-none cursor-pointer ${getStatusColor(order.status)}`}
-                        >
-                          <option value="PENDING">PENDING</option>
-                          <option value="CONFIRMED">CONFIRMED</option>
-                          <option value="PACKAGING">PACKAGING</option>
-                          <option value="SHIPPED">SHIPPED</option>
-                          <option value="DELIVERED">DELIVERED</option>
-                          <option value="CANCELLED">CANCELLED</option>
-                          <option value="RETURNED">RETURNED</option>
-                        </select>
-                      </td>
-                      <td className="py-4 px-4 text-right">
-                        <button 
-                          onClick={() => handleDelete(order.id)}
-                          className="p-2 text-neutral-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {/* Pagination Controls */}
-              {meta && meta.totalPages > 1 && (
-                <div className="flex items-center justify-between px-4 py-4 border-t border-neutral-100 mt-4">
-                  <div className="text-sm text-neutral-500">
-                    Showing page <span className="font-medium text-neutral-900">{meta.page}</span> of <span className="font-medium text-neutral-900">{meta.totalPages}</span> ({meta.total} total items)
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setPage(p => Math.max(1, p - 1))}
-                      disabled={page === 1}
-                      className="px-3 py-1 text-sm font-medium border border-neutral-200 rounded text-neutral-600 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      onClick={() => setPage(p => Math.min(meta.totalPages, p + 1))}
-                      disabled={page === meta.totalPages}
-                      className="px-3 py-1 text-sm font-medium border border-neutral-200 rounded text-neutral-600 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <>
+              <OrderTable 
+                orders={orders}
+                handleStatusChange={handleStatusChange}
+                handleDelete={handleDelete}
+              />
+              <OrderPagination 
+                meta={meta}
+                page={page}
+                setPage={setPage}
+              />
+            </>
           )}
         </CardContent>
       </Card>
