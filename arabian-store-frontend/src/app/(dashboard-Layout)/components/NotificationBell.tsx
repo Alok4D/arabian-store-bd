@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Bell } from "lucide-react";
 import { io, Socket } from "socket.io-client";
+import Swal from 'sweetalert2';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -35,6 +36,17 @@ export function NotificationBell() {
     socket.on("newOrder", (data: Notification) => {
       setNotifications((prev) => [data, ...prev]);
       setHasUnread(true);
+      
+      Swal.fire({
+        title: 'New Order!',
+        text: data.message || 'You have received a new order.',
+        icon: 'success',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+      });
     });
 
     return () => {
