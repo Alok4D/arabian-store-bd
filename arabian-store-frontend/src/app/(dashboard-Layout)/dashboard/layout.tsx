@@ -91,10 +91,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <aside className={`${isCollapsed ? "w-20" : "w-64"} bg-background border-r flex flex-col hidden md:flex shrink-0 transition-all duration-300 ease-in-out`}>
         <div className={`h-16 flex items-center ${isCollapsed ? "justify-center" : "px-6"} border-b shrink-0 overflow-hidden`}>
           <Link href="/" className="flex items-center gap-2 overflow-hidden">
-            <div className="flex justify-center text-[#008013] font-bold overflow-hidden shrink-0">
+            <div className="flex justify-center text-[#009e19] font-bold overflow-hidden shrink-0">
                  <Image src="https://res.cloudinary.com/dlvywmmyv/image/upload/v1783573994/arabian-store-bd/products/image-1783573993347.jpg" alt="Logo" width={50} height={50} />
             </div>
-            {!isCollapsed && <span className="text-xl font-extrabold tracking-tight whitespace-nowrap text-[#2D251E]">Arabian Store</span>}
+            {!isCollapsed && <span className="text-xl font-bold tracking-tight whitespace-nowrap text-[#a46404]">Arabian Store</span>}
           </Link>
         </div>
 
@@ -110,9 +110,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 key={route.href}
                 href={route.href}
                 title={isCollapsed ? route.label : undefined}
-                className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3 px-3"} py-2.5 rounded-md text-sm transition-all ${isActive
-                    ? "bg-[#008013]/10 text-[#008013] font-bold border-l-4 border-[#008013]"
-                    : "text-[#555] font-medium hover:bg-[#F4F0E8] hover:text-[#2D251E]"
+                className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3 px-3"} py-2 rounded-md text-sm font-medium transition-colors ${isActive
+                    ? "bg-[#009e19]/10 text-[#009e19]"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
               >
                 <Icon className="h-5 w-5 shrink-0" />
@@ -124,7 +124,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
         <div className="p-4 border-t space-y-4 shrink-0 overflow-hidden">
           <div className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3 px-3"}`}>
-            <div className="w-8 h-8 rounded-full bg-[#F4F0E8] flex items-center justify-center text-[#2D251E] font-bold text-xs uppercase overflow-hidden relative shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#009e19]/10 flex items-center justify-center text-[#009e19] font-bold text-xs uppercase overflow-hidden relative shrink-0">
               {user.avatar ? (
                 <img src={user.avatar} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
@@ -166,10 +166,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               <SheetContent side="left" className="w-64 p-0">
                 <div className="h-16 flex items-center px-6 border-b shrink-0">
                   <Link href="/dashboard" className="flex items-center gap-2">
-                    <div className=" flex justify-center text-[#008013] font-bold overflow-hidden">
+                    <div className=" flex justify-center text-[#009e19] font-bold overflow-hidden">
                       <Package className="w-8 h-8" />
                     </div>
-                    <span className="text-xl font-extrabold tracking-tight text-[#2D251E]">Arabian Store</span>
+                    <span className="text-xl font-bold tracking-tight text-[#a46404]">Arabian Store</span>
                   </Link>
                 </div>
                 <div className="flex flex-col h-[calc(100vh-4rem)]">
@@ -185,9 +185,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                           key={route.href}
                           href={route.href}
                           onClick={() => setOpen(false)}
-                          className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all ${isActive
-                              ? "bg-[#008013]/10 text-[#008013] font-bold border-l-4 border-[#008013]"
-                              : "text-[#555] font-medium hover:bg-[#F4F0E8] hover:text-[#2D251E]"
+                          className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
+                              ? "bg-[#009e19]/10 text-[#009e19]"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
                             }`}
                         >
                           <Icon className="h-4 w-4" />
@@ -226,7 +226,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <span className="text-sm font-medium leading-none">{user.name}</span>
                 <span className="text-xs text-muted-foreground mt-1 capitalize">{user.role}</span>
               </div>
-              <div className="w-8 h-8 rounded-full bg-[#F4F0E8] flex items-center justify-center text-[#2D251E] font-bold text-xs uppercase overflow-hidden relative shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#009e19]/10 flex items-center justify-center text-[#009e19] font-bold text-xs uppercase overflow-hidden relative shrink-0">
                 {user.avatar ? (
                   <img 
                     src={user.avatar} 
