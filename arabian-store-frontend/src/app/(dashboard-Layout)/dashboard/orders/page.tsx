@@ -141,6 +141,20 @@ export default function OrdersPage() {
   const orders: Order[] = data?.data || [];
   const meta = data?.meta;
 
+  const resetFilters = () => {
+    setSearchQuery('');
+    setDebouncedSearch('');
+    setDateRange('');
+    setAmountRange('');
+    setMinAmount('');
+    setMaxAmount('');
+    setSortOption('newest');
+    setFilterStatus('All');
+    setPage(1);
+  };
+
+  const hasActiveFilters = searchQuery !== '' || dateRange !== '' || amountRange !== '' || sortOption !== 'newest' || filterStatus !== 'All';
+
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
       const res = await updateOrderStatus({ id, status: newStatus }).unwrap();
@@ -216,7 +230,7 @@ export default function OrdersPage() {
               {/* Search and Primary Filters */}
               <div className="flex flex-col lg:flex-row gap-4">
                 {/* Search Bar */}
-                <div className="relative flex-grow">
+                <div className="relative w-full lg:w-[320px] flex-shrink-0">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                     <Search className="h-4 w-4 text-neutral-400" />
                   </div>
@@ -230,13 +244,13 @@ export default function OrdersPage() {
                 </div>
                 
                 {/* Secondary Filters row */}
-                <div className="flex flex-wrap lg:flex-nowrap items-center gap-3">
-                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all">
+                <div className="flex flex-wrap items-center gap-3 w-full justify-start lg:justify-end">
+                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all flex-grow lg:flex-grow-0">
                     <span className="text-xs font-semibold text-neutral-500 whitespace-nowrap">Date:</span>
                     <select 
                       value={dateRange} 
                       onChange={(e) => { setDateRange(e.target.value); setPage(1); }}
-                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer"
+                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer w-full"
                     >
                       <option value="">All Time</option>
                       <option value="today">Today</option>
@@ -248,12 +262,12 @@ export default function OrdersPage() {
                     </select>
                   </div>
 
-                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all">
+                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all flex-grow lg:flex-grow-0">
                     <span className="text-xs font-semibold text-neutral-500 whitespace-nowrap">Amount:</span>
                     <select 
                       value={amountRange} 
                       onChange={(e) => setAmountRange(e.target.value)}
-                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer"
+                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer w-full"
                     >
                       <option value="">Any</option>
                       <option value="under500">Under ৳500</option>
@@ -264,12 +278,12 @@ export default function OrdersPage() {
                     </select>
                   </div>
 
-                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all">
+                  <div className="flex items-center gap-2 bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-1.5 focus-within:border-[#008013] focus-within:ring-2 focus-within:ring-[#008013]/20 transition-all flex-grow lg:flex-grow-0">
                     <span className="text-xs font-semibold text-neutral-500 whitespace-nowrap">Sort:</span>
                     <select 
                       value={sortOption} 
                       onChange={(e) => { setSortOption(e.target.value); setPage(1); }}
-                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer"
+                      className="text-sm bg-transparent outline-none text-neutral-700 font-medium py-1 cursor-pointer w-full"
                     >
                       <option value="newest">Newest</option>
                       <option value="oldest">Oldest</option>
@@ -279,6 +293,15 @@ export default function OrdersPage() {
                       <option value="customerZA">Customer (Z-A)</option>
                     </select>
                   </div>
+
+                  {hasActiveFilters && (
+                    <button 
+                      onClick={resetFilters}
+                      className="text-sm px-4 py-2 font-medium text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl transition-colors whitespace-nowrap border border-transparent hover:border-red-100"
+                    >
+                      Reset Filters
+                    </button>
+                  )}
                 </div>
               </div>
 
