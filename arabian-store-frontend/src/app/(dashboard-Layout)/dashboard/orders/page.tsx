@@ -12,6 +12,7 @@ import OrderPagination from "./components/OrderPagination";
 import OrderSkeleton from "./components/OrderSkeleton";
 
 export default function OrdersPage() {
+  
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');

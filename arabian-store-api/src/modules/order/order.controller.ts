@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express';
 import { OrderService } from './order.service.js';
+import { getIO } from '../../socket.js';
 
 export const createOrder = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -28,6 +29,18 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
       status
     });
     
+    // Emit real-time notification
+    try {
+      const io = getIO();
+      io.emit('newOrder', {
+        id: order.id,
+        message: `A new sale has been created!`,
+        time: new Date().toISOString()
+      });
+    } catch (socketError) {
+      console.error('Socket emission error:', socketError);
+    }
+
     res.status(201).json({ success: true, data: order });
   } catch (error: any) {
     console.error('Create order error:', error);

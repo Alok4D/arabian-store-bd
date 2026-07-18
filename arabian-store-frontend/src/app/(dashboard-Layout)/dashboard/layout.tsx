@@ -33,6 +33,7 @@ import {
 } from "lucide-react";
 import { useGetProfileQuery } from "@/lib/feature/auth/authApi";
 import Image from "next/image";
+import { NotificationBell } from "@/app/(dashboard-Layout)/components/NotificationBell";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -219,7 +220,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <div className="font-bold md:hidden">{user.name}</div>
           </div>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 pl-4">
+            <NotificationBell />
+            <div className="flex items-center gap-3 pl-4 border-l">
               <div className="flex flex-col text-right hidden sm:flex">
                 <span className="text-sm font-medium leading-none">{user.name}</span>
                 <span className="text-xs text-muted-foreground mt-1 capitalize">{user.role}</span>
