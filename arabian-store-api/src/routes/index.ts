@@ -5,6 +5,7 @@ import { OrderRoutes } from '../modules/order/order.routes.js';
 import { CustomerRoutes } from '../modules/customer/customer.routes.js';
 import { DashboardRoutes } from '../modules/dashboard/dashboard.routes.js';
 import { ShippingRoutes } from '../modules/shipping/shipping.routes.js';
+import { NotificationRoutes } from '../modules/notification/notification.routes.js';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/orders', OrderRoutes);
 router.use('/customers', CustomerRoutes);
 router.use('/dashboard', DashboardRoutes);
 router.use('/shipping', ShippingRoutes);
+router.use('/notifications', NotificationRoutes);
 
 export default router;

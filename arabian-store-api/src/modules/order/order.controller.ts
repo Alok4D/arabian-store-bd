@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express';
 import { OrderService } from './order.service.js';
+import { NotificationService } from '../notification/notification.service.js';
 import { getIO } from '../../socket.js';
 
 export const createOrder = async (req: Request, res: Response): Promise<void> => {
@@ -32,13 +33,18 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
     // Emit real-time notification
     try {
       const io = getIO();
+      const notificationMsg = `A new order has been created by ${customerName}!`;
+      
+      // Save to database
+      const savedNotification = await NotificationService.createNotification(notificationMsg);
+      
       io.emit('newOrder', {
-        id: order.id,
-        message: `A new sale has been created!`,
-        time: new Date().toISOString()
+        id: savedNotification.id,
+        message: savedNotification.message,
+        time: savedNotification.createdAt
       });
     } catch (socketError) {
-      console.error('Socket emission error:', socketError);
+      console.error('Socket/Notification error:', socketError);
     }
 
     res.status(201).json({ success: true, data: order });

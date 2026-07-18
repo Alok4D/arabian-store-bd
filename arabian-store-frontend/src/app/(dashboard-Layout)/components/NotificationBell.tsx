@@ -24,6 +24,31 @@ export function NotificationBell() {
   const [hasUnread, setHasUnread] = useState(false);
 
   useEffect(() => {
+    // Fetch initial notifications
+    const fetchNotifications = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/api/notifications`);
+        const data = await res.json();
+        
+        if (data.success && data.data) {
+          const fetchedNotifications = data.data.map((item: any) => ({
+            id: item.id,
+            message: item.message,
+            time: item.createdAt
+          }));
+          setNotifications(fetchedNotifications);
+          if (fetchedNotifications.length > 0) {
+            setHasUnread(true);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch notifications", error);
+      }
+    };
+    
+    fetchNotifications();
+
     // Initialize socket connection
     const socket: Socket = io(process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000", {
       withCredentials: true,
@@ -42,7 +67,7 @@ export function NotificationBell() {
         text: data.message || 'You have received a new order.',
         icon: 'success',
         toast: true,
-        position: 'top-end',
+        position: 'top',
         showConfirmButton: false,
         timer: 4000,
         timerProgressBar: true,
@@ -54,8 +79,18 @@ export function NotificationBell() {
     };
   }, []);
 
-  const handleMarkAllRead = () => {
+  const handleMarkAllRead = async () => {
     setHasUnread(false);
+    setNotifications([]);
+    
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      await fetch(`${apiUrl}/api/notifications/mark-all-read`, {
+        method: 'PATCH',
+      });
+    } catch (error) {
+      console.error("Failed to mark notifications as read", error);
+    }
   };
 
   const formatTime = (isoString: string) => {

@@ -80,3 +80,12 @@ model ShippingSetting {
   insideDhaka  Decimal @default(80)
   outsideDhaka Decimal @default(130)
 }
+
+model Notification {
+  id        String   @id @default(cuid())
+  message   String
+  isRead    Boolean  @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
