@@ -29,7 +29,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight text-[#a46404]">Overview</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">Overview</h1>
       </div>
       
       {isLoading ? (
@@ -71,7 +71,7 @@ export default function DashboardPage() {
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                 <CardTitle className="text-base font-medium text-neutral-600">Total Revenue</CardTitle>
-                <DollarSign className="h-6 w-6 text-[#009e19]" />
+                <DollarSign className="h-6 w-6 text-[#008013]" />
               </CardHeader>
               <CardContent>
                 <div className="text-4xl font-bold text-neutral-800 tracking-tight">৳{overview.totalRevenue.toLocaleString()}</div>
@@ -82,18 +82,18 @@ export default function DashboardPage() {
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                 <CardTitle className="text-base font-medium text-neutral-600">Orders</CardTitle>
-                <Receipt className="h-6 w-6 text-[#009e19]" />
+                <Receipt className="h-6 w-6 text-[#008013]" />
               </CardHeader>
               <CardContent>
                 <div className="text-4xl font-bold text-neutral-800 tracking-tight">{overview.totalOrders}</div>
-                <p className="text-xs text-[#009e19] mt-1">{overview.pendingOrders} Pending</p>
+                <p className="text-xs text-[#008013] mt-1">{overview.pendingOrders} Pending</p>
               </CardContent>
             </Card>
             
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                 <CardTitle className="text-base font-medium text-neutral-600">Products</CardTitle>
-                <Package className="h-6 w-6 text-[#009e19]" />
+                <Package className="h-6 w-6 text-[#008013]" />
               </CardHeader>
               <CardContent>
                 <div className="text-4xl font-bold text-neutral-800 tracking-tight">{overview.totalProducts}</div>
@@ -104,7 +104,7 @@ export default function DashboardPage() {
             <Card className="border-[#faecd8] bg-[#fcf8f2]/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                 <CardTitle className="text-base font-medium text-neutral-600">Delivered</CardTitle>
-                <Users className="h-6 w-6 text-[#009e19]" />
+                <Users className="h-6 w-6 text-[#008013]" />
               </CardHeader>
               <CardContent>
                 <div className="text-4xl font-bold text-neutral-800 tracking-tight">{overview.deliveredOrders}</div>
@@ -116,7 +116,7 @@ export default function DashboardPage() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
             <Card className="col-span-4 border-[#faecd8]">
               <CardHeader>
-                <CardTitle className="text-[#a46404]">Revenue (Last 7 Days)</CardTitle>
+                <CardTitle className="text-[#2D251E]">Revenue (Last 7 Days)</CardTitle>
               </CardHeader>
               <CardContent className="h-[300px]">
                 {overview.graphData && overview.graphData.length > 0 ? (
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                         formatter={(value: any) => [`৳${value}`, 'Revenue']}
                         labelStyle={{ color: '#888', marginBottom: '4px' }}
                       />
-                      <Line type="monotone" dataKey="revenue" stroke="#009e19" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+                      <Line type="monotone" dataKey="revenue" stroke="#008013" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
                     </LineChart>
                   </ResponsiveContainer>
                 ) : (
@@ -143,7 +143,7 @@ export default function DashboardPage() {
             
             <Card className="col-span-3 border-[#faecd8]">
               <CardHeader>
-                <CardTitle className="text-[#a46404]">Order Status Breakdown</CardTitle>
+                <CardTitle className="text-[#2D251E]">Order Status Breakdown</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 <div className="flex justify-between items-center border-b pb-3 border-neutral-100">

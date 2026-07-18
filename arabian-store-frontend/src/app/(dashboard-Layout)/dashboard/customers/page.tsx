@@ -40,7 +40,7 @@ export default function CustomersPage() {
             title: 'Deleted!',
             text: 'Customer and their orders have been deleted.',
             icon: 'success',
-            confirmButtonColor: '#009e19',
+            confirmButtonColor: '#008013',
             timer: 2000
           });
         }
@@ -58,14 +58,14 @@ export default function CustomersPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-[#a46404] flex items-center gap-2">
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E] flex items-center gap-2">
           <UserIcon className="w-8 h-8" /> Customers
         </h1>
       </div>
 
       <Card className="border-[#faecd8]">
         <CardHeader>
-          <CardTitle className="text-[#a46404]">All Customers</CardTitle>
+          <CardTitle className="text-[#2D251E]">All Customers</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -99,7 +99,7 @@ export default function CustomersPage() {
                           {customer.totalOrders}
                         </span>
                       </td>
-                      <td className="py-4 px-4 text-right font-bold text-[#009e19]">
+                      <td className="py-4 px-4 text-right font-bold text-[#008013]">
                         {Number(customer.totalSpent).toLocaleString('bn-BD')} ৳
                       </td>
                       <td className="py-4 px-4 text-right text-sm text-neutral-500">

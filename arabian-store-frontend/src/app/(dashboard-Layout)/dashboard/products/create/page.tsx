@@ -89,7 +89,7 @@ export default function CreateProductPage() {
     <div className="space-y-6 animate-in fade-in duration-500 max-w-4xl mx-auto">
       <Card className="border-[#faecd8]">
         <CardHeader>
-          <CardTitle className="text-[#a46404]">Product Information</CardTitle>
+          <CardTitle className="text-[#2D251E]">Product Information</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -104,7 +104,7 @@ export default function CreateProductPage() {
                   value={formData.title}
                   onChange={handleTitleChange}
                   placeholder="e.g. ১ কেজি মিসরীয় মেডজুল খেজুর"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -116,7 +116,7 @@ export default function CreateProductPage() {
                   value={formData.slug}
                   onChange={handleChange}
                   placeholder="e.g. 1kg-medjool"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19] bg-neutral-50"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013] bg-neutral-50"
                 />
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function CreateProductPage() {
                 onChange={handleChange}
                 rows={4}
                 placeholder="Write a short description..."
-                className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
               />
             </div>
 
@@ -143,7 +143,7 @@ export default function CreateProductPage() {
                   value={formData.price}
                   onChange={handleChange}
                   placeholder="e.g. 1650"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -154,7 +154,7 @@ export default function CreateProductPage() {
                   value={formData.discountPrice}
                   onChange={handleChange}
                   placeholder="e.g. 1500"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -165,7 +165,7 @@ export default function CreateProductPage() {
                   name="stock"
                   value={formData.stock}
                   onChange={handleChange}
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -176,7 +176,7 @@ export default function CreateProductPage() {
                   name="shippingFee"
                   value={formData.shippingFee}
                   onChange={handleChange}
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
             </div>
@@ -191,7 +191,7 @@ export default function CreateProductPage() {
                   value={formData.weight}
                   onChange={handleChange}
                   placeholder="e.g. 1 KG"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function CreateProductPage() {
               <button 
                 type="submit"
                 disabled={isCreating}
-                className={`px-6 py-2.5 bg-[#009e19] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isCreating ? 'opacity-70 cursor-not-allowed' : ''}`}
+                className={`px-6 py-2.5 bg-[#008013] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isCreating ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Save className="w-4 h-4" />
                 {isCreating ? "Saving..." : "Save Product"}

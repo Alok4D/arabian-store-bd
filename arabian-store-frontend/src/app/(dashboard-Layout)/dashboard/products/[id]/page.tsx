@@ -30,11 +30,11 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           >
             <ArrowLeft className="w-6 h-6 text-neutral-600" />
           </Link>
-          <h1 className="text-3xl font-bold tracking-tight text-[#a46404]">Product Details</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">Product Details</h1>
         </div>
         <Link 
           href={`/dashboard/products/edit/${id}`}
-          className="bg-[#009e19] hover:bg-[#008014] text-white px-4 py-2 rounded-md font-medium transition-colors flex items-center gap-2"
+          className="bg-[#008013] hover:bg-[#008014] text-white px-4 py-2 rounded-md font-medium transition-colors flex items-center gap-2"
         >
           <Edit className="w-4 h-4" />
           Edit Product
@@ -58,13 +58,13 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
         {/* Details Card */}
         <Card className="border-[#faecd8] md:col-span-2">
           <CardHeader>
-            <CardTitle className="text-xl text-[#a46404]">{product.title}</CardTitle>
+            <CardTitle className="text-xl text-[#2D251E]">{product.title}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-semibold text-neutral-500">Price</p>
-                <p className="text-lg font-medium text-[#009e19]">{Number(product.price).toLocaleString()}৳</p>
+                <p className="text-lg font-medium text-[#008013]">{Number(product.price).toLocaleString()}৳</p>
               </div>
               <div>
                 <p className="text-sm font-semibold text-neutral-500">Discount Price</p>

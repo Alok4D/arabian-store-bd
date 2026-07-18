@@ -79,7 +79,7 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500 max-w-full">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-[#a46404] flex items-center gap-2">
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E] flex items-center gap-2">
           <Settings className="w-8 h-8" /> Settings
         </h1>
       </div>

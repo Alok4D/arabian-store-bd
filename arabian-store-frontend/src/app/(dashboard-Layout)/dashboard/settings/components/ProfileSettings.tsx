@@ -56,7 +56,7 @@ export default function ProfileSettings() {
           icon: "success",
           title: "Profile Updated!",
           text: "Your profile has been updated successfully.",
-          confirmButtonColor: "#009e19",
+          confirmButtonColor: "#008013",
           timer: 2000,
           timerProgressBar: true,
         });
@@ -85,7 +85,7 @@ export default function ProfileSettings() {
   return (
     <Card className="border-[#faecd8]">
       <CardHeader>
-        <CardTitle className="text-[#a46404] flex items-center gap-2">
+        <CardTitle className="text-[#2D251E] flex items-center gap-2">
           <User className="w-5 h-5" /> Profile Settings
         </CardTitle>
         <CardDescription>Update your admin account details and profile picture.</CardDescription>
@@ -95,7 +95,7 @@ export default function ProfileSettings() {
           {/* Image Upload */}
           <div className="flex flex-col items-center justify-center pb-4">
             <div className="relative group cursor-pointer">
-              <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#009e19] bg-neutral-100 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#008013] bg-neutral-100 flex items-center justify-center">
                 {imagePreview ? (
                   <img src={imagePreview} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
@@ -127,7 +127,7 @@ export default function ProfileSettings() {
               required
               value={profileData.name}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md outline-none focus:border-[#009e19] bg-neutral-50"
+              className="w-full p-2 border rounded-md outline-none focus:border-[#008013] bg-neutral-50"
             />
           </div>
           <div className="space-y-2">
@@ -138,14 +138,14 @@ export default function ProfileSettings() {
               required
               value={profileData.email}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md outline-none focus:border-[#009e19] bg-neutral-50"
+              className="w-full p-2 border rounded-md outline-none focus:border-[#008013] bg-neutral-50"
             />
           </div>
 
           <button
             type="submit"
             disabled={saving}
-            className="w-full mt-4 bg-[#009e19] hover:bg-[#008a16] text-white py-2 rounded-md font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full mt-4 bg-[#008013] hover:bg-[#008a16] text-white py-2 rounded-md font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {saving ? "Saving..." : <><Save className="w-4 h-4" /> Save Profile</>}
           </button>

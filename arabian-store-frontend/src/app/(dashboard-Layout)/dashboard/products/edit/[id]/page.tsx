@@ -119,12 +119,12 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         >
           <ArrowLeft className="w-6 h-6 text-neutral-600" />
         </Link>
-        <h1 className="text-3xl font-bold tracking-tight text-[#a46404]">Edit Product</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">Edit Product</h1>
       </div>
 
       <Card className="border-[#faecd8]">
         <CardHeader>
-          <CardTitle className="text-[#a46404]">Product Information</CardTitle>
+          <CardTitle className="text-[#2D251E]">Product Information</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -139,7 +139,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   value={formData.title}
                   onChange={handleTitleChange}
                   placeholder="e.g. ১ কেজি মিসরীয় মেডজুল খেজুর"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -151,7 +151,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   value={formData.slug}
                   onChange={handleChange}
                   placeholder="e.g. 1kg-medjool"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19] bg-neutral-50"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013] bg-neutral-50"
                 />
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                 onChange={handleChange}
                 rows={4}
                 placeholder="Write a short description..."
-                className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
               />
             </div>
 
@@ -178,7 +178,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   value={formData.price}
                   onChange={handleChange}
                   placeholder="e.g. 1650"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -189,7 +189,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   value={formData.discountPrice}
                   onChange={handleChange}
                   placeholder="e.g. 1500"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -200,7 +200,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   name="stock"
                   value={formData.stock}
                   onChange={handleChange}
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
               <div className="space-y-2">
@@ -211,7 +211,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   name="shippingFee"
                   value={formData.shippingFee}
                   onChange={handleChange}
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                   value={formData.weight}
                   onChange={handleChange}
                   placeholder="e.g. 1 KG"
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#009e19]"
+                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
               </div>
             </div>
@@ -280,7 +280,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
               <button 
                 type="submit"
                 disabled={isUpdating}
-                className={`px-6 py-2.5 bg-[#009e19] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isUpdating ? 'opacity-70 cursor-not-allowed' : ''}`}
+                className={`px-6 py-2.5 bg-[#008013] text-white rounded-md font-medium hover:bg-[#008014] transition-colors flex items-center gap-2 ${isUpdating ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
                 <Save className="w-4 h-4" />
                 {isUpdating ? "Saving..." : "Update Product"}

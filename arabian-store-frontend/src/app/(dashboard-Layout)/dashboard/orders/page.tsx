@@ -86,12 +86,12 @@ export default function OrdersPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-[#a46404]">Orders</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">Orders</h1>
       </div>
 
       <Card className="border-[#faecd8]">
         <CardHeader>
-          <CardTitle className="text-[#a46404]">All Orders</CardTitle>
+          <CardTitle className="text-[#2D251E]">All Orders</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -135,7 +135,7 @@ export default function OrdersPage() {
                         <span className="font-medium">{order.product?.title || 'Unknown Product'}</span>
                         <span className="text-neutral-500 ml-1">x{order.quantity}</span>
                       </td>
-                      <td className="py-4 px-4 font-bold text-[#009e19]">{Number(order.total).toLocaleString()}৳</td>
+                      <td className="py-4 px-4 font-bold text-[#008013]">{Number(order.total).toLocaleString()}৳</td>
                       <td className="py-4 px-4">
                         <select 
                           value={order.status}

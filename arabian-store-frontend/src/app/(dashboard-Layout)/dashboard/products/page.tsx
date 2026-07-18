@@ -51,10 +51,10 @@ export default function ProductsPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-[#a46404]">Products</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-[#2D251E]">Products</h1>
         <Link 
           href="/dashboard/products/create"
-          className="bg-[#009e19] hover:bg-[#008014] text-white px-4 py-2 rounded-md font-medium transition-colors flex items-center gap-2"
+          className="bg-[#008013] hover:bg-[#008014] text-white px-4 py-2 rounded-md font-medium transition-colors flex items-center gap-2"
         >
           <Plus className="w-5 h-5" />
           Add Product
@@ -63,7 +63,7 @@ export default function ProductsPage() {
 
       <Card className="border-[#faecd8]">
         <CardHeader>
-          <CardTitle className="text-[#a46404]">All Products</CardTitle>
+          <CardTitle className="text-[#2D251E]">All Products</CardTitle>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -97,7 +97,7 @@ export default function ProductsPage() {
                         </div>
                       </td>
                       <td className="py-3 px-4 font-medium text-neutral-800">{product.title}</td>
-                      <td className="py-3 px-4 font-semibold text-[#009e19]">{Number(product.price).toLocaleString()}৳</td>
+                      <td className="py-3 px-4 font-semibold text-[#008013]">{Number(product.price).toLocaleString()}৳</td>
                       <td className="py-3 px-4 font-semibold text-orange-500">
                         {product.discountPrice ? `${Number(product.discountPrice).toLocaleString()}৳` : '-'}
                       </td>

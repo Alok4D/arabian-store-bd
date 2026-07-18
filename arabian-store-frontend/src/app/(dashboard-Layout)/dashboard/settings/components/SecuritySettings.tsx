@@ -51,7 +51,7 @@ export default function SecuritySettings() {
           icon: "success",
           title: "Password Updated!",
           text: "Your password has been changed. Please login again.",
-          confirmButtonColor: "#009e19",
+          confirmButtonColor: "#008013",
           timer: 2500,
           timerProgressBar: true,
         });
