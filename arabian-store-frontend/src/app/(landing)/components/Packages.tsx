@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import ScrollAnimate from './ScrollAnimate';
+import { useGetProductsQuery } from '@/lib/feature/products/productsApi';
 
 interface ApiProduct {
   id: string;
@@ -38,32 +39,20 @@ export default function Packages() {
   
   const [products, setProducts] = useState<ApiProduct[]>([]);
 
+  const { data: productsData, isLoading, isError } = useGetProductsQuery({});
+  
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow' as RequestRedirect
-    };
+    if (productsData?.success && productsData?.data) {
+      const apiProducts: ApiProduct[] = productsData.data;
+      
+      const desiredOrder = ['1 KG', '2 KG', '3 KG', '5 KG'];
+      const matchedProducts = desiredOrder
+        .map(weight => apiProducts.find((p: ApiProduct) => p.weight === weight))
+        .filter(Boolean) as ApiProduct[];
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-    fetch(`${apiUrl}/products`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.success && result.data) {
-          const apiProducts: ApiProduct[] = result.data;
-          
-          // The original UI design strictly requires 4 items in this exact order: 1kg, 2kg, 3kg, 5kg.
-          // We map the API data to match this layout perfectly.
-          const desiredOrder = ['1 KG', '2 KG', '3 KG', '5 KG'];
-          const matchedProducts = desiredOrder
-            .map(weight => apiProducts.find(p => p.weight === weight))
-            .filter(Boolean) as ApiProduct[];
-
-          // Fallback to the first 4 items if none match the desired weights
-          setProducts(matchedProducts.length > 0 ? matchedProducts : apiProducts.slice(0, 4));
-        }
-      })
-      .catch((error) => console.error(error));
-  }, []);
+      setProducts(matchedProducts.length > 0 ? matchedProducts : apiProducts.slice(0, 4));
+    }
+  }, [productsData]);
 
   const handleOrderClick = (productId: string) => {
     // Scroll to the checkout section

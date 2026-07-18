@@ -11,6 +11,8 @@ import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import Cookies from "js-cookie";
+import { useAppDispatch } from "@/lib/hooks/redux";
+import { logout } from "@/lib/feature/auth/authSlice";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { 
@@ -22,7 +24,12 @@ import {
   PanelLeft, 
   LineChart, 
   Settings,
-  Package
+  Package,
+  LayoutDashboard,
+  Users,
+  ShoppingCart,
+  X,
+  ChevronRight
 } from "lucide-react";
 import { useGetProfileQuery } from "@/lib/feature/auth/authApi";
 import Image from "next/image";
@@ -69,8 +76,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     { href: "/dashboard/settings", label: "Settings", icon: Settings },
   ];
 
+  const dispatch = useAppDispatch();
+
   const handleLogout = () => {
     Cookies.remove('admin_token');
+    dispatch(logout());
     router.push("/login");
   };
 

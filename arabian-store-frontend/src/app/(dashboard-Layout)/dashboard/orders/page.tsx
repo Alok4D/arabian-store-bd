@@ -19,6 +19,7 @@ interface Order {
 }
 
 export default function OrdersPage() {
+  
   const { data, isLoading } = useGetOrdersQuery({});
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
   const [deleteOrder] = useDeleteOrderMutation();
