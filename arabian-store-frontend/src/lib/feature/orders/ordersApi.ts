@@ -6,7 +6,11 @@ export const ordersApi = baseApi.injectEndpoints({
       query: (params) => {
         const page = params?.page || 1;
         const limit = params?.limit || 10;
-        return `/orders?page=${page}&limit=${limit}`;
+        let url = `/orders?page=${page}&limit=${limit}`;
+        if (params?.status && params.status !== 'All') {
+          url += `&status=${params.status}`;
+        }
+        return url;
       },
       providesTags: ['Orders'],
     }),

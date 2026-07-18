@@ -11,11 +11,13 @@ export const OrderService = {
     });
   },
 
-  async getAllOrders(page: number = 1, limit: number = 10) {
+  async getAllOrders(page: number = 1, limit: number = 10, status?: string) {
     const skip = (page - 1) * limit;
+    const whereClause = status ? { status } : {};
     
     const [orders, total] = await Promise.all([
       prisma.order.findMany({
+        where: whereClause,
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
@@ -23,7 +25,7 @@ export const OrderService = {
           product: true,
         },
       }),
-      prisma.order.count()
+      prisma.order.count({ where: whereClause })
     ]);
 
     return {

@@ -39,8 +39,9 @@ export const getAllOrders = async (req: Request, res: Response): Promise<void> =
   try {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
+    const status = req.query.status as string | undefined;
     
-    const result = await OrderService.getAllOrders(page, limit);
+    const result = await OrderService.getAllOrders(page, limit, status);
     res.status(200).json({ success: true, data: result.orders, meta: result.meta });
   } catch (error) {
     console.error('Get orders error:', error);

@@ -21,7 +21,8 @@ interface Order {
 
 export default function OrdersPage() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useGetOrdersQuery({ page, limit: 10 });
+  const [filterStatus, setFilterStatus] = useState('All');
+  const { data, isLoading } = useGetOrdersQuery({ page, limit: 10, status: filterStatus });
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
   const [deleteOrder] = useDeleteOrderMutation();
   
@@ -95,6 +96,25 @@ export default function OrdersPage() {
       <Card className="border-[#faecd8]">
         <CardHeader>
           <CardTitle className="text-[#2D251E]">All Orders</CardTitle>
+          
+          <div className="flex flex-wrap gap-2 pt-4">
+            {['All', 'PENDING', 'CONFIRMED', 'PACKAGING', 'SHIPPED', 'DELIVERED', 'CANCELLED'].map(status => (
+              <button
+                key={status}
+                onClick={() => {
+                  setFilterStatus(status);
+                  setPage(1);
+                }}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                  filterStatus === status 
+                    ? 'bg-[#008013] text-white' 
+                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                }`}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
         </CardHeader>
         <CardContent>
           {isLoading ? (
