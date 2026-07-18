@@ -13,8 +13,11 @@ export default function DashboardPage() {
     totalOrders: 0,
     pendingOrders: 0,
     confirmedOrders: 0,
+    packagingOrders: 0,
+    shippedOrders: 0,
     deliveredOrders: 0,
     cancelledOrders: 0,
+    returnedOrders: 0,
     totalRevenue: 0,
     graphData: []
   });
@@ -162,17 +165,38 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
                   <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-orange-400"></div>
+                    <span className="text-neutral-600 font-medium">Packaging</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.packagingOrders}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+                    <span className="text-neutral-600 font-medium">Shipped</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.shippedOrders}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
+                  <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     <span className="text-neutral-600 font-medium">Delivered</span>
                   </div>
                   <span className="font-bold text-neutral-800">{overview.deliveredOrders}</span>
                 </div>
-                <div className="flex justify-between items-center pb-2">
+                <div className="flex justify-between items-center border-b pb-3 border-neutral-100">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <span className="text-neutral-600 font-medium">Cancelled</span>
                   </div>
                   <span className="font-bold text-neutral-800">{overview.cancelledOrders}</span>
+                </div>
+                <div className="flex justify-between items-center pb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-slate-500"></div>
+                    <span className="text-neutral-600 font-medium">Returned</span>
+                  </div>
+                  <span className="font-bold text-neutral-800">{overview.returnedOrders}</span>
                 </div>
               </CardContent>
             </Card>

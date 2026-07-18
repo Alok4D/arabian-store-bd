@@ -7,16 +7,22 @@ export const DashboardService = {
       totalOrders,
       pendingOrders,
       confirmedOrders,
+      packagingOrders,
+      shippedOrders,
       deliveredOrders,
       cancelledOrders,
+      returnedOrders,
       ordersWithRevenue
     ] = await Promise.all([
       prisma.product.count(),
       prisma.order.count(),
       prisma.order.count({ where: { status: 'PENDING' } }),
       prisma.order.count({ where: { status: 'CONFIRMED' } }),
+      prisma.order.count({ where: { status: 'PACKAGING' } }),
+      prisma.order.count({ where: { status: 'SHIPPED' } }),
       prisma.order.count({ where: { status: 'DELIVERED' } }),
       prisma.order.count({ where: { status: 'CANCELLED' } }),
+      prisma.order.count({ where: { status: 'RETURNED' } }),
       prisma.order.aggregate({
         where: {
           status: {
@@ -76,8 +82,11 @@ export const DashboardService = {
       totalOrders,
       pendingOrders,
       confirmedOrders,
+      packagingOrders,
+      shippedOrders,
       deliveredOrders,
       cancelledOrders,
+      returnedOrders,
       totalRevenue,
       graphData,
     };
