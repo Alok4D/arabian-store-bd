@@ -68,7 +68,6 @@ enum PaymentMethod {
 enum OrderStatus {
   PENDING
   CONFIRMED
-  PROCESSING
   PACKAGING
   SHIPPED
   DELIVERED

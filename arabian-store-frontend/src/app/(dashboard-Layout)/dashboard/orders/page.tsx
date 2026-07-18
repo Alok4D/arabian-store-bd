@@ -205,7 +205,6 @@ export default function OrdersPage() {
     switch (status) {
       case 'PENDING': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'CONFIRMED': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'PROCESSING': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'PACKAGING': return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'SHIPPED': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
       case 'DELIVERED': return 'bg-green-100 text-green-800 border-green-200';
@@ -320,7 +319,7 @@ export default function OrdersPage() {
           {/* Status Tabs */}
           <div className="px-6 pb-0 bg-neutral-50/50">
             <div className="flex items-center gap-2 overflow-x-auto pt-4 pb-4">
-              {['All', 'PENDING', 'CONFIRMED', 'PROCESSING', 'PACKAGING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED'].map(status => (
+              {['All', 'PENDING', 'CONFIRMED', 'PACKAGING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED'].map(status => (
                 <button
                   key={status}
                   onClick={() => {
@@ -389,7 +388,6 @@ export default function OrdersPage() {
                         >
                           <option value="PENDING">PENDING</option>
                           <option value="CONFIRMED">CONFIRMED</option>
-                          <option value="PROCESSING">PROCESSING</option>
                           <option value="PACKAGING">PACKAGING</option>
                           <option value="SHIPPED">SHIPPED</option>
                           <option value="DELIVERED">DELIVERED</option>
