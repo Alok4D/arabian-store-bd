@@ -20,7 +20,7 @@ export const deleteCustomer = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    const result = await CustomerService.deleteCustomerByPhone(phone);
+    const result = await CustomerService.deleteCustomerByPhone(phone as string);
     
     if (result.count === 0) {
       res.status(404).json({ success: false, message: 'Customer not found' });

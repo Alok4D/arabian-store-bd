@@ -1,4 +1,5 @@
 import { prisma } from '../../config/prisma.js';
+import { OrderStatus } from '@prisma/client';
 
 export const DashboardService = {
   async getOverview() {
@@ -16,17 +17,17 @@ export const DashboardService = {
     ] = await Promise.all([
       prisma.product.count(),
       prisma.order.count(),
-      prisma.order.count({ where: { status: 'PENDING' } }),
-      prisma.order.count({ where: { status: 'CONFIRMED' } }),
-      prisma.order.count({ where: { status: 'PACKAGING' } }),
-      prisma.order.count({ where: { status: 'SHIPPED' } }),
-      prisma.order.count({ where: { status: 'DELIVERED' } }),
-      prisma.order.count({ where: { status: 'CANCELLED' } }),
-      prisma.order.count({ where: { status: 'RETURNED' } }),
+      prisma.order.count({ where: { status: OrderStatus.PENDING } }),
+      prisma.order.count({ where: { status: OrderStatus.CONFIRMED } }),
+      prisma.order.count({ where: { status: OrderStatus.PACKAGING } }),
+      prisma.order.count({ where: { status: OrderStatus.SHIPPED } }),
+      prisma.order.count({ where: { status: OrderStatus.DELIVERED } }),
+      prisma.order.count({ where: { status: OrderStatus.CANCELLED } }),
+      prisma.order.count({ where: { status: OrderStatus.RETURNED } }),
       prisma.order.aggregate({
         where: {
           status: {
-            notIn: ['CANCELLED'] // revenue usually excludes cancelled, adjust if needed
+            notIn: [OrderStatus.CANCELLED, OrderStatus.RETURNED]
           }
         },
         _sum: {
@@ -48,7 +49,7 @@ export const DashboardService = {
           gte: sevenDaysAgo
         },
         status: {
-          not: 'CANCELLED'
+          not: OrderStatus.CANCELLED
         }
       },
       select: {
