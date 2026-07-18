@@ -101,7 +101,7 @@ function SuccessContent() {
               <span className="font-medium mb-1">Date:</span>
               <span className="font-bold text-neutral-900">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
             </div>
-            <div className="flex flex-col border-r border-neutral-300 pr-3 md:px-8 md:border-r border-neutral-300">
+            <div className="flex flex-col border-r border-neutral-300 pr-3 md:px-8 md:border-r">
               <span className="font-medium mb-1">Total:</span>
               <span className="font-bold text-neutral-900">{totalPrice.toLocaleString()}.00৳</span>
             </div>

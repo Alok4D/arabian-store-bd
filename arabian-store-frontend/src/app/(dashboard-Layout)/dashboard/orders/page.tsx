@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
 import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from "@/lib/feature/orders/ordersApi";
@@ -19,11 +20,13 @@ interface Order {
 }
 
 export default function OrdersPage() {
-  
-  const { data, isLoading } = useGetOrdersQuery({});
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useGetOrdersQuery({ page, limit: 10 });
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
   const [deleteOrder] = useDeleteOrderMutation();
+  
   const orders: Order[] = data?.data || [];
+  const meta = data?.meta;
 
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
@@ -163,6 +166,31 @@ export default function OrdersPage() {
                   ))}
                 </tbody>
               </table>
+
+              {/* Pagination Controls */}
+              {meta && meta.totalPages > 1 && (
+                <div className="flex items-center justify-between px-4 py-4 border-t border-neutral-100 mt-4">
+                  <div className="text-sm text-neutral-500">
+                    Showing page <span className="font-medium text-neutral-900">{meta.page}</span> of <span className="font-medium text-neutral-900">{meta.totalPages}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setPage(p => Math.max(1, p - 1))}
+                      disabled={page === 1}
+                      className="px-3 py-1 text-sm font-medium border border-neutral-200 rounded text-neutral-600 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={() => setPage(p => Math.min(meta.totalPages, p + 1))}
+                      disabled={page === meta.totalPages}
+                      className="px-3 py-1 text-sm font-medium border border-neutral-200 rounded text-neutral-600 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </CardContent>

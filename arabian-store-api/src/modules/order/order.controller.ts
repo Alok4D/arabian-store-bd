@@ -37,8 +37,11 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
 
 export const getAllOrders = async (req: Request, res: Response): Promise<void> => {
   try {
-    const orders = await OrderService.getAllOrders();
-    res.status(200).json({ success: true, data: orders });
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    
+    const result = await OrderService.getAllOrders(page, limit);
+    res.status(200).json({ success: true, data: result.orders, meta: result.meta });
   } catch (error) {
     console.error('Get orders error:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });

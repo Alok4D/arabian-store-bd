@@ -11,13 +11,30 @@ export const OrderService = {
     });
   },
 
-  async getAllOrders() {
-    return await prisma.order.findMany({
-      orderBy: { createdAt: 'desc' },
-      include: {
-        product: true,
-      },
-    });
+  async getAllOrders(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    
+    const [orders, total] = await Promise.all([
+      prisma.order.findMany({
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+        include: {
+          product: true,
+        },
+      }),
+      prisma.order.count()
+    ]);
+
+    return {
+      orders,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    };
   },
 
   async getOrderById(id: string) {

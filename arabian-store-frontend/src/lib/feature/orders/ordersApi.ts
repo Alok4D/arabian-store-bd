@@ -3,7 +3,11 @@ import { baseApi } from '@/lib/api/baseApi';
 export const ordersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query({
-      query: () => '/orders',
+      query: (params) => {
+        const page = params?.page || 1;
+        const limit = params?.limit || 10;
+        return `/orders?page=${page}&limit=${limit}`;
+      },
       providesTags: ['Orders'],
     }),
     getOrderById: builder.query({
