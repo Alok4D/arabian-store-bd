@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useGetProductsQuery } from '@/lib/feature/products/productsApi';
 import { useGetShippingQuery } from '@/lib/feature/shipping/shippingApi';
