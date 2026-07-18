@@ -24,7 +24,7 @@ export default function BannerSection() {
 
   return (
     <section className="bg-[#FAF7F2] w-full pt-0 md:pt-12 pb-12 md:pb-24 px-4 md:px-8 lg:px-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-8 items-center">
 
           {/* Left Content */}
@@ -115,7 +115,7 @@ export default function BannerSection() {
           </ScrollAnimate>
 
           {/* Right Image */}
-          <ScrollAnimate animation="animate__zoomIn" className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-8 lg:mt-0 lg:pl-4">
+          <ScrollAnimate animation="animate__zoomIn" className="order-1 lg:order-2 relative flex justify-center lg:justify-end items-center w-full mt-4 md:mt-8 lg:mt-0 lg:pl-4">
             <div className="relative w-full max-w-[550px] xl:max-w-[650px] overflow-hidden rounded-xl md:rounded-2xl">
               <Image
                 src="/banner-img/banner-image.jpg"
