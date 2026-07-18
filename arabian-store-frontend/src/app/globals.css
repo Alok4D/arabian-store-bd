@@ -77,7 +77,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'kalpurush', sans-serif;
+    font-family: var(--font-manrope), 'kalpurush', sans-serif;
   }
 }
 
