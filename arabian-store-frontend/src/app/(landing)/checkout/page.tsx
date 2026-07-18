@@ -209,11 +209,11 @@ export default function CheckoutPage() {
                     </div>
                     {product.discountPrice ? (
                       <div className="flex flex-col items-end leading-none mt-1">
-                        <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight">{Number(product.discountPrice).toLocaleString()}৳</span>
-                        <span className="text-[11px] sm:text-[12px] text-gray-400 line-through">{Number(product.price).toLocaleString()}৳</span>
+                        <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight">{(Number(product.discountPrice) * (quantities[product.id] || 1)).toLocaleString()}৳</span>
+                        <span className="text-[11px] sm:text-[12px] text-gray-400 line-through">{(Number(product.price) * (quantities[product.id] || 1)).toLocaleString()}৳</span>
                       </div>
                     ) : (
-                      <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight mt-1">{Number(product.price).toLocaleString()}৳</span>
+                      <span className="font-extrabold text-[14px] sm:text-[17px] md:text-[18px] text-[#1a6b2a] tracking-tight mt-1">{(Number(product.price) * (quantities[product.id] || 1)).toLocaleString()}৳</span>
                     )}
                   </div>
                 </div>
