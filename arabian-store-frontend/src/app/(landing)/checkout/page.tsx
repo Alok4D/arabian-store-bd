@@ -128,16 +128,34 @@ export default function CheckoutPage() {
 
   if (loadingProducts) {
     return (
-      <div className="px-4 py-8 md:px-8 lg:px-12 animate-pulse max-w-7xl mx-auto">
-        <div className="h-8 w-64 bg-[#E8DFD0] rounded mb-6"></div>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-7 space-y-4">
-            <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
-            <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
-            <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+      <div className="px-4 py-8 md:px-8 lg:px-12 text-[#2D251E] scroll-mt-20" id="order">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center gap-3 md:gap-4 mb-8 md:mb-12 animate-pulse">
+            <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-[#E8DFD0]" />
+            <div className="h-8 w-48 sm:w-64 bg-[#E8DFD0] rounded"></div>
+            <div className="flex-1 max-w-[40px] sm:max-w-[60px] md:max-w-[100px] h-[1px] md:h-[2px] bg-[#E8DFD0]" />
           </div>
-          <div className="lg:col-span-5">
-            <div className="h-64 bg-[#E8DFD0] rounded-xl"></div>
+
+          <PackageSelection
+            products={[]}
+            selectedProduct=""
+            setSelectedProduct={() => {}}
+            quantities={{}}
+            handleQuantityChange={() => {}}
+            isLoading={true}
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-pulse">
+            <div className="lg:col-span-7 space-y-4">
+              <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+              <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+              <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+              <div className="h-12 bg-[#E8DFD0] rounded-lg"></div>
+              <div className="h-24 bg-[#E8DFD0] rounded-lg"></div>
+            </div>
+            <div className="lg:col-span-5">
+              <div className="h-[400px] bg-[#E8DFD0] rounded-xl"></div>
+            </div>
           </div>
         </div>
       </div>

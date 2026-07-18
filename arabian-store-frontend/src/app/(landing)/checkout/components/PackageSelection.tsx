@@ -7,6 +7,7 @@ interface PackageSelectionProps {
   setSelectedProduct: (id: string) => void;
   quantities: Record<string, number>;
   handleQuantityChange: (id: string, delta: number) => void;
+  isLoading?: boolean;
 }
 
 export default function PackageSelection({
@@ -15,7 +16,37 @@ export default function PackageSelection({
   setSelectedProduct,
   quantities,
   handleQuantityChange,
+  isLoading,
 }: PackageSelectionProps) {
+
+  if (isLoading) {
+    return (
+      <div className="mb-10 lg:mb-14 animate-pulse">
+        <div className="h-[24px] md:h-[28px] w-48 bg-[#E8DFD0] rounded mb-4"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="relative flex items-center gap-2 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white rounded-md border border-[#d1d5db]">
+              {/* Radio Skeleton */}
+              <div className="w-4 h-4 rounded-full bg-[#E8DFD0] flex-shrink-0"></div>
+              {/* Image Skeleton */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-[#E8DFD0] rounded-md flex-shrink-0"></div>
+              {/* Info Skeleton */}
+              <div className="flex-1 flex flex-col justify-center min-w-0 gap-2.5">
+                <div className="h-3.5 bg-[#E8DFD0] rounded w-3/4"></div>
+                <div className="h-3 bg-[#E8DFD0] rounded w-1/2"></div>
+              </div>
+              {/* Right Side Skeleton */}
+              <div className="flex flex-col items-end justify-center gap-2 flex-shrink-0 pl-0 sm:pl-2">
+                <div className="h-7 sm:h-8 w-16 sm:w-20 bg-[#E8DFD0] rounded-md"></div>
+                <div className="h-4 sm:h-5 w-12 sm:w-16 bg-[#E8DFD0] rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mb-10 lg:mb-14">
       <h3 className="text-[18px] md:text-[20px] font-bold text-[#2D251E] mb-4">যেকোনো একটি প্যাকেজ নির্বাচন করুন</h3>
