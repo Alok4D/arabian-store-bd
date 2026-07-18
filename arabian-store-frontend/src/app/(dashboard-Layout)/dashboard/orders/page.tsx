@@ -171,7 +171,7 @@ export default function OrdersPage() {
               {meta && meta.totalPages > 1 && (
                 <div className="flex items-center justify-between px-4 py-4 border-t border-neutral-100 mt-4">
                   <div className="text-sm text-neutral-500">
-                    Showing page <span className="font-medium text-neutral-900">{meta.page}</span> of <span className="font-medium text-neutral-900">{meta.totalPages}</span>
+                    Showing page <span className="font-medium text-neutral-900">{meta.page}</span> of <span className="font-medium text-neutral-900">{meta.totalPages}</span> ({meta.total} total items)
                   </div>
                   <div className="flex gap-2">
                     <button
