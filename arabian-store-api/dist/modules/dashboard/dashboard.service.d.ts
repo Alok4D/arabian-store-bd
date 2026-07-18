@@ -7,6 +7,11 @@ export declare const DashboardService: {
         deliveredOrders: number;
         cancelledOrders: number;
         totalRevenue: number;
+        graphData: {
+            date: string;
+            revenue: number;
+            orders: number;
+        }[];
     }>;
 };
 //# sourceMappingURL=dashboard.service.d.ts.map

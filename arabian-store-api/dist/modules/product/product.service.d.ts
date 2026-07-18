@@ -9,6 +9,7 @@ export declare const ProductService: {
         slug: string;
         description: string | null;
         price: Prisma.Decimal;
+        discountPrice: Prisma.Decimal | null;
         weight: string;
         stock: number;
         shippingFee: Prisma.Decimal;
@@ -23,6 +24,7 @@ export declare const ProductService: {
         slug: string;
         description: string | null;
         price: Prisma.Decimal;
+        discountPrice: Prisma.Decimal | null;
         weight: string;
         stock: number;
         shippingFee: Prisma.Decimal;
@@ -37,6 +39,7 @@ export declare const ProductService: {
         slug: string;
         description: string | null;
         price: Prisma.Decimal;
+        discountPrice: Prisma.Decimal | null;
         weight: string;
         stock: number;
         shippingFee: Prisma.Decimal;
@@ -51,6 +54,7 @@ export declare const ProductService: {
         slug: string;
         description: string | null;
         price: Prisma.Decimal;
+        discountPrice: Prisma.Decimal | null;
         weight: string;
         stock: number;
         shippingFee: Prisma.Decimal;
@@ -65,6 +69,7 @@ export declare const ProductService: {
         slug: string;
         description: string | null;
         price: Prisma.Decimal;
+        discountPrice: Prisma.Decimal | null;
         weight: string;
         stock: number;
         shippingFee: Prisma.Decimal;

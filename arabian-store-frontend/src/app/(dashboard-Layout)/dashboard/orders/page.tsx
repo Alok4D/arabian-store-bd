@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash2 } from "lucide-react";
+import { Trash2, Search, Filter } from "lucide-react";
 import { useGetOrdersQuery, useUpdateOrderStatusMutation, useDeleteOrderMutation } from "@/lib/feature/orders/ordersApi";
 import Swal from 'sweetalert2';
 
@@ -22,10 +22,122 @@ interface Order {
 export default function OrdersPage() {
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState('All');
-  const { data, isLoading } = useGetOrdersQuery({ page, limit: 10, status: filterStatus });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  
+  const [dateRange, setDateRange] = useState('');
+  const [amountRange, setAmountRange] = useState('');
+  const [minAmount, setMinAmount] = useState('');
+  const [maxAmount, setMaxAmount] = useState('');
+  const [sortOption, setSortOption] = useState('newest');
+
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
   const [deleteOrder] = useDeleteOrderMutation();
-  
+
+  // Debounce search
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setPage(1);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
+  // Handle Date Range
+  const getDateRangeValues = () => {
+    const today = new Date();
+    let start, end;
+    
+    switch (dateRange) {
+      case 'today':
+        start = new Date(today.setHours(0,0,0,0));
+        end = new Date(today.setHours(23,59,59,999));
+        break;
+      case 'yesterday':
+        const yesterday = new Date();
+        yesterday.setDate(today.getDate() - 1);
+        start = new Date(yesterday.setHours(0,0,0,0));
+        end = new Date(yesterday.setHours(23,59,59,999));
+        break;
+      case 'last7days':
+        start = new Date();
+        start.setDate(today.getDate() - 7);
+        end = new Date();
+        break;
+      case 'last30days':
+        start = new Date();
+        start.setDate(today.getDate() - 30);
+        end = new Date();
+        break;
+      case 'thisMonth':
+        start = new Date(today.getFullYear(), today.getMonth(), 1);
+        end = new Date();
+        break;
+      case 'lastMonth':
+        start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        end = new Date(today.getFullYear(), today.getMonth(), 0, 23, 59, 59, 999);
+        break;
+      default:
+        start = undefined;
+        end = undefined;
+    }
+    
+    return {
+      startDate: start ? start.toISOString() : undefined,
+      endDate: end ? end.toISOString() : undefined,
+    };
+  };
+
+  // Handle Amount Range
+  useEffect(() => {
+    switch (amountRange) {
+      case 'under500':
+        setMinAmount(''); setMaxAmount('500'); break;
+      case '500to1000':
+        setMinAmount('500'); setMaxAmount('1000'); break;
+      case '1000to5000':
+        setMinAmount('1000'); setMaxAmount('5000'); break;
+      case 'above5000':
+        setMinAmount('5000'); setMaxAmount(''); break;
+      case 'custom':
+        // Leave minAmount/maxAmount as they are for custom input
+        break;
+      default:
+        setMinAmount(''); setMaxAmount('');
+    }
+    setPage(1);
+  }, [amountRange]);
+
+  // Handle Sorting
+  const getSortValues = () => {
+    switch (sortOption) {
+      case 'oldest': return { sortBy: 'date', sortOrder: 'asc' };
+      case 'highestAmount': return { sortBy: 'amount', sortOrder: 'desc' };
+      case 'lowestAmount': return { sortBy: 'amount', sortOrder: 'asc' };
+      case 'customerAZ': return { sortBy: 'customer', sortOrder: 'asc' };
+      case 'customerZA': return { sortBy: 'customer', sortOrder: 'desc' };
+      case 'newest':
+      default:
+        return { sortBy: 'date', sortOrder: 'desc' };
+    }
+  };
+
+  const { startDate, endDate } = getDateRangeValues();
+  const { sortBy, sortOrder } = getSortValues();
+
+  const { data, isLoading } = useGetOrdersQuery({
+    page,
+    limit: 10,
+    status: filterStatus,
+    search: debouncedSearch,
+    startDate,
+    endDate,
+    minAmount: minAmount ? Number(minAmount) : undefined,
+    maxAmount: maxAmount ? Number(maxAmount) : undefined,
+    sortBy,
+    sortOrder: sortOrder as 'asc'|'desc',
+  });
+
   const orders: Order[] = data?.data || [];
   const meta = data?.meta;
 
@@ -79,10 +191,12 @@ export default function OrdersPage() {
     switch (status) {
       case 'PENDING': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'CONFIRMED': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'PROCESSING': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'PACKAGING': return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'SHIPPED': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
       case 'DELIVERED': return 'bg-green-100 text-green-800 border-green-200';
       case 'CANCELLED': return 'bg-red-100 text-red-800 border-red-200';
+      case 'RETURNED': return 'bg-gray-200 text-gray-800 border-gray-300';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -95,10 +209,94 @@ export default function OrdersPage() {
 
       <Card className="border-[#faecd8]">
         <CardHeader>
-          <CardTitle className="text-[#2D251E]">All Orders</CardTitle>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+            <CardTitle className="text-[#2D251E]">All Orders</CardTitle>
+            
+            {/* Search Bar */}
+            <div className="relative w-full md:w-80">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-neutral-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search by ID, Name, Phone, Product..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="block w-full pl-10 pr-3 py-2 border border-neutral-300 rounded-lg text-sm placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-[#008013] focus:border-[#008013] transition-colors"
+              />
+            </div>
+          </div>
           
-          <div className="flex flex-wrap gap-2 pt-4">
-            {['All', 'PENDING', 'CONFIRMED', 'PACKAGING', 'SHIPPED', 'DELIVERED', 'CANCELLED'].map(status => (
+          {/* Advanced Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-neutral-50 rounded-lg border border-neutral-100">
+            {/* Date Filter */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-neutral-600">Date Range</label>
+              <select 
+                value={dateRange} 
+                onChange={(e) => { setDateRange(e.target.value); setPage(1); }}
+                className="w-full text-sm py-2 px-3 border border-neutral-200 rounded-md outline-none focus:border-[#008013]"
+              >
+                <option value="">All Time</option>
+                <option value="today">Today</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="last7days">Last 7 Days</option>
+                <option value="last30days">Last 30 Days</option>
+                <option value="thisMonth">This Month</option>
+                <option value="lastMonth">Last Month</option>
+              </select>
+            </div>
+
+            {/* Amount Filter */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-neutral-600">Order Amount</label>
+              <select 
+                value={amountRange} 
+                onChange={(e) => setAmountRange(e.target.value)}
+                className="w-full text-sm py-2 px-3 border border-neutral-200 rounded-md outline-none focus:border-[#008013]"
+              >
+                <option value="">All Amounts</option>
+                <option value="under500">Under ৳500</option>
+                <option value="500to1000">৳500 - ৳1000</option>
+                <option value="1000to5000">৳1000 - ৳5000</option>
+                <option value="above5000">Above ৳5000</option>
+                <option value="custom">Custom Range...</option>
+              </select>
+            </div>
+            
+            {/* Custom Amount Inputs (shows only if 'custom' is selected) */}
+            {amountRange === 'custom' && (
+              <div className="flex flex-col gap-1.5 col-span-1 md:col-span-2">
+                <label className="text-xs font-semibold text-neutral-600">Custom Amount (Min - Max)</label>
+                <div className="flex items-center gap-2">
+                  <input type="number" placeholder="Min" value={minAmount} onChange={e => { setMinAmount(e.target.value); setPage(1); }} className="w-full text-sm py-2 px-3 border border-neutral-200 rounded-md outline-none focus:border-[#008013]" />
+                  <span className="text-neutral-400">-</span>
+                  <input type="number" placeholder="Max" value={maxAmount} onChange={e => { setMaxAmount(e.target.value); setPage(1); }} className="w-full text-sm py-2 px-3 border border-neutral-200 rounded-md outline-none focus:border-[#008013]" />
+                </div>
+              </div>
+            )}
+
+            {/* Sort By */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-neutral-600">Sort By</label>
+              <select 
+                value={sortOption} 
+                onChange={(e) => { setSortOption(e.target.value); setPage(1); }}
+                className="w-full text-sm py-2 px-3 border border-neutral-200 rounded-md outline-none focus:border-[#008013]"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="highestAmount">Highest Amount</option>
+                <option value="lowestAmount">Lowest Amount</option>
+                <option value="customerAZ">Customer (A-Z)</option>
+                <option value="customerZA">Customer (Z-A)</option>
+              </select>
+            </div>
+          </div>
+          
+          {/* Status Tabs */}
+          <div className="flex flex-wrap gap-2 pt-4 border-t border-neutral-100 mt-4">
+            {['All', 'PENDING', 'CONFIRMED', 'PROCESSING', 'PACKAGING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED'].map(status => (
               <button
                 key={status}
                 onClick={() => {
@@ -120,7 +318,7 @@ export default function OrdersPage() {
           {isLoading ? (
             <div className="py-8 text-center text-neutral-500">Loading orders...</div>
           ) : orders.length === 0 ? (
-            <div className="py-8 text-center text-neutral-500">No orders found.</div>
+            <div className="py-8 text-center text-neutral-500">No orders found matching your filters.</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[800px]">
@@ -152,7 +350,6 @@ export default function OrdersPage() {
                       <td className="py-4 px-4">
                         <div className="font-medium text-neutral-800">{order.customerName}</div>
                         <div className="text-xs text-neutral-500">{order.phone}</div>
-                        {/* <div className="text-xs text-neutral-400 max-w-[150px] truncate" title={order.address}>{order.address}</div> */}
                       </td>
                       <td className="py-4 px-4 text-sm">
                         <span className="font-medium">{order.product?.title || 'Unknown Product'}</span>
@@ -167,10 +364,12 @@ export default function OrdersPage() {
                         >
                           <option value="PENDING">PENDING</option>
                           <option value="CONFIRMED">CONFIRMED</option>
+                          <option value="PROCESSING">PROCESSING</option>
                           <option value="PACKAGING">PACKAGING</option>
                           <option value="SHIPPED">SHIPPED</option>
                           <option value="DELIVERED">DELIVERED</option>
                           <option value="CANCELLED">CANCELLED</option>
+                          <option value="RETURNED">RETURNED</option>
                         </select>
                       </td>
                       <td className="py-4 px-4 text-right">

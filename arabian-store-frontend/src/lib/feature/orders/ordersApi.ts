@@ -4,13 +4,19 @@ export const ordersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query({
       query: (params) => {
-        const page = params?.page || 1;
-        const limit = params?.limit || 10;
-        let url = `/orders?page=${page}&limit=${limit}`;
-        if (params?.status && params.status !== 'All') {
-          url += `&status=${params.status}`;
-        }
-        return url;
+        const queryParams = new URLSearchParams();
+        if (params?.page) queryParams.append('page', params.page.toString());
+        if (params?.limit) queryParams.append('limit', params.limit.toString());
+        if (params?.status && params.status !== 'All') queryParams.append('status', params.status);
+        if (params?.search) queryParams.append('search', params.search);
+        if (params?.startDate) queryParams.append('startDate', params.startDate);
+        if (params?.endDate) queryParams.append('endDate', params.endDate);
+        if (params?.minAmount) queryParams.append('minAmount', params.minAmount.toString());
+        if (params?.maxAmount) queryParams.append('maxAmount', params.maxAmount.toString());
+        if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
+        if (params?.sortOrder) queryParams.append('sortOrder', params.sortOrder);
+        
+        return `/orders?${queryParams.toString()}`;
       },
       providesTags: ['Orders'],
     }),

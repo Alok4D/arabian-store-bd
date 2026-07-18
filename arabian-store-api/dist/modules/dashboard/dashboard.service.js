@@ -20,6 +20,40 @@ export const DashboardService = {
             })
         ]);
         const totalRevenue = ordersWithRevenue._sum.total ? Number(ordersWithRevenue._sum.total) : 0;
+        const today = new Date();
+        const sevenDaysAgo = new Date(today);
+        sevenDaysAgo.setDate(today.getDate() - 6);
+        sevenDaysAgo.setHours(0, 0, 0, 0);
+        const recentOrders = await prisma.order.findMany({
+            where: {
+                createdAt: {
+                    gte: sevenDaysAgo
+                },
+                status: {
+                    not: 'CANCELLED'
+                }
+            },
+            select: {
+                createdAt: true,
+                total: true,
+            }
+        });
+        const graphDataMap = {};
+        // Initialize last 7 days with 0
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            graphDataMap[dateStr] = { date: dateStr, revenue: 0, orders: 0 };
+        }
+        recentOrders.forEach(order => {
+            const dateStr = order.createdAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            if (graphDataMap[dateStr]) {
+                graphDataMap[dateStr].revenue += Number(order.total || 0);
+                graphDataMap[dateStr].orders += 1;
+            }
+        });
+        const graphData = Object.values(graphDataMap);
         return {
             totalProducts,
             totalOrders,
@@ -28,6 +62,7 @@ export const DashboardService = {
             deliveredOrders,
             cancelledOrders,
             totalRevenue,
+            graphData,
         };
     }
 };

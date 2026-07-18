@@ -9,6 +9,8 @@ export const createProduct = async (req, res) => {
         // FormData sends values as strings, parse them to numbers
         if (productData.price)
             productData.price = Number(productData.price);
+        if (productData.discountPrice)
+            productData.discountPrice = Number(productData.discountPrice);
         if (productData.stock)
             productData.stock = Number(productData.stock);
         if (productData.shippingFee)
@@ -57,6 +59,8 @@ export const updateProduct = async (req, res) => {
         }
         if (productData.price)
             productData.price = Number(productData.price);
+        if (productData.discountPrice)
+            productData.discountPrice = Number(productData.discountPrice);
         if (productData.stock)
             productData.stock = Number(productData.stock);
         if (productData.shippingFee)

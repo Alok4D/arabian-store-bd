@@ -29,8 +29,18 @@ export const createOrder = async (req, res) => {
 };
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await OrderService.getAllOrders();
-        res.status(200).json({ success: true, data: orders });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const status = req.query.status;
+        const search = req.query.search;
+        const startDate = req.query.startDate;
+        const endDate = req.query.endDate;
+        const minAmount = req.query.minAmount ? parseFloat(req.query.minAmount) : undefined;
+        const maxAmount = req.query.maxAmount ? parseFloat(req.query.maxAmount) : undefined;
+        const sortBy = req.query.sortBy;
+        const sortOrder = req.query.sortOrder;
+        const result = await OrderService.getAllOrders(page, limit, status, search, startDate, endDate, minAmount, maxAmount, sortBy, sortOrder);
+        res.status(200).json({ success: true, data: result.orders, meta: result.meta });
     }
     catch (error) {
         console.error('Get orders error:', error);
