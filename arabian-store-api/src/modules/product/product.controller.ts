@@ -12,7 +12,7 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
     if (productData.price) productData.price = Number(productData.price);
     if (productData.discountPrice) productData.discountPrice = Number(productData.discountPrice);
     if (productData.stock) productData.stock = Number(productData.stock);
-    if (productData.shippingFee) productData.shippingFee = Number(productData.shippingFee);
+    productData.shippingFee = productData.shippingFee ? Number(productData.shippingFee) : 0;
 
     const product = await ProductService.createProduct(productData);
     res.status(201).json({ success: true, data: product });
@@ -60,7 +60,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     if (productData.price) productData.price = Number(productData.price);
     if (productData.discountPrice) productData.discountPrice = Number(productData.discountPrice);
     if (productData.stock) productData.stock = Number(productData.stock);
-    if (productData.shippingFee) productData.shippingFee = Number(productData.shippingFee);
+    productData.shippingFee = productData.shippingFee ? Number(productData.shippingFee) : 0;
 
     const product = await ProductService.updateProduct(req.params.id as string, productData);
     res.status(200).json({ success: true, data: product });
