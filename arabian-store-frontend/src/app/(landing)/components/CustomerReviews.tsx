@@ -88,7 +88,7 @@ export function CustomerReviews() {
             <button
               onClick={prevSlide}
               disabled={currentIndex === 0}
-              className={`absolute -left-3 md:-left-5 top-1/2 -translate-y-1/2 bg-gradient-to-b from-[#008013] to-[#00660F] hover:from-[#00660F] hover:to-[#004D0B] p-2.5 rounded-full shadow-md z-10 flex items-center justify-center text-white transition-all active:scale-95 ${currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:shadow-lg'}`}
+              className={`absolute -left-3 md:-left-5 top-1/2 -translate-y-1/2 bg-gradient-to-b from-[#008013] to-[#00660F] hover:from-[#00660F] hover:to-[#004D0B] p-2.5 rounded-full shadow-md z-10 hidden md:flex items-center justify-center text-white transition-all active:scale-95 ${currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:shadow-lg'}`}
             >
               <ChevronLeft size={22} />
             </button>
@@ -105,7 +105,7 @@ export function CustomerReviews() {
               >
                 {reviews.map((imgSrc, index) => (
                   <div key={index} className="flex-none px-2" style={{ width: `${100 / itemsPerView}%` }}>
-                    <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-sm border border-[#E8DFD0] bg-white">
+                    <div className="relative aspect-square w-full rounded-sm md:rounded-xl overflow-hidden shadow-sm border border-[#E8DFD0] bg-white">
                       <Image src={imgSrc} alt={`Customer Review ${index + 1}`} fill className="object-cover" />
                     </div>
                   </div>
@@ -116,7 +116,7 @@ export function CustomerReviews() {
             <button
               onClick={nextSlide}
               disabled={currentIndex >= maxIndex}
-              className={`absolute -right-3 md:-right-5 top-1/2 -translate-y-1/2 bg-gradient-to-b from-[#008013] to-[#00660F] hover:from-[#00660F] hover:to-[#004D0B] p-2.5 rounded-full shadow-md z-10 flex items-center justify-center text-white transition-all active:scale-95 ${currentIndex >= maxIndex ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:shadow-lg'}`}
+              className={`absolute -right-3 md:-right-5 top-1/2 -translate-y-1/2 bg-gradient-to-b from-[#008013] to-[#00660F] hover:from-[#00660F] hover:to-[#004D0B] p-2.5 rounded-full shadow-md z-10 hidden md:flex items-center justify-center text-white transition-all active:scale-95 ${currentIndex >= maxIndex ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:shadow-lg'}`}
             >
               <ChevronRight size={22} />
             </button>
