@@ -59,12 +59,7 @@ export default function PackageSelection({
               onClick={() => setSelectedProduct(product.id)}
               className={`relative flex items-center gap-2 sm:gap-4 p-3 sm:p-4 md:p-5 cursor-pointer transition-all bg-white rounded-md border ${isSelected ? 'border-[#008013] shadow-[0_0_5px_rgba(0,128,19,0.3)]' : 'border-[#d1d5db] hover:border-[#008013]/50'}`}
             >
-              {/* TODO: Uncomment when client confirms shipping details */}
-              {Number(product.shippingFee) === 0 && (
-                <div className="absolute right-0 top-0 bg-[#008013] text-white text-[10px] sm:text-[11px] font-medium px-1.5 sm:px-2 py-0.5 rounded-bl-md shadow-sm z-10">
-                  ফ্রি ডেলিভারি
-                </div>
-              )}
+ 
               
               {/* Radio */}
               <div className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 ${isSelected ? 'border-[#008013]' : 'border-[#9ca3af]'}`}>
