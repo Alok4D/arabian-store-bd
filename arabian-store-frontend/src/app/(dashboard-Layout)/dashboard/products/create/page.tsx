@@ -20,8 +20,7 @@ export default function CreateProductPage() {
     price: "",
     discountPrice: "",
     weight: "1 KG",
-    stock: "100",
-    shippingFee: "130"
+    stock: "100"
   });
 
   const generateSlug = (title: string) => {
@@ -58,7 +57,6 @@ export default function CreateProductPage() {
       }
       submitData.append("weight", formData.weight);
       submitData.append("stock", formData.stock);
-      submitData.append("shippingFee", formData.shippingFee);
       
       if (imageFile) {
         submitData.append("image", imageFile);
@@ -133,7 +131,7 @@ export default function CreateProductPage() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-neutral-700">Price (৳) <span className="text-red-500">*</span></label>
                 <input 
@@ -164,17 +162,6 @@ export default function CreateProductPage() {
                   type="number" 
                   name="stock"
                   value={formData.stock}
-                  onChange={handleChange}
-                  className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-neutral-700">Shipping Fee (৳) <span className="text-red-500">*</span></label>
-                <input 
-                  required
-                  type="number" 
-                  name="shippingFee"
-                  value={formData.shippingFee}
                   onChange={handleChange}
                   className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />

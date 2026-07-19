@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  
   // Check if the user is visiting a dashboard route
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     // Check for the admin_token cookie

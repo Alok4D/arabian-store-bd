@@ -80,7 +80,6 @@ export default function ProductsPage() {
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Price</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Discount</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Stock</th>
-                    <th className="py-3 px-4 text-sm font-semibold text-neutral-600">Shipping</th>
                     <th className="py-3 px-4 text-sm font-semibold text-neutral-600 text-right">Actions</th>
                   </tr>
                 </thead>
@@ -106,7 +105,6 @@ export default function ProductsPage() {
                           {product.stock > 0 ? `${product.stock} In Stock` : 'Out of Stock'}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-neutral-600">{Number(product.shippingFee)}৳</td>
                       <td className="py-3 px-4 text-right">
                         <div className="flex justify-end gap-2">
                           <Link 
