@@ -80,8 +80,8 @@ export default function PackageSelection({
               </div>
               {/* Info */}
               <div className="flex-1 flex flex-col justify-center min-w-0">
-                <p className="font-bold text-[13px] sm:text-[14px] md:text-[15px] text-[#333] mb-0.5 md:mb-1 leading-snug truncate whitespace-normal line-clamp-2">{product.title}</p>
-                <p className="text-[11px] sm:text-[12px] md:text-[13px] text-[#777] leading-tight line-clamp-2">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
+                <p className="font-bold text-[15px] sm:text-[16px] md:text-[17px] text-[#333] mb-0.5 md:mb-1 leading-snug truncate whitespace-normal line-clamp-2">{product.title}</p>
+                <p className="text-[13px] sm:text-[14px] md:text-[15px] text-[#777] leading-tight line-clamp-2">{product.description || "বিশেষ ডিসকাউন্ট অফার"}</p>
               </div>
 
               {/* Qty + Price (Right Side) */}
