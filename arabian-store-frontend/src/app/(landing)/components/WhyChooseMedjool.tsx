@@ -59,7 +59,7 @@ export default function WhyChooseMedjool() {
                 {r.icon}
               </div>
               <h3 className="font-bold text-[15px] md:text-[20px] text-[#2D251E] mb-1 md:mb-2 leading-tight">{r.title}</h3>
-              <p className="text-[12px] md:text-[14px] text-[#555] leading-relaxed">{r.desc}</p>
+              <p className="text-[13px] md:text-[15px] text-[#333] font-medium leading-relaxed">{r.desc}</p>
             </ScrollAnimate>
           ))}
         </div>
