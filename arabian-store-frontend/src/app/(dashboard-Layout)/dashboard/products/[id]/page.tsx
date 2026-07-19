@@ -78,10 +78,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                   {product.stock > 0 ? `${product.stock} In Stock` : 'Out of Stock'}
                 </span>
               </div>
-              <div>
-                <p className="text-sm font-semibold text-neutral-500">Shipping Fee</p>
-                <p className="text-neutral-800">{Number(product.shippingFee)}৳</p>
-              </div>
+
               <div>
                 <p className="text-sm font-semibold text-neutral-500">Weight</p>
                 <p className="text-neutral-800">{product.weight}</p>

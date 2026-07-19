@@ -19,8 +19,8 @@ export default function CreateProductPage() {
     description: "",
     price: "",
     discountPrice: "",
-    weight: "1 KG",
-    stock: "100"
+    weight: "",
+    stock: ""
   });
 
   const generateSlug = (title: string) => {
@@ -162,6 +162,7 @@ export default function CreateProductPage() {
                   type="number" 
                   name="stock"
                   value={formData.stock}
+                  placeholder="e.g. 100"
                   onChange={handleChange}
                   className="w-full p-2.5 border rounded-md outline-none focus:border-[#008013]"
                 />
