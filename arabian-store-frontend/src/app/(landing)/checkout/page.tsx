@@ -19,7 +19,7 @@ export default function CheckoutPage() {
   // Form State
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [district, setDistrict] = useState('ঢাকা');
+  const [district, setDistrict] = useState('Dhaka');
   const [shippingSettings, setShippingSettings] = useState({ insideDhaka: 80, outsideDhaka: 130 });
   const [fullAddress, setFullAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('COD');
