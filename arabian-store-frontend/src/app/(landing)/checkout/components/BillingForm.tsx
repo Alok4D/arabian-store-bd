@@ -1,6 +1,21 @@
 "use client";
 
-import React from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { ChevronDown, Search } from 'lucide-react';
+
+const DISTRICTS = [
+  "Dhaka", "Faridpur", "Gazipur", "Gopalganj", "Jamalpur", "Kishoreganj", 
+  "Madaripur", "Manikganj", "Munshiganj", "Mymensingh", "Narayanganj", 
+  "Narsingdi", "Netrokona", "Rajbari", "Shariatpur", "Sherpur", "Tangail", 
+  "Bogra", "Joypurhat", "Naogaon", "Natore", "Chapainawabganj", "Pabna", 
+  "Rajshahi", "Sirajganj", "Dinajpur", "Gaibandha", "Kurigram", "Lalmonirhat", 
+  "Nilphamari", "Panchagarh", "Rangpur", "Thakurgaon", "Barguna", "Barishal", 
+  "Bhola", "Jhalokati", "Patuakhali", "Pirojpur", "Bandarban", "Brahmanbaria", 
+  "Chandpur", "Chattogram", "Cumilla", "Cox's Bazar", "Feni", "Khagrachari", 
+  "Lakshmipur", "Noakhali", "Rangamati", "Habiganj", "Moulvibazar", "Sunamganj", 
+  "Sylhet", "Bagerhat", "Chuadanga", "Jashore", "Jhenaidah", "Khulna", 
+  "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira"
+];
 
 interface BillingFormProps {
   fullName: string;
@@ -25,6 +40,24 @@ export default function BillingForm({
   setMobileNumber,
   deliveryCharge
 }: BillingFormProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredDistricts = DISTRICTS.filter(d => 
+    d.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <h3 className="text-[16px] md:text-[18px] font-bold text-[#333] mb-4">Billing details</h3>
@@ -33,74 +66,52 @@ export default function BillingForm({
           <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার সম্পূর্ণ নাম লিখুন <span className="text-red-500">*</span></label>
           <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} placeholder="আপনার নাম" className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#008013] focus:ring-1 focus:ring-[#008013] text-[14px] bg-white text-[#333]" />
         </div>
-        <div>
+        <div className="relative" ref={dropdownRef}>
           <label className="block text-[13px] font-bold text-[#555] mb-1">আপনার জেলা <span className="text-red-500">*</span></label>
-          <select value={district} onChange={e => setDistrict(e.target.value)} className="w-full px-3 py-2.5 border border-[#e5e7eb] rounded-sm focus:outline-none focus:border-[#008013] focus:ring-1 focus:ring-[#008013] text-[14px] bg-white text-[#333]">
-            <option value="Dhaka">Dhaka</option>
-            <option value="Faridpur">Faridpur</option>
-            <option value="Gazipur">Gazipur</option>
-            <option value="Gopalganj">Gopalganj</option>
-            <option value="Jamalpur">Jamalpur</option>
-            <option value="Kishoreganj">Kishoreganj</option>
-            <option value="Madaripur">Madaripur</option>
-            <option value="Manikganj">Manikganj</option>
-            <option value="Munshiganj">Munshiganj</option>
-            <option value="Mymensingh">Mymensingh</option>
-            <option value="Narayanganj">Narayanganj</option>
-            <option value="Narsingdi">Narsingdi</option>
-            <option value="Netrokona">Netrokona</option>
-            <option value="Rajbari">Rajbari</option>
-            <option value="Shariatpur">Shariatpur</option>
-            <option value="Sherpur">Sherpur</option>
-            <option value="Tangail">Tangail</option>
-            <option value="Bogra">Bogra</option>
-            <option value="Joypurhat">Joypurhat</option>
-            <option value="Naogaon">Naogaon</option>
-            <option value="Natore">Natore</option>
-            <option value="Chapainawabganj">Chapainawabganj</option>
-            <option value="Pabna">Pabna</option>
-            <option value="Rajshahi">Rajshahi</option>
-            <option value="Sirajganj">Sirajganj</option>
-            <option value="Dinajpur">Dinajpur</option>
-            <option value="Gaibandha">Gaibandha</option>
-            <option value="Kurigram">Kurigram</option>
-            <option value="Lalmonirhat">Lalmonirhat</option>
-            <option value="Nilphamari">Nilphamari</option>
-            <option value="Panchagarh">Panchagarh</option>
-            <option value="Rangpur">Rangpur</option>
-            <option value="Thakurgaon">Thakurgaon</option>
-            <option value="Barguna">Barguna</option>
-            <option value="Barishal">Barishal</option>
-            <option value="Bhola">Bhola</option>
-            <option value="Jhalokati">Jhalokati</option>
-            <option value="Patuakhali">Patuakhali</option>
-            <option value="Pirojpur">Pirojpur</option>
-            <option value="Bandarban">Bandarban</option>
-            <option value="Brahmanbaria">Brahmanbaria</option>
-            <option value="Chandpur">Chandpur</option>
-            <option value="Chattogram">Chattogram</option>
-            <option value="Cumilla">Cumilla</option>
-            <option value="Cox's Bazar">Cox's Bazar</option>
-            <option value="Feni">Feni</option>
-            <option value="Khagrachari">Khagrachari</option>
-            <option value="Lakshmipur">Lakshmipur</option>
-            <option value="Noakhali">Noakhali</option>
-            <option value="Rangamati">Rangamati</option>
-            <option value="Habiganj">Habiganj</option>
-            <option value="Moulvibazar">Moulvibazar</option>
-            <option value="Sunamganj">Sunamganj</option>
-            <option value="Sylhet">Sylhet</option>
-            <option value="Bagerhat">Bagerhat</option>
-            <option value="Chuadanga">Chuadanga</option>
-            <option value="Jashore">Jashore</option>
-            <option value="Jhenaidah">Jhenaidah</option>
-            <option value="Khulna">Khulna</option>
-            <option value="Kushtia">Kushtia</option>
-            <option value="Magura">Magura</option>
-            <option value="Meherpur">Meherpur</option>
-            <option value="Narail">Narail</option>
-            <option value="Satkhira">Satkhira</option>
-          </select>
+          <div 
+            onClick={() => setIsOpen(!isOpen)}
+            className={`w-full px-3 py-2.5 border rounded-sm flex items-center justify-between cursor-pointer bg-white text-[14px] transition-colors ${isOpen ? 'border-[#008013] ring-1 ring-[#008013]' : 'border-[#e5e7eb] hover:border-[#008013]'}`}
+          >
+            <span className={district ? 'text-[#333]' : 'text-gray-400'}>{district || "Select District"}</span>
+            <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+          </div>
+          
+          {isOpen && (
+            <div className="absolute z-50 w-full mt-1 bg-white border border-[#e5e7eb] rounded-sm shadow-lg overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="p-2 border-b border-[#e5e7eb] flex items-center gap-2 bg-gray-50/50">
+                <Search className="w-4 h-4 text-gray-400 shrink-0" />
+                <input 
+                  type="text" 
+                  autoFocus
+                  placeholder="Search district..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full outline-none text-[13px] bg-transparent text-[#333] placeholder:text-gray-400"
+                />
+              </div>
+              <div data-lenis-prevent="true" className="max-h-[220px] overflow-y-auto py-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+                {filteredDistricts.length > 0 ? (
+                  filteredDistricts.map(d => (
+                    <div 
+                      key={d}
+                      onClick={() => {
+                        setDistrict(d);
+                        setIsOpen(false);
+                        setSearchQuery("");
+                      }}
+                      className={`px-3 py-2 text-[13px] cursor-pointer transition-colors ${district === d ? 'bg-[#008013]/10 text-[#008013] font-semibold' : 'hover:bg-gray-50 text-gray-700'}`}
+                    >
+                      {d}
+                    </div>
+                  ))
+                ) : (
+                  <div className="px-3 py-6 text-center text-[13px] text-gray-400">
+                    No district found
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <label className="block text-[13px] font-bold text-[#555] mb-1">সম্পূর্ণ ঠিকানা পূরণ করুন <span className="text-red-500">*</span></label>
