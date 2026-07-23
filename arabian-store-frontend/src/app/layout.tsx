@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn">
+    <html lang="bn" className={manrope.variable}>
       <head>
         {/* Facebook Pixel Code - Test ID */}
         <Script
@@ -47,9 +47,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={notoSansBengali.className}>
-    <html lang="bn" className={manrope.variable}>
-      <body>
+      <body className={manrope.className}>
         <ReduxProvider>
           <LenisProvider>
             {children}
