@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import { ReduxProvider } from '@/components/providers/ReduxProvider';
-import { LenisProvider } from '@/components/providers/LenisProvider';
+import Script from 'next/script';
 import './globals.css';
 
 const manrope = Manrope({ 
@@ -24,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" className={manrope.variable}>
-      <body>
+    <html lang="bn">
+      <body className={notoSansBengali.className}>
         <ReduxProvider>
           <LenisProvider>
             {children}
